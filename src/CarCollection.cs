@@ -1,11 +1,34 @@
-public class CarCollection : ICollection<Car> // extends ICollection
+using System.Collections;
+using System.Collections.Generic;
+
+
+namespace Carvana
 {
-    private List<Car> cars = new List<Car>(); // list holding cars, placeholder for now will be replaced with some wierd DB shit
-    public void add(Car car) = cars.Add(car); // adds car
-    public bool remove(Car car) = cars.remove(car); // tries to remove car, returns bool on if it was found/removed
-    public Car get(int index) = cars[index]; // gets data at index
-    public int count => cars.count; // returns number of items
-    public IEnumerable<Car> getAll = cars; // returns full data
+    public class CarCollection : CustomCollection<Car> // extends ICollection
+    {
+        private List<Car>
+            cars = new List<Car>(); // list holding cars, placeholder for now will be replaced with some wierd DB shit
 
+        public void add(Car car) // adds car
+        {
+            cars.Add(car);
+        }
 
+        public bool remove(Car car) // tries to remove car, returns bool on if it was found/removed
+        {
+            return cars.Remove(car);
+        }
+
+        public Car get(int index) // gets data at index
+        {
+            return cars[index];
+        }
+
+        public int count => cars.Count;  // returns number of item
+        
+        public IEnumerable<Car> getAll() // returns full data
+        {
+            return cars;
+        }
+    }
 }

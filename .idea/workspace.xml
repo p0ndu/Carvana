@@ -18,21 +18,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3c1fca1-076d-42b6-8cf3-8a4046c2e451" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/CarCollection.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/CollectionsUtils.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ICollection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Car.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Car.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Customer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Customer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/History.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/History.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Insurance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Insurance.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PersonalInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/PersonalInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Registration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Registration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Engine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fuelType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/FuelType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model.cs" afterDir="false" />
-    </list>
+    <list default="true" id="b3c1fca1-076d-42b6-8cf3-8a4046c2e451" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,7 +47,7 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "CollectionTest",
     "last_opened_file_path": "/Users/alexanderley/Desktop/UniProjects/Carvana/Carvana",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -85,7 +71,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1740333115809</updated>
-      <workItem from="1740333116861" duration="1258000" />
+      <workItem from="1740333116861" duration="1534000" />
     </task>
     <servers />
   </component>
