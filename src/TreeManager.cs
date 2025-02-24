@@ -19,8 +19,18 @@ public static class TreeManager // static class which will manage the tree, will
         }
     }
 
+    public static void PrintTree(Node root) // dfs Tree traversal that prints data of each node
+    {
+        Console.WriteLine(root.GetData()); // prints data
+        foreach (Node child in root.GetChildren())
+        {
+            PrintTree(child);
+        }
+    }
+
     private static bool PruneInternal(Node root) // recursive function to prune the tree, returns false if error or true otherwise
     {
+        Console.WriteLine("Called on node with following data - " + root.GetData());
         if (root == null) // handling unexpected null call
         {
             Console.WriteLine("unexpected null call");
@@ -32,16 +42,19 @@ public static class TreeManager // static class which will manage the tree, will
         switch (numChildren)
         {
             case 0: // no child, end of branch
+                Console.WriteLine("Case 0");
                 return true;
             case 1:
             {
+                Console.WriteLine("Case 1");
                 Node child = root.GetChildren()[0];
                 ReplaceData(root, child); // replace data and pointers for parent/child relationship
                 return PruneInternal(child); // recur on merged child
             }
             default:
-            {
-              return root.GetChildren().Select(child => PruneInternal(child)).Aggregate(false, (acc, result) => acc | result); // one liner because i felt quirky
+            { 
+                Console.WriteLine("Default case, Num children are " + numChildren);
+                return root.GetChildren().ToList().Select(child => PruneInternal(child)).Aggregate(false, (acc, result) => acc | result); // one liner because i felt quirky
                                                                                                                                       // basically ORMAPs PruneInternal onto all children and returns the output
             }
         }
@@ -52,8 +65,14 @@ public static class TreeManager // static class which will manage the tree, will
 
     private static void ReplaceData(Node root, Node child) // replaces data of child with parent+child data, and updates pointers modelling parent child relationship to delete root node once it goes out of scope
     {
-        child.SetData(root.GetData() + child.GetData()); 
-        child.SetParent(root.GetParent());
-        root.RemoveChild(child); // removing the final refference to root, garbage collector will do its thing once it gets around to it
+        Node parent = root.GetParent();
+        if (parent != null) // if 'root' is the actual root of the tree you need to check its parent exists
+        {
+             child.SetData(root.GetData() + child.GetData()); // update child data to merge the two 
+             child.SetParent(root.GetParent()); // sets childs parent to the parent of 'root'
+             root.RemoveChild(child); // removing the final refference to 'root', garbage collector will do its thing once it gets around to it
+             root.GetParent().AddChild(child); // transfers parent relation to node above 'root', as 'root' is being removed
+             root.GetParent().RemoveChild(root); // removes last pointer to 'root'
+        }
     }
 }
