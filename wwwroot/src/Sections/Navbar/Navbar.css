@@ -1,0 +1,41 @@
+/* NAVBAR CSS */
+:root .navbar-container {
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    width: 120px;
+}
+
+.navbar {
+    width: fit-content;
+    padding: 0px 10px;
+    border-radius: 55px;
+    background-color: var(--accent-color);
+    color: white;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.menu-links {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 16px 30px;
+}
+
+.menu-links .menu-item {
+    padding: 5px 40px;
+}
+
+.menu-links .menu-item a {
+    text-decoration: none;
+    color: var(--background-color);
+    transition: color 0.7s ease;
+}
+
+.menu-links .menu-item a:hover {
+    color: var(--hover-nav-color);
+}
