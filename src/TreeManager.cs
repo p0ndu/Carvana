@@ -47,9 +47,85 @@ public static class TreeManager // static class which will manage the tree, will
         }
     }
 
+    public static int CountNodes(Node root) // counts number of nodes
+    {
+        int count = 1; // count current node
+        
+        var children = root.GetChildren();
+        for (int i = 0; i < children.Count; i++)
+        {
+           count += CountNodes(children[i]); // recur on chldren incrementing count, count increases kinda like a fibbonacci function
+        }
+
+        return count; 
+    }
+
+    public static void VisualizeTree(Node root, string indent = "", bool isLast = true) // prints out tree strucutre with nodes values
+    {
+        Console.Write(indent);
+        Console.Write(isLast ? "└── " : "├── "); // found online, basically emojis to help lay out tree structure, if isLast then do L otherwise T
+        Console.WriteLine(root.GetData());
+        
+        indent += isLast ? "    " : "│   "; // if it isLast (end of a branch) then add nothing to the end, otherwise add a pipe
+        
+        var children = root.GetChildren();
+        for (int i = 0; i < children.Count; i++) // recur for all children of node
+        {
+            VisualizeTree(children[i], indent, i == children.Count - 1);
+        }
+    }
+
+    public static List<Node> AutoComplete(Node root, string prefix = "") // returns top 5 results branching from node corresponding to prefix, default prefix value = "" so it always returns something
+    {
+        List<Node> nodes = GetSuggestions(root, prefix); // gets all possible completions of prefix
+        
+        nodes.Sort(); // sorting list alphabetically for now, will add proper weights to it later
+
+        return nodes.Take(5).ToList(); // returns first 5 nodes in list
+    }
+
+    private static Node? FindBranch(Node root, string prefix) // searches for a branch from 'root' matching input prefix, output node can be NULL
+    { 
+        Node currentNode = root;
+        
+        foreach (char character in prefix) // iterate over each charafter 
+        {
+            bool found = false;
+            foreach (Node child in currentNode.GetChildren()) // check each child
+            {
+                if (child.GetData().Equals(character.ToString(), StringComparison.OrdinalIgnoreCase)) // try find character in child data
+                {
+                    currentNode = child; // update node being checked
+                    found = true; // tell program to continue searching
+                    break; // break inner foreach
+                }
+            }
+
+            if (!found) // if data is not in branch
+            {
+                return null;
+            }
+        }
+        
+       return currentNode;
+    }
+
+    private static List<Node> GetSuggestions(Node root, string prefix) // returns list of all children from branch corresponding to prefix, if the branch cannot be found or there are no children the list will be empty
+    {
+        Node foundBranch = FindBranch(root, prefix); // search for branch
+
+        if (foundBranch == null) // if branch cant be found
+        {
+            return new List<Node>(); // return empty list
+        }
+        else
+        {
+            List<Node> suggestions = foundBranch.GetChildren(); // return all children of branch
+            return suggestions;
+        }
+    }
     private static bool PruneInternal(Node root) // recursive function to prune the tree, returns false if error or true otherwise
     {
-        Console.WriteLine("Called on node with following data - " + root.GetData());
         if (root == null) // handling unexpected null call
         {
             Console.WriteLine("unexpected null call");
@@ -61,18 +137,15 @@ public static class TreeManager // static class which will manage the tree, will
         switch (numChildren)
         {
             case 0: // no child, end of branch
-                Console.WriteLine("Case 0");
                 return true;
             case 1:
             {
-                Console.WriteLine("Case 1");
                 Node child = root.GetChildren()[0];
                 ReplaceData(root, child); // replace data and pointers for parent/child relationship
                 return PruneInternal(child); // recur on merged child
             }
             default:
             { 
-                Console.WriteLine("Default case, Num children are " + numChildren);
                 return root.GetChildren().ToList().Select(child => PruneInternal(child)).Aggregate(false, (acc, result) => acc | result); // one liner because i felt quirky
                                                                                                                                       // basically ORMAPs PruneInternal onto all children and returns the output
             }
@@ -125,6 +198,5 @@ public static class TreeManager // static class which will manage the tree, will
                 currentNode = newNode; // continue searching for rest of word from newNode onwards, it wont be found as its a new branch meaning it will just create the word branching each time
             }
         }
-       Console.WriteLine("word - " + word + " inserted into trie \n"); 
     }
 }
