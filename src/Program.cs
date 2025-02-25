@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more icnformation
+using Carvana.Autocomplete; // autocomplete namespace for testing my code
 
 namespace Carvana
 {

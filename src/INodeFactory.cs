@@ -1,4 +1,4 @@
-namespace Carvana;
+namespace Carvana.Autocomplete;
 
 public interface INodeFactory // interface for node factories, to allow for DI instead of hardcoding new nodes
 {

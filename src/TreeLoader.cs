@@ -1,6 +1,6 @@
 using System.Reflection.Metadata.Ecma335;
 
-namespace Carvana;
+namespace Carvana.Autocomplete;
 
 public class TreeLoader : ITreeLoader // tree loader class, to move loading and building the tree into its own class
 {

@@ -1,4 +1,4 @@
-namespace Carvana;
+namespace Carvana.Autocomplete;
 
 public class DefaultNodeFactory : INodeFactory
 {

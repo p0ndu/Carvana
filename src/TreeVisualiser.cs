@@ -1,4 +1,4 @@
-namespace Carvana;
+namespace Carvana.Autocomplete;
 
 public static class TreeVisualiser // TreeVisualiser class, to move anything to do with printing/displaying the tree away from TreeManager
 {

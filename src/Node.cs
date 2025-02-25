@@ -1,4 +1,4 @@
-namespace Carvana;
+namespace Carvana.Autocomplete;
 
 public class Node // class for node of tree, going to be used for autocomplete, none of this uses pointers because were in c# and its kinda pointless(stop laughing)
 {

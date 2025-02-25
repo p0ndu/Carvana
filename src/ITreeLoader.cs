@@ -1,4 +1,4 @@
-namespace Carvana;
+namespace Carvana.Autocomplete;
 
 public interface ITreeLoader // tree loader interface, to modularise and enforce loading rules
 {
