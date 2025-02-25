@@ -16,13 +16,20 @@ namespace Carvana
            int numNodesAfter = TreeManager.CountNodes(root);
            Console.WriteLine("Number of nodes before pruning - " + numNodes + "\nNumber of nodes after pruning - " + numNodesAfter + "\nReduced by " + ((double)(numNodes - numNodesAfter) / numNodes) * 100 + "%");
 
-           List<Node> nodes = TreeManager.AutoComplete(root, "jo");
+           List<string> results = TreeManager.AutoComplete(root, "");
 
-           foreach (var node in nodes)
+           foreach (var VARIABLE in results)
            {
-               Console.WriteLine(node.GetData());
-           }
+               Console.WriteLine("" + VARIABLE);
+           } 
+           
+           results.Clear();
+           results = TreeManager.AutoComplete(root, "d");
 
+           foreach (var VARIABLE in results)
+           {
+               Console.WriteLine("d" + VARIABLE);
+           } 
 
         }
 

@@ -75,13 +75,19 @@ public static class TreeManager // static class which will manage the tree, will
         }
     }
 
-    public static List<Node> AutoComplete(Node root, string prefix = "") // returns top 5 results branching from node corresponding to prefix, default prefix value = "" so it always returns something
-    {
-        List<Node> nodes = GetSuggestions(root, prefix); // gets all possible completions of prefix
+    public static List<string> AutoComplete(Node root, string prefix = "") // returns top 5 results branching from node corresponding to prefix, default prefix value = "" so it always returns something
+    { 
+        List<string> results = new List<string>();
+        List<Node> nodes = GetSuggestions(root, prefix); // gets all words that the current prefix could be completed to
         
-        nodes.Sort(); // sorting list alphabetically for now, will add proper weights to it later
+        foreach (Node word in nodes) // for each possible completion
+        {
+            GetFullWord(word, "", results); // explore branch, complete the word and add it to 'results'
+        } 
 
-        return nodes.Take(5).ToList(); // returns first 5 nodes in list
+        results.Sort(); // sort results, will be changed later to implement a weight system
+        
+        return results.Take(5).ToList(); // returns first 5 nodes in list
     }
 
     private static Node? FindBranch(Node root, string prefix) // searches for a branch from 'root' matching input prefix, output node can be NULL
@@ -108,6 +114,22 @@ public static class TreeManager // static class which will manage the tree, will
         }
         
        return currentNode;
+    }
+
+    private static void GetFullWord(Node node, string currentWord, List<string> words) // fully explores each branch of the tree, building the current word and then adding it to the list 'words'
+    {
+        currentWord += node.GetData(); // append data to end of word
+
+        if (node.GetChildren().Count == 0) // if at the end of a branch
+        {
+            words.Add(currentWord);
+            return;
+        }
+
+        foreach (Node child in node.GetChildren()) // recur for all children
+        {
+            GetFullWord(child, currentWord, words);
+        }
     }
 
     private static List<Node> GetSuggestions(Node root, string prefix) // returns list of all children from branch corresponding to prefix, if the branch cannot be found or there are no children the list will be empty
