@@ -6,30 +6,33 @@ namespace Carvana
     {
         public static void Main(string[] args)
         {
-           Node root = TreeManager.BuildFromFile("../../../src/TestTree.txt"); // hardcoded filepath because idfk c# is wonky
+            INodeFactory nodeFactory = new DefaultNodeFactory(); // nodeFactory, handles creating nodes
+            TreeManager manager = new TreeManager(nodeFactory); // manager, handles managing t
+            TreeLoader loader = new TreeLoader("../../../src/TestTree.txt", nodeFactory); // hardcoded filepath because idfk c# is wonky
+            Node root = loader.LoadFromFile();
 
             // Print the tree before pruning
-           TreeManager.VisualizeTree(root);
-           int numNodes = TreeManager.CountNodes(root);
-           TreeManager.Prune(root);
-           TreeManager.VisualizeTree(root);
-           int numNodesAfter = TreeManager.CountNodes(root);
-           Console.WriteLine("Number of nodes before pruning - " + numNodes + "\nNumber of nodes after pruning - " + numNodesAfter + "\nReduced by " + ((double)(numNodes - numNodesAfter) / numNodes) * 100 + "%");
+            TreeVisualiser.VisualizeTree(root);
+            int numNodes = TreeVisualiser.CountNodes(root);
+            manager.Prune(root);
+            TreeVisualiser.VisualizeTree(root);
+            int numNodesAfter = TreeVisualiser.CountNodes(root);
+            Console.WriteLine("Number of nodes before pruning - " + numNodes + "\nNumber of nodes after pruning - " + numNodesAfter + "\nReduced by " + ((double)(numNodes - numNodesAfter) / numNodes) * 100 + "%");
 
-           List<string> results = TreeManager.AutoComplete(root, "");
+            List<string> results = manager.AutoComplete(root, "");
 
-           foreach (var VARIABLE in results)
-           {
-               Console.WriteLine("" + VARIABLE);
-           } 
+            foreach (var VARIABLE in results)
+            {
+                Console.WriteLine("" + VARIABLE);
+            } 
            
-           results.Clear();
-           results = TreeManager.AutoComplete(root, "d");
+            results.Clear();
+            results = manager.AutoComplete(root, "d");
 
-           foreach (var VARIABLE in results)
-           {
-               Console.WriteLine("d" + VARIABLE);
-           } 
+            foreach (var VARIABLE in results)
+            {
+                Console.WriteLine("d" + VARIABLE);
+            } 
 
         }
 
