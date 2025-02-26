@@ -1,51 +1,104 @@
-/* HOME PAGE CSS */
+/* Full Page Background */
 .home-container {
     width: 100%;
+    min-height: 90.5vh;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    background-image: url('../../../public/home-banner.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
+/* Home Card */
 .home-card {
-    padding: 30px 0 70px 0;
-    border-radius: 40px;
-    opacity: 0.9;
-    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 100px;
-    background-color: var(--background-color);
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow-color) 0px 0px 10px;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
 }
 
-.home-card .home-form {
-    width: 100%;
+/* Title & Subtitle */
+.home-title {
+    font-size: 2rem;
+    font-weight: bold;
 }
 
-.home-card h1 {
-    margin-top: 10px;
-    font-size: 2.5rem;
-    color: var(--primary-color);
+.home-subtitle {
+    font-size: 1rem;
+    color: var(--hover-color);
+    margin-bottom: 1.5rem;
 }
 
-.home-card .home-form .home-input {
-    opacity: 1cdcd;
-    height: 15px;
-    width: 25%;
-    padding: 15px;
-    margin: 10px 0;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    margin-right: 15px;
+/* Form & Inputs */
+.home-form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
 }
 
-.home-card .home-button {
-    padding: 15px;
-    margin: 10px 0;
+.home-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.home-input {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+/* Primary Button */
+.home-button {
+    background: var(--accent-color);
+    color: var(--card-background);
+    padding: 12px;
     border: none;
-    border-radius: 5px;
-    background-color: var(--primary-color);
-    color: var(--background-color);
-    font-size: 1.2rem;
+    border-radius: 8px;
+    font-size: 1rem;
     cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.home-button:hover {
+    background: var(--accent-hover-color);
+}
+
+/* Secondary Button */
+.home-button.secondary {
+    width: 30%;
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+}
+
+.home-button.secondary:hover {
+    background: var(--accent-color);
+    color: var(--card-background);
+}
+
+/* Indecision Text */
+.home-indecision-title {
+    font-size: 1.2rem;
+    color: var(--hover-color);
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+
+.home-indecision-text {
+    margin-top: 2px;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: var(--muted-text-color);
 }

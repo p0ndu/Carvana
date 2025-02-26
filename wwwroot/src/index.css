@@ -2,13 +2,14 @@
   --primary-color: #2D2D2D;
   --secondary-color: #1A1A1A;
   --accent-color: #6B8E23;
-  --background-color: #FFFFFF;
+  --accent-hover-color: #8FAF3C;
+  --background-color: #f3f3f3;
   --text-color: #333333;
   --muted-text-color: #777777;
   --border-color: #DDDDDD;
   --hover-nav-color: #d6d6d6;
-  --hover-color: #4E6B1E;
-  --card-background: #F6F6F6;
+  --hover-color: #555555;
+  --card-background: #FFF;
   --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -19,8 +20,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('../public/home-banner.png');
-  background-size: cover;
 }
 
 code {
