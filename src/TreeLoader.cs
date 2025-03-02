@@ -26,6 +26,7 @@ public class TreeLoader : ITreeLoader // tree loader class, to move loading and 
             if (!string.IsNullOrEmpty(trimmedLine)) // if line is not null
             {
                 InsertWord(root, trimmedLine); // inserts the word into the trie
+                
             }
         }
         return root; // returns root node as sort of header for whole tree
@@ -61,5 +62,7 @@ public class TreeLoader : ITreeLoader // tree loader class, to move loading and 
                 currentNode = newNode; // continue searching for rest of word from newNode onwards, it wont be found as its a new branch meaning it will just create the word branching each time
             }
         }
+        
+        currentNode.setFullWord(); // once all letters have been added, set it as a complete word
     }
 }

@@ -28,11 +28,11 @@ namespace Carvana
             } 
            
             results.Clear();
-            results = manager.AutoComplete(root, "d");
+            results = manager.AutoComplete(root, "f");
 
             foreach (var VARIABLE in results)
             {
-                Console.WriteLine("d" + VARIABLE);
+                Console.WriteLine("f" + VARIABLE);
             } 
 
         }

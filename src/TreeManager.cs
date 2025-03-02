@@ -72,10 +72,9 @@ public class TreeManager // class which will manage the tree, will handle prunin
     {
         currentWord += node.GetData(); // append data to end of word
 
-        if (!node.GetChildren().Any()) // if at the end of a branch
+        if (node.isFullWord()) // add word once its complete 
         {
             words.Add(currentWord);
-            return;
         }
 
         foreach (Node child in node.GetChildren()) // recur for all children
@@ -107,7 +106,12 @@ public class TreeManager // class which will manage the tree, will handle prunin
             case 1:
             {
                 Node child = root.GetChildren()[0]; // not using factory for readability
-                ReplaceData(root, child); // replace data and pointers for parent/child relationship
+                
+                if (!root.isFullWord()) // only prune if node is not a full word
+                {
+                    ReplaceData(root, child); // replace data and pointers for parent/child relationship
+                }
+                
                 return PruneInternal(child); // recur on merged child
             }
             default:

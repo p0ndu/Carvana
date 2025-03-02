@@ -5,11 +5,15 @@ public class Node // class for node of tree, going to be used for autocomplete, 
     private string  _data;
     private Node? _parent; // nullable in case root node 
     private List<Node>? _children; // nullable in case final node
+    private bool _isFullWord; // flag to indicate whether or not the node is a full word
+    private int weight; // number of times this node has been selected by user. Used to sort possible words
 
     public Node(string data) // constructor for only data, to make root node
     {
         this._data = data;
         this._parent = null;
+        this._isFullWord = false;
+        this.weight = 0;
         
         this._children = new List<Node>();
     }
@@ -18,6 +22,8 @@ public class Node // class for node of tree, going to be used for autocomplete, 
     {
         this._data = data;
         this._parent = parent;
+        this._isFullWord = false;
+        this.weight = 0;
         
         this._children = new List<Node>();
     }
@@ -26,17 +32,37 @@ public class Node // class for node of tree, going to be used for autocomplete, 
     {
         this._data = data;
         this._parent = parent;
+        this._isFullWord = false;
+        this.weight = 0;
         
         this._children = children;
     }
 
-    public Node(string data, Node parent, Node child)
+    // public Node(string data, Node parent, Node child)
+    // {
+    //     this._data = data;
+    //     this._parent = parent;
+    //     
+    //     this._children = new List<Node>();
+    //     this._children.Add(child);
+    //
+    // }
+
+   
+    public void IncrementWeight() // increments weight, no decrement required
     {
-        this._data = data;
-        this._parent = parent;
-        
-        this._children = new List<Node>();
-        this._children.Add(child);
+        this.weight += 1;
+    }
+
+    public void setFullWord()
+    {
+        this._isFullWord = true;
+    }
+     
+
+    public bool isFullWord()
+    {
+        return this._isFullWord;
     }
 
     public void AddChild(Node child) // adds child to children
