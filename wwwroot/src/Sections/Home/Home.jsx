@@ -15,8 +15,8 @@ function Home() {
 
                     <form className="home-form">
                         <div className="home-form-group">
-                            <input type="text" placeholder="Car model, type, brand..." className="home-input" />
-                            <input type="text" placeholder="Location" className="home-input" />
+                            <input type="text" placeholder="Car model, type, brand..." className="home-input" id="home-car-type" />
+                            <input type="text" placeholder="Location" className="home-input" id="home-location" />
                         </div>
                         <button className="home-button">Search</button>
                     </form>
