@@ -1,9 +1,7 @@
 /* HOME PAGE CSS */
-
-/* Full Page Background */
 .home-container {
     width: 100%;
-    min-height: 90.5vh;
+    min-height: 884.422px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,7 +11,6 @@
     background-repeat: no-repeat;
 }
 
-/* Home Card */
 .home-card {
     display: flex;
     flex-direction: column;
@@ -27,7 +24,6 @@
     width: 90%;
 }
 
-/* Title & Subtitle */
 .home-title {
     font-size: 2rem;
     font-weight: bold;
@@ -39,7 +35,6 @@
     margin-bottom: 1.5rem;
 }
 
-/* Form & Inputs */
 .home-form {
     display: flex;
     flex-direction: column;

@@ -1,11 +1,10 @@
 import React from "react";
 import "./Home.css";
-import Navbar from '../../Components/Navbar/Navbar';
 
+// Create the Home component and export it
 function Home() {
     return (
         <>
-            <Navbar />
             <div className="home-container">
                 <div className="home-card">
                     <div className="home-card-text">
@@ -23,7 +22,7 @@ function Home() {
 
                     <div className="home-card-indecision-text">
                         <h3 className="home-indecision-title">Not sure what to pick?</h3>
-                        <p className="home-indecision-text">We’ll help you find the best option!</p>
+                        <p className="home-indecision-text">We'll help you find the best option!</p>
                     </div>
 
                     <button className="home-button secondary">View All Cars</button>

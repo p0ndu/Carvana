@@ -1,3 +1,6 @@
+/* RANGE FILTER CSS */
+
+/* NUM INPUT */
 .rent-car-filter .input-group .num-input {
     display: flex;
     align-items: center;
@@ -14,6 +17,7 @@
     margin: 5px 0;
 }
 
+/* RANGE FILTER VALUES */
 .rent-car-filter .value-labels {
     width: 90%;
     display: flex;
@@ -21,6 +25,7 @@
     margin-bottom: 5px;
 }
 
+/* RANGE FILTER BAR */
 .rent-car-filter .multirange {
     width: 90%;
     height: 8px;
@@ -56,6 +61,33 @@
     pointer-events: none;
 }
 
+.rent-car-filter .range {
+    position: relative;
+    z-index: 1;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    display: inline-block;
+    outline: none;
+    margin: 0 auto;
+    height: 1rem;
+    color: black;
+    background: none;
+    transition: color 0.05s linear, -webkit-filter 0.5s ease-in-out;
+    transition: color 0.05s linear, filter 0.5s ease-in-out;
+    transition: color 0.05s linear, filter 0.5s ease-in-out, -webkit-filter 0.5s ease-in-out;
+}
+
+.rent-car-filter .multirange .bar {
+    height: 7px;
+    transform: translateY(14%);
+    margin: 0 0.25rem;
+    position: absolute;
+    background-color: var(--accent-color);
+}
+
+/* RANGE FILTER THUMB */
 .rent-car-filter .multirange input::-webkit-slider-thumb {
     appearance: none;
     background: var(--accent-color);
@@ -73,30 +105,4 @@
     pointer-events: auto;
     height: 15px;
     width: 15px;
-}
-
-.rent-car-filter .range {
-    position: relative;
-    z-index: 1;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 100%;
-    display: inline-block;
-    outline: none;
-    margin: 0 auto;
-    height: 1rem;
-    color: black;
-    background: none;
-    transition: color 0.05s linear, -webkit-filter 0.5s ease-in-out;
-    transition: color 0.05s linear, filter 0.5s ease-in-out;
-    transition: color 0.05s linear, filter 0.5s ease-in-out, -webkit-filter 0.5s ease-in-out
-}
-
-.rent-car-filter .multirange .bar {
-    height: 7px;
-    transform: translateY(14%);
-    margin: 0 0.25rem;
-    position: absolute;
-    background-color: var(--accent-color);
 }

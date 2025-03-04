@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './RangeFilter.css';
 
+// Create the MultiRangeSlider component and export it
 const MultiRangeSlider = ({ label, min, max, unit = '' }) => {
-    // Define state for the lower and upper values
     const [lowerValue, setLowerValue] = useState(min);
     const [upperValue, setUpperValue] = useState(max);
 

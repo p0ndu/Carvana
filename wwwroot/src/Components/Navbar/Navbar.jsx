@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 
+// Create the Navbar component and export it
 function Navbar() {
 
     const [isActive, setActive] = useState(false);
