@@ -1,1 +1,0 @@
-# Carvana car rental project
