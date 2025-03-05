@@ -1,0 +1,82 @@
+.rent-car-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding: 30px;
+}
+
+/* Car Image */
+.rent-car-item .car-image {
+    width: 15%;
+}
+
+.rent-car-item .car-item-img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Car Details */
+.rent-car-item .car-details-container {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    color: var(--muted-text-color)
+}
+
+.car-details-container .car-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 5px 0;
+    color: var(--text-color)
+}
+
+.car-details-container .car-details-text {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.car-details-text .car-details {
+    font-size: 1rem;
+    margin: 0 0;
+}
+
+.car-details-text .car-details-features {
+    margin: 3px 0;
+}
+
+.car-details-container .car-extra-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Car Price and Actions */
+.rent-car-item .car-price {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.car-price .car-price-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--tex-color);
+}
+
+.car-price .rent-btn {
+    background-color: var(--accent-color);
+    color: var(--background-color);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.car-price .rent-btn:hover {
+    background-color: var(--accent-hover-color);
+}

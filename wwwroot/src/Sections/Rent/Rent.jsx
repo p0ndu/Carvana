@@ -2,6 +2,7 @@ import "./Rent.css";
 import RangeFilter from "../../Components/Filters/RangeFilter/RangeFilter";
 import SelectFilter from "../../Components/Filters/SelectFilter/SelectFilter";
 import CheckboxFilter from "../../Components/Filters/CheckboxFilter/CheckboxFilter";
+import CarItem from "../../Components/CarItem/CarItem";
 
 // Define the options for the filters
 const sortOptions = [
@@ -49,6 +50,21 @@ const features = [
     { value: "power-windows", label: "Power Windows" }
 ];
 
+const carList = [
+    {
+        id: 1,
+        name: "Ford Something",
+        brand: "Ford",
+        type: "Sedan",
+        transmission: "Automatic",
+        seatingCapacity: 5,
+        rating: 4.5,
+        price: "£100/day",
+        image: "/favicon.png",
+        features: ["GPS", "Bluetooth", "Backup Camera", "Heated Seats", "Sunroof", "Cruise Control"]
+    }
+];
+
 // Create the Rent component and export it
 function Rent() {
     return (
@@ -75,26 +91,9 @@ function Rent() {
                         <CheckboxFilter label="Features" options={features} />
                     </div>
                     <div className="rent-car-list-card">
-                        <div className="rent-car-item">
-                            <div className="car-image">
-                                <img src="/favicon.png" alt="Car" className="car-item-img" />
-                            </div>
-                            <div className="car-details">
-                                <h3>Ford someting</h3>
-                                <div className='car-features'>
-                                    <p>Brand: Ford</p>
-                                    <p>Type: Sedan</p>
-                                    <p>Transmission: Automatic</p>
-                                    <p>Seating Capacity: 5</p>
-                                    <p>Rating: 4.5</p>
-                                    <p>Price: £100/day</p>
-                                </div>
-                            </div>
-                            <div className="car-price">
-                                <p>Price</p>
-                                <button className="rent-button">Rent</button>
-                            </div>
-                        </div>
+                        {carList.map((car) => (
+                            <CarItem key={car.id} car={car} />
+                        ))}
                     </div>
                 </div>
             </div >
