@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace Carvana.Controllers
 {
     [ApiController]
-    [Route("api/tree")] // not sure what route to use yet so im defaulting to this
+    [Route("search")] // not sure what route to use yet so im defaulting to this
     public class TreeController : ControllerBase // extends controllerbase to allow for BadRequest responses etc
     {
         private readonly TreeService _treeService;
@@ -27,6 +27,33 @@ namespace Carvana.Controllers
             
             return Ok(completions); // returns HTTP 200 ok result with completions
         }
-        
+
+        [HttpGet("prune")] // prune endpoint
+        public IActionResult PruneTree()
+        {
+            try
+            {
+                _treeService.Prune(); // should output to console
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+            return Ok();
+        }
+
+        [HttpGet("printTree")] // visualising tree endpoint
+        public IActionResult VisualiseTree()
+        {
+            try
+            {
+                _treeService.VisualiseTree(); // should output to console(?)
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+            return Ok();
+        }
     }
 }
