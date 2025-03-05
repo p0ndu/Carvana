@@ -1,14 +1,13 @@
 using Carvana.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Carvana.Controllers
 {
     [ApiController]
-    [Route("rent")] 
+    [Route("rent")] //rental route
     public class CarRentalController : ControllerBase // will control all interactions to do with renting and car availability
     {
-        private readonly string IMPLEMENT_DATABASE; // placeholder for car database
+        private readonly string? _carDB; // placeholder for car database
 
 
 

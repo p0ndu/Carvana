@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Carvana.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Carvana.Controllers
 {
