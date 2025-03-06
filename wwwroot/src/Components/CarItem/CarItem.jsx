@@ -31,7 +31,10 @@ function CarItem({ car }) {
                 </div>
             </div>
             <div className="car-price">
-                <h3 className="car-price-value">{car.price}</h3>
+                <div className='car-price-text'>
+                    <h3 className="car-price-label">Price:</h3>
+                    <h3 className="car-price-value">{car.price}/day</h3>
+                </div>
                 <button className="rent-btn">More Details</button>
             </div>
         </div>

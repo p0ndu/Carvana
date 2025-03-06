@@ -4,6 +4,7 @@ import './App.css';
 import Navbar from '../Components/Navbar/Navbar.jsx';
 import Home from '../Sections/Home/Home.jsx';
 import Rent from '../Sections/Rent/Rent.jsx';
+import AboutUs from '../Sections/AboutUs/AboutUs.jsx';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/rent" element={<Rent />}></Route>
+          <Route path="/about-us" element={<AboutUs />}></Route>
         </Routes>
       </Router>
     </main>

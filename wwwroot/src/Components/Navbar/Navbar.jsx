@@ -34,10 +34,7 @@ function Navbar() {
                         <a href="/rent" className="menu-link">Rent a Car</a>
                     </li>
                     <li className="menu-item">
-                        <a href="/about" className="menu-link">About Us</a>
-                    </li>
-                    <li className="menu-item">
-                        <a href="/contact" className="menu-link">Contact Us</a>
+                        <a href="/about-us" className="menu-link">About Us</a>
                     </li>
                     {isActive ? (
                         <>
