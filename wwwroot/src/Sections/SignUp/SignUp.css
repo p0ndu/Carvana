@@ -1,5 +1,5 @@
-/* HOME PAGE CSS */
-.home-container {
+/* SIGNUP PAGE CSS */
+.signup-container {
     width: 100%;
     min-height: 884.422px;
     display: flex;
@@ -11,7 +11,8 @@
     background-repeat: no-repeat;
 }
 
-.home-card {
+/* Signup Card */
+.signup-card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,42 +21,61 @@
     border-radius: 15px;
     box-shadow: var(--shadow-color) 0px 0px 10px;
     text-align: center;
-    max-width: 450px;
+    max-width: 550px;
     width: 90%;
 }
 
-.home-title {
+.signup-card h2 {
     font-size: 2rem;
     font-weight: bold;
+    margin-bottom: 3rem;
 }
 
-.home-subtitle {
-    font-size: 1rem;
-    color: var(--hover-color);
-    margin-bottom: 1.5rem;
-}
-
-.home-form {
+/* Signup Form */
+.signup-form {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    align-items: center;
+    width: 75%;
 }
 
-.home-form-group {
+.signup-form-group {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    align-items: flex-start;
+    width: 100%;
     margin-bottom: 1rem;
 }
 
-.home-input {
+.signup-form-group label {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.signup-form-group input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     padding: 12px;
     border-radius: 8px;
     font-size: 1rem;
+    border: 1px solid var(--muted-text-color);
+    background: var(--input-background);
+    color: var(--text-color);
 }
 
-/* Primary Button */
-.home-button {
+.signup-form-group:last-of-type {
+    margin-bottom: 3rem;
+}
+
+.signup-form-group input::placeholder {
+    color: var(--muted-text-color);
+}
+
+/* Signup Button */
+.signup-form button {
     background: var(--accent-color);
     color: var(--card-background);
     padding: 12px;
@@ -63,43 +83,26 @@
     border-radius: 8px;
     font-size: 1rem;
     cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
+    width: 80%;
     transition: 0.3s;
 }
 
-.home-button:hover {
+.signup-form button:hover {
     background: var(--accent-hover-color);
 }
 
-/* Secondary Button */
-.home-link {
-    width: 30%;
-}
-
-.home-button.secondary {
-    width: 100%;
-    background: transparent;
-    border: 2px solid var(--accent-color);
-    color: var(--accent-color);
-}
-
-.home-button.secondary:hover {
-    background: var(--accent-color);
-    color: var(--card-background);
-}
-
-/* Indecision Text */
-.home-indecision-title {
-    font-size: 1.2rem;
-    color: var(--hover-color);
-    margin-top: 2rem;
-    margin-bottom: 0;
-}
-
-.home-indecision-text {
-    margin-top: 2px;
-    margin-bottom: 5px;
+/* Login Link */
+.login-link {
+    margin-top: 1rem;
     font-size: 0.9rem;
-    color: var(--muted-text-color);
+}
+
+.login-link a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
 }

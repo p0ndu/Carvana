@@ -10,6 +10,10 @@
   --hover-nav-color: #d6d6d6;
   --hover-color: #555555;
   --card-background: #FFF;
+  --error-bg-color: #f8d7da;
+  --error-color: #721c24;
+  --success-bg-color: #d4edda;
+  --success-color: #155724;
   --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -25,4 +29,28 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Global Styles */
+
+/* Form Messages */
+.form-message .message {
+  font-size: 15px;
+  margin-bottom: 10px;
+  padding: 13px;
+  border-radius: 5px;
+  width: 80%;
+  text-align: center;
+}
+
+.error.message {
+  background-color: var(--error-bg-color);
+  border: var(--error-color) 2px solid;
+  color: var(--error-color);
+}
+
+.success.message {
+  background-color: var(--success-bg-color);
+  border: var(--success-color) 2px solid;
+  color: var(--success-color);
 }

@@ -5,6 +5,8 @@ import Navbar from '../Components/Navbar/Navbar.jsx';
 import Home from '../Sections/Home/Home.jsx';
 import Rent from '../Sections/Rent/Rent.jsx';
 import AboutUs from '../Sections/AboutUs/AboutUs.jsx';
+import Login from '../Sections/Login/Login.jsx';
+import SignUp from '../Sections/SignUp/SignUp.jsx';
 
 function App() {
 
@@ -16,6 +18,8 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/rent" element={<Rent />}></Route>
           <Route path="/about-us" element={<AboutUs />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/sign-up" element={<SignUp />}></Route>
         </Routes>
       </Router>
     </main>

@@ -1,8 +1,10 @@
 import React from "react";
+import { Link } from "react-router";
 import "./Home.css";
 
 // Create the Home component and export it
 function Home() {
+
     return (
         <>
             <div className="home-container">
@@ -24,8 +26,9 @@ function Home() {
                         <h3 className="home-indecision-title">Not sure what to pick?</h3>
                         <p className="home-indecision-text">We'll help you find the best option!</p>
                     </div>
-
-                    <button className="home-button secondary">View All Cars</button>
+                    <a href='/rent' className="home-link">
+                        <button className="home-button secondary">View All Cars</button>
+                    </a>
                 </div>
             </div>
         </>

@@ -11,8 +11,7 @@
 
 /* RENT CAR SEARCH */
 .rent-car-search {
-    position: relative;
-    left: 155px;
+    margin-left: 270px;
     margin-bottom: 20px;
     width: 100%;
     display: flex;
@@ -36,7 +35,6 @@
     border-radius: 8px;
 }
 
-/* Styling for the first input field in the search */
 .rent-car-search .rent-search-container .rent-input:first-child {
     border-right: 1px solid var(--text-color);
     border-radius: 8px 0 0 8px;
@@ -49,7 +47,6 @@
     border: none;
 }
 
-/* Keep right border for the first input when focused */
 .rent-car-search .rent-search-container .rent-input:first-child:focus-visible {
     border-right: 1px solid var(--text-color);
     border-radius: 8px 0 0 8px;
@@ -88,19 +85,16 @@
     height: fit-content;
 }
 
-/* Ensure first filter card is full width */
 .rent-car-filter:first-child {
     width: 100%;
 }
 
-/* Style for filters, except last one */
 .rent-car-filter:not(:last-child) {
     border-bottom: 1px solid var(--border-color);
     margin-bottom: 10px;
     padding-bottom: 20px;
 }
 
-/* Remove bottom padding for the last filter card */
 .rent-car-filter:last-child {
     padding-bottom: 0;
 }
