@@ -1,0 +1,32 @@
+﻿[
+    {
+        "LicenseID": "67890ABC",
+        "PersonalInfo": {
+            "Name": "Tanush Bikram Shah",
+            "Age": 81,
+            "Email": "tbs@email.com",
+            "PhoneNumber": "234-567-8901",
+            "DriversLicense": "D2345678"
+        },
+        "RentalHistory": {
+            "PreviousRentals": [ "Ford Mustang", "Chevrolet Malibu" ],
+            "DamageHistory": [ "A huge shit in driver's seat" ]
+        },
+        "Password": "securepass123"
+    },
+    {
+        "LicenseID": "54321DEF",
+        "PersonalInfo": {
+            "Name": "Bob Smith",
+            "Age": 40,
+            "Email": "bobsmith@email.com",
+            "PhoneNumber": "345-678-9012",
+            "DriversLicense": "D3456789"
+        },
+        "RentalHistory": {
+            "PreviousRentals": [ "Nissan Altima", "Hyundai Sonata" ],
+            "DamageHistory": [ "Dent on driver side door" ]
+        },
+        "Password": "mystrongpassword"
+    }
+]
