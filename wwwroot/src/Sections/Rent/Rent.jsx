@@ -59,7 +59,8 @@ const carList = [
         transmission: "Automatic",
         seatingCapacity: 5,
         rating: 4.5,
-        price: "£100",
+        price: "100",
+        currency: "£",
         image: "/favicon.png",
         features: ["GPS", "Bluetooth", "Backup Camera", "Heated Seats", "Sunroof", "Cruise Control"]
     }

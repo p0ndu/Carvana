@@ -1,18 +1,23 @@
 import React from 'react';
 import "./CarItem.css"
+import { useNavigate } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 // Create the CarItem component and export it
-function CarItem({ car }) {
+function CarItem({ car, page = 'rent' }) {
+    const navigate = useNavigate();
+    const goToCheckout = (car) => {
+        navigate("/checkout", { state: { car } });
+    };
     return (
         <div className="rent-car-item">
-            <div className="car-image">
+            <div className={`car-image ${page === 'checkout' ? 'checkout-image' : ''}`}>
                 <img className="car-item-img" src={car.image} alt={car.name} />
             </div>
-            <div className="car-details-container">
+            <div className={`car-details-container ${page === 'checkout' ? 'checkout-details' : ''}`}>
                 <h3 className="car-name">{car.name}</h3>
-                <div className="car-details-text">
+                <div className="car-details-text ">
                     <p className="car-details"><strong>Brand:</strong> {car.brand}</p>
                     <p className="car-details"><strong>Type:</strong> {car.type}</p>
                     <p className="car-details"><strong>Transmission:</strong> {car.transmission}</p>
@@ -30,13 +35,15 @@ function CarItem({ car }) {
 
                 </div>
             </div>
-            <div className="car-price">
-                <div className='car-price-text'>
-                    <h3 className="car-price-label">Price:</h3>
-                    <h3 className="car-price-value">{car.price}/day</h3>
+            {page === 'rent' ? (
+                <div className="car-price">
+                    <div className='car-price-text'>
+                        <h3 className="car-price-label">Price:</h3>
+                        <h3 className="car-price-value">{car.currency}{car.price}/day</h3>
+                    </div>
+                    <button className="rent-btn" onClick={() => goToCheckout(car)}>Checkout</button>
                 </div>
-                <button className="rent-btn">More Details</button>
-            </div>
+            ) : (<> </>)}
         </div>
     );
 }

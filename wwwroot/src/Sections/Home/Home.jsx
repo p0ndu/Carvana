@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router";
 import "./Home.css";
 
 // Create the Home component and export it

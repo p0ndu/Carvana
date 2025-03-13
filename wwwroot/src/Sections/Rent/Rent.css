@@ -11,9 +11,9 @@
 
 /* RENT CAR SEARCH */
 .rent-car-search {
-    margin-left: 270px;
+    margin-left: 135px;
     margin-bottom: 20px;
-    width: 100%;
+    width: 95%;
     display: flex;
     justify-content: center;
 }

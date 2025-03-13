@@ -94,3 +94,12 @@
 .car-price .rent-btn:hover {
     background-color: var(--accent-hover-color);
 }
+
+/* Checkout car item styling */
+.rent-car-item .car-image.checkout-image {
+    width: 20%;
+}
+
+.rent-car-item .car-details-container.checkout-details {
+    width: 70%;
+}
