@@ -1,47 +1,25 @@
-﻿using CarRentalAPI.Helpers;
+using Carvana.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
 
-namespace CarRentalAPI.Controllers
+namespace Carvana.Controllers
 {
-    [Route("api/customers")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    [Route("auth")] // authentication route
+    public class CustomerController : ControllerBase
     {
-        private readonly string _filePath = "customers.json"; // Path to JSON file
+        private readonly string? _userDB; // IMPLEMENT DATABASE
 
-        // Load customers from JSON file
-        private List<Customer> LoadCustomersFromJson()
+        [HttpGet("/login")]
+        public IActionResult Login([FromQuery] string username, string password) // logs user in via credentails passed
         {
-            if (!System.IO.File.Exists(_filePath))
-                return new List<Customer>();
-
-            var jsonData = System.IO.File.ReadAllText(_filePath);
-            return JsonSerializer.Deserialize<List<Customer>>(jsonData) ?? new List<Customer>();
+            return Ok();
         }
 
-        // Returns all customers
-        [HttpGet]
-        public IActionResult GetAllCustomers()
+
+        [HttpPost("/signup")]
+        public IActionResult SignUp([FromQuery] string username, [FromQuery] string password) // signs the user up, push to DB
         {
-            var customers = LoadCustomersFromJson();
-            return Ok(customers);
-        }
-
-        //Search customer by License ID
-        [HttpGet("search/{licenseID}")]
-        public IActionResult SearchCustomer(string licenseID)
-        {
-            var customers = LoadCustomersFromJson(); // Load data
-
-            var foundCustomer = SearchHelper<Customer>.HashSearch(customers, c => c.LicenseID, licenseID);
-
-            if (foundCustomer == null)
-                return NotFound("Customer not found");
-
-            return Ok(foundCustomer);
+            return Ok();
         }
     }
 }
