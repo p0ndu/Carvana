@@ -1,0 +1,145 @@
+/* RENT PAGE CSS */
+
+/* FULL PAGE CONTAINER */
+.rent-car-container {
+    display: flex;
+    gap: 1rem;
+    padding: 2rem;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* RENT CAR SEARCH */
+.rent-car-search {
+    margin-left: 135px;
+    margin-bottom: 20px;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+}
+
+.rent-search-container {
+    padding: 5px;
+    width: 50%;
+    border: 1px solid var(--text-color);
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px var(--shadow-color);
+}
+
+/* Search input field */
+.rent-car-search .rent-search-container .rent-input {
+    width: 41%;
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+}
+
+.rent-car-search .rent-search-container .rent-input:first-child {
+    border-right: 1px solid var(--text-color);
+    border-radius: 8px 0 0 8px;
+    margin-right: 5px;
+}
+
+/* Remove border and outline on focus for both inputs */
+.rent-car-search .rent-search-container .rent-input:focus-visible {
+    outline: none;
+    border: none;
+}
+
+.rent-car-search .rent-search-container .rent-input:first-child:focus-visible {
+    border-right: 1px solid var(--text-color);
+    border-radius: 8px 0 0 8px;
+}
+
+/* Search button styling */
+.rent-car-search .rent-search-container .rent-search-button {
+    width: 10%;
+    padding: 12px;
+    background-color: var(--accent-color);
+    color: var(--card-background);
+    border: none;
+    border-radius: 7px;
+}
+
+/* Button hover effect */
+.rent-car-search .rent-search-container .rent-search-button:hover {
+    background-color: var(--accent-hover-color);
+}
+
+/* RENT CAR RESULTS */
+.rent-car-results {
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+}
+
+/* RENT CAR FILTER CSS */
+.rent-car-filter-card {
+    width: 17%;
+    background: var(--card-background);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 300px;
+    height: fit-content;
+}
+
+.rent-car-filter:first-child {
+    width: 100%;
+}
+
+.rent-car-filter:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+}
+
+.rent-car-filter:last-child {
+    padding-bottom: 0;
+}
+
+/* Title styling in filter cards */
+.rent-car-filter.card-title {
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.rent-car-filter.card-title h3 {
+    margin: 0px;
+}
+
+/* General filter styling */
+.rent-car-filter {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Heading styling for each filter */
+.rent-car-filter h4 {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+/* Label styling in filters */
+.rent-car-filter label {
+    margin-right: 15px;
+    color: var(--text-color);
+}
+
+/* RENT CAR RESULTS CSS */
+.rent-car-list-card {
+    width: 75%;
+    background: var(--card-background);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    border-radius: 10px;
+    padding: 20px;
+    height: fit-content;
+}

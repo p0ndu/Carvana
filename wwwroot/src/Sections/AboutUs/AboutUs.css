@@ -1,0 +1,42 @@
+/* ABOUT US CSS */
+.about-container {
+    width: 100%;
+    min-height: 884.422px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-image: url('../../../public/home-banner.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* About Card */
+.about-card {
+    background: var(--card-background);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    max-width: 800px;
+    margin: 100px auto;
+    text-align: center;
+}
+
+.about-header {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+/* About Card Text */
+.about-card p {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.about-card p:last-child {
+    margin-bottom: 0;
+}

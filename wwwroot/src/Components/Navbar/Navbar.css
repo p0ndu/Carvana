@@ -1,0 +1,44 @@
+/* NAVBAR CSS */
+.navbar {
+    display: flex;
+    height: 70px;
+    padding: 0px 0px 0 50px;
+    background-color: var(--card-background);
+    box-shadow: 0 2px 4px var(--shadow-color);
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+}
+
+/* LOGO STYLE */
+.logo {
+    width: 60px;
+}
+
+/* MENU LINKS */
+.menu-links {
+    margin: 0 4px;
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+/* INDIVIDUAL MENU ITEM STYLING */
+.menu-links .menu-item {
+    padding: 5px 40px;
+    border-left: 1px solid var(--border-color);
+}
+
+/* LINKS IN MENU ITEMS */
+.menu-links .menu-item a {
+    text-decoration: none;
+    color: var(--text-color);
+    transition: color 0.7s ease;
+}
+
+/* MENU LINK HOVER EFFECT */
+.menu-links .menu-item a:hover {
+    color: var(--hover-color);
+}

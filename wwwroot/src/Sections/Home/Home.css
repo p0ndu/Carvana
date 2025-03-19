@@ -1,0 +1,105 @@
+/* HOME PAGE CSS */
+.home-container {
+    width: 100%;
+    min-height: 884.422px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../../public/home-banner.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.home-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow-color) 0px 0px 10px;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+}
+
+.home-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.home-subtitle {
+    font-size: 1rem;
+    color: var(--hover-color);
+    margin-bottom: 1.5rem;
+}
+
+.home-form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.home-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.home-input {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+/* Primary Button */
+.home-button {
+    background: var(--accent-color);
+    color: var(--card-background);
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.home-button:hover {
+    background: var(--accent-hover-color);
+}
+
+/* Secondary Button */
+.home-link {
+    width: 30%;
+}
+
+.home-button.secondary {
+    width: 100%;
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+}
+
+.home-button.secondary:hover {
+    background: var(--accent-color);
+    color: var(--card-background);
+}
+
+/* Indecision Text */
+.home-indecision-title {
+    font-size: 1.2rem;
+    color: var(--hover-color);
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+
+.home-indecision-text {
+    margin-top: 2px;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: var(--muted-text-color);
+}

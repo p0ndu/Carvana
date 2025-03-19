@@ -1,0 +1,8 @@
+/* CHECKBOX FILTER CSS */
+.rent-car-filter input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.rent-car-filter .checkboxes {
+    width: 80%;
+}

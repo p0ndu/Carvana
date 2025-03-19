@@ -1,0 +1,141 @@
+/* CHECKOUT PAGE CSS */
+
+/* FULL PAGE CONTAINER */
+.checkout-container {
+    padding: 70px;
+}
+
+/* CHECKOUT HEADER */
+.checkout-header {
+    margin-left: 70px;
+    margin-bottom: 30px;
+}
+
+/* CHECKOUT CARDS */
+.checkout-cards {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.checkout-cards.card-equal-height {
+    align-items: normal;
+}
+
+/* CAR DETAILS SECTION */
+.car-checkout-details {
+    width: 70%;
+    background: var(--card-background);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.car-checkout-details .car-checkout-image-container {
+    width: 40%;
+}
+
+.car-checkout-image {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* RENTAL SUMMARY */
+.rental-summary {
+    width: 25%;
+    background: var(--card-background);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    border-radius: 10px;
+    padding: 20px;
+    height: fit-content;
+}
+
+.rental-summary h3,
+.rental-summary h4 {
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+/* INPUT STYLING */
+.rental-summary label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.rental-summary input[type="number"] {
+    padding: 8px;
+    width: 60px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin-left: 100px;
+}
+
+/* CHECKBOX STYLING */
+.rental-summary input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* PRICE BREAKDOWN */
+.price-breakdown p {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    font-size: 1rem;
+    color: var(--text-secondary-color);
+}
+
+.price-breakdown strong {
+    color: var(--text-color);
+}
+
+/* BUTTON STYLES */
+.checkout-btn,
+.login-signup-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--accent-color);
+    color: var(--card-background);
+    border: none;
+    border-radius: 7px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.login-signup-btn {
+    width: 35%;
+    margin: 0 auto;
+}
+
+.login-signup-btn:first-of-type {
+    margin-top: 15px;
+}
+
+.checkout-btn:hover,
+.login-signup-btn:hover {
+    background-color: var(--accent-hover-color);
+}
+
+/* LOGIN PROMPT */
+.login-prompt {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--text-secondary-color);
+}
+
+.login-prompt-or {
+    margin: 15px 0;
+}
+
+.card-equal-height-prompt {
+    height: auto;
+}
