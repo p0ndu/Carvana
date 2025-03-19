@@ -8,6 +8,7 @@ import AboutUs from '../Sections/AboutUs/AboutUs.jsx';
 import Login from '../Sections/Login/Login.jsx';
 import SignUp from '../Sections/SignUp/SignUp.jsx';
 import Checkout from '../Sections/Checkout/Checkout.jsx';
+import Profile from '../Sections/Profile/Profile.jsx';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/sign-up" element={<SignUp />}></Route>
           <Route path="/checkout" element={<Checkout />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
         </Routes>
       </Router>
     </main>
