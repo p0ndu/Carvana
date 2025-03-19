@@ -1,16 +1,21 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Carvana.Services;
 
 public class License
 {
-    private readonly string _licenseNumber;
+    [Key] public string LicenseNumber { get; set; } // private key
+    public Customer Customer { get; set; } // navigation back to customer
+    
+    public License (){} // parameterless constructor for EFCore
 
-    public License(string licenseNumber)
+    private License(string licenseNumber) // privaet constructor for factories
     {
-        _licenseNumber = licenseNumber;
+        LicenseNumber = licenseNumber;
     }
 
-    public string GetLicenseNumber()
+    public static License Create(string licenseNumber)
     {
-        return _licenseNumber;
+        return new License(licenseNumber);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,93 +10,48 @@ namespace Carvana
 {
     public class Customer
     {
-        private readonly Guid _customerID; // private key
-        private readonly License _license; // foreign key
-        private string _password;
-        private string _email;
-        private string _fullName;
-        private int _age;
-        private string _phoneNumber;
+        [Key] public Guid CustomerID { get; set; } // private key
+        public string LicenseNumber { get; set; } // foreign key
+        public License License { get; set; } // navigation to license
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public string FullName { get; set; }
+        public int Age { get; set; }
+        public string PhoneNumber { get; set; }
 
-        public Customer(Guid customerID, License license, String email, String fullName, Int32 age,
-            String phoneNumber, String passowrd)
-        {
-            _customerID = customerID;
-            _license = license;
-            _email = email;
-            _fullName = fullName;
-            _age = age;
-            _phoneNumber = phoneNumber;
-            _password = passowrd;
-        }
-        
-        // getters
+        public ICollection<RentalContract> RentalContracts { get; set; } = new List<RentalContract>(); // 1 customer -> many contracts
 
-        public Guid GetCustomerID()
+        public Customer(){} // parameterless constructor for EFCore
+        private Customer(Guid customerID, License license, string email, string fullName, int age, string phoneNumber, string password) // private constructor for factory
         {
-            return _customerID;
-        }
+            CustomerID = customerID;
+            License = license;
 
-        public License GetLicense()
-        {
-            return _license;
-        }
-
-        public String GetPassword()
-        {
-            return _password; 
+            if (license != null)
+            {
+                LicenseNumber = license.LicenseNumber;
+            }
+            else
+            {
+                LicenseNumber = String.Empty;
+            }
+            
+            Email = email;
+            FullName = fullName;
+            Age = age;
+            PhoneNumber = phoneNumber;
+            Password = password;
         }
 
-        public string GetEmail()
+        public static Customer Create(Guid customerID, License license, string email, string fullName, int age,
+            string phoneNumber, string password)
         {
-            return _email;
-        }
-
-        public string getFullName()
-        {
-            return _fullName;
-        }
-
-        public string GetPhoneNumber()
-        {
-            return _phoneNumber;
-        }
-
-        public int GetAge()
-        {
-            return _age;
-        }
-        
-        // setters
-
-        public void SetPassword(String password)
-        {
-            _password = password;
-        }
-
-        public void SetEmail(String email)
-        {
-            _email = email;
-        }
-
-        public void SetFullName(String fullName)
-        {
-            _fullName = fullName;
-        }
-
-        public void SetPhoneNumber(String phoneNumber)
-        {
-            _phoneNumber = phoneNumber;
-        }
-
-        public void SetAge(int age)
-        {
-            _age = age;
+            return new Customer(customerID, license, email, fullName, age, phoneNumber, password);
         }
 
         public void IncrementAge() // for birthdays
         {
-            _age++;
+            Age++;
         }
         
     }

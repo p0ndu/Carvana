@@ -5,7 +5,7 @@ namespace Carvana.Controllers
 {
     [ApiController]
     [Route("auth")] // authentication route
-    public class AuthenticationController : ControllerBase
+    public class CustomerController : ControllerBase
     {
         private readonly string? _userDB; // IMPLEMENT DATABASE
 

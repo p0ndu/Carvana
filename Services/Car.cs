@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Carvana
 {
@@ -12,66 +13,45 @@ namespace Carvana
 
     public class Car
     {
-        private readonly Guid _carId; // private key
-        private readonly Model _carModel; // foreign key
-        private readonly VehicleStatus _vehicleStatus;
-        private readonly string _licensePlate;
-        private readonly int _mileage;
-        private readonly string _colour;
-        private int _pricePerDay; // not readonly as damage to the car could decrease rentable price
+        [Key] public Guid CarId { get; set; } // private key
+        public Guid ModelID { get; set; } // foreign key to link to Model
+        public Model CarModel { get; set; } // to navigate to model
+        public VehicleStatus VehicleStatus { get; set; }
+        public string LicensePlate { get; set; }
+        public int Mileage { get; set; }
+        public string Colour { get; set; }
+        public int PricePerDay { get; set; }
 
+        public Car() {} // EFCore needs parameterless constructor
 
-        public Car(Guid carId, Model model, VehicleStatus vehicleStatus, string licensePlate, int mileage,
-            string colour, int pricePerDay)
+        private Car(Guid carId, Model model, VehicleStatus vehicleStatus, string licensePlate, int mileage, string colour, int pricePerDay) // private constructor for factory
         {
-            _carId = carId;
-            _carModel = model;
-            _vehicleStatus = vehicleStatus;
-            _licensePlate = licensePlate;
-            _mileage = mileage;
-            _colour = colour;
-            _pricePerDay = pricePerDay;
+            
+            CarId = carId;
+            CarModel = model;
+            
+            if (model != null)
+            {
+                ModelID = model.ModelID;
+            }
+            else
+            {
+                ModelID = Guid.Empty;
+            }
+            
+            VehicleStatus = vehicleStatus;
+            LicensePlate = licensePlate;
+            Mileage = mileage;
+            Colour = colour;
+            PricePerDay = pricePerDay;
         }
-
-        // Getters
-        public Guid GetCarId()
+        public static Car Create(Guid carId, Model model, VehicleStatus vehicleStatus, string licensePlate, int mileage, string colour, int pricePerDay) // factory constructor
         {
-            return _carId;
+            return new Car(carId, model, vehicleStatus, licensePlate, mileage, colour, pricePerDay); // calls private constructor
         }
-
-        public Model GetModel()
+        public void addMiles(int miles)
         {
-            return _carModel;
-        }
-
-        public VehicleStatus GetVehicleStatus()
-        {
-            return _vehicleStatus;
-        }
-
-        public string GetLicensePlate()
-        {
-            return _licensePlate;
-        }
-
-        public int GetMileage()
-        {
-            return _mileage;
-        }
-
-        public string GetColour()
-        {
-            return _colour;
-        }
-
-        public int GetPricePerDay()
-        {
-            return _pricePerDay;
-        }
-
-        public void SetPricePerDay(int price) // update price if damage occurs
-        {
-            _pricePerDay = price;
+            Mileage += miles;
         }
     }
 }
