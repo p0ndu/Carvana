@@ -21,7 +21,7 @@ public class TreeManager // class which will manage the tree, will handle prunin
             throw new ArgumentNullException(nameof(root));
         }
         bool outcome = PruneInternal(root);
-       Console.WriteLine(outcome ? "Tree Pruned" : "Error: Pruning Failed"); 
+       Console.WriteLine(outcome ? "Tree Pruned" : "Error: Pruning Failed"); // output success or failure
     }
 
     public List<string> AutoComplete(Node root, string prefix = "") // returns top 5 results branching from node corresponding to prefix, default prefix value = "" so it always returns something
@@ -49,13 +49,12 @@ public class TreeManager // class which will manage the tree, will handle prunin
     {
         Node endNode = FindBranch(root, word);
 
-        if (endNode != null) // if node is found
+        if (endNode == null || !endNode.isFullWord()) // if endnode doesnt exist or is not a full word (error findig the correct node)
         {
-            endNode.IncrementWeight(); // increment weight and return success
-            return true;
+            return false;
         }
-        
-        return false; // if node is not found
+
+        return true;
     }
     
     private void QuickSort(List<Node> nodes, int low, int high) // Qsort - aqab

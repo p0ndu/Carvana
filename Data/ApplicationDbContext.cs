@@ -9,8 +9,6 @@ namespace Carvana.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         { }
-
-        // DbSets
         public DbSet<Car> Cars { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<License> Licenses { get; set; }
@@ -19,62 +17,57 @@ namespace Carvana.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // CAR
+            // car table
             modelBuilder.Entity<Car>(entity =>
             {
                 entity.HasKey(e => e.CarId);
 
-                // Car -> Model (many Car to one Model)
+                // many cars are the same model
                 entity.HasOne(e => e.CarModel)
                       .WithMany(m => m.Cars)
                       .HasForeignKey(e => e.ModelID)
                       .IsRequired();
 
                 entity.Property(e => e.LicensePlate).IsRequired();
-                // etc.
             });
 
-            // MODEL
+            // model table
             modelBuilder.Entity<Model>(entity =>
             {
                 entity.HasKey(e => e.ModelID);
-
-                // optional: store VehicleType as string
-                // entity.Property(e => e.VehicleType)
-                //       .HasConversion<string>();
             });
 
-            // RENTAL CONTRACT
+            // rental contract table
             modelBuilder.Entity<RentalContract>(entity =>
             {
                 entity.HasKey(e => e.ContractID);
 
-                // RentalContract -> Car (many-to-one)
+                // one car will be in many contracts 
                 entity.HasOne(rc => rc.Car)
-                      .WithMany() // or with a collection if you prefer Car->Contracts
+                      .WithMany() 
                       .HasForeignKey(rc => rc.CarID)
                       .IsRequired();
 
-                // RentalContract -> Customer (many-to-one)
+                // one customer may have many contracts 
                 entity.HasOne(rc => rc.Customer)
                       .WithMany(c => c.RentalContracts)
                       .HasForeignKey(rc => rc.CustomerID)
                       .IsRequired();
             });
 
-            // CUSTOMER
+            // customer table
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.HasKey(e => e.CustomerID);
 
-                // Customer -> License (1-to-1)
+                // each customer only has one license 
                 entity.HasOne(c => c.License)
-                      .WithOne(l => l.Customer) // If License has a Customer property
+                      .WithOne(l => l.Customer)
                       .HasForeignKey<Customer>(c => c.LicenseNumber)
                       .IsRequired(); 
             });
 
-            // LICENSE
+            // license table 
             modelBuilder.Entity<License>(entity =>
             {
                 entity.HasKey(e => e.LicenseNumber);

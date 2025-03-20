@@ -19,13 +19,25 @@ public class CarService : ICarService
 
     public async Task<Car?> GetCarAsync(Guid id)
     {
+        if (id == Guid.Empty)
+        {
+            return null;
+        }
+        
         return await _context.Cars.FindAsync(id); // search DB for car matching ID
     }
 
-    public async Task<Car> AddCarAsync(Car car)
+    public async Task<Car?> AddCarAsync(Car car)
     {
-        _context.Cars.AddAsync(car); // adds Car to DB locally
-        await _context.SaveChangesAsync(); // save changes
+        await _context.Cars.AddAsync(car); // adds Car to DB locally
+        try
+        {
+            await _context.SaveChangesAsync(); // save changes     
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            return null;
+        }
         
         return car; // return the same car
     }
@@ -36,8 +48,15 @@ public class CarService : ICarService
 
         if (car != null)
         {
-            _context.Cars.Remove(car); // remove the car
-            await _context.SaveChangesAsync(); // save the change
+            try
+            {
+                _context.Cars.Remove(car); // remove the car     
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return false;
+            }
             
             return true; // deletion succeeded
         }

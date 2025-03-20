@@ -38,13 +38,7 @@ public class TreeService
     public bool IncrementWeight(string word)
     {
        bool result =  _manager.IncrementNodeWeight(word, _root);
-
-       if (result != null)
-       {
-           return result;
-       }
-
-       return false;
+       return result;
     }
     
 }
