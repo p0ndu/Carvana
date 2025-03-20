@@ -17,7 +17,7 @@ public class TreeService
         _manager = new TreeManager(_factory);
         _loader = new TreeLoader(filepath, _factory);
         _root = _loader.LoadFromFile();
-        
+        Prune(); 
     }
 
     public void VisualiseTree()
