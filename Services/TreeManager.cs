@@ -9,6 +9,7 @@ public class TreeManager // class which will manage the tree, will handle prunin
 {
     private readonly INodeFactory _nodeFactory; // used to make nodes
 
+
     public TreeManager(INodeFactory nodeFactory)
     {
         _nodeFactory = nodeFactory;
@@ -32,14 +33,73 @@ public class TreeManager // class which will manage the tree, will handle prunin
         
         List<string> results = new List<string>();
         List<Node> nodes = GetSuggestions(root, prefix); // gets all words that the current prefix could be completed to
-        
+
+        QuickSort(nodes, 0, nodes.Count - 1);
+
         foreach (Node word in nodes) // for each possible completion
         {
             GetFullWord(word, "", results); // explore branch, complete the word and add it to 'results'
         } 
 
-        results.Sort(); // sort results, will be changed later to implement a weight system
+        
         return results.Take(5).ToList(); // returns first 5 nodes in list
+    }
+
+    public bool IncrementNodeWeight(string word, Node root) // finds branch corresponding to word, and increments its weight
+    {
+        Node endNode = FindBranch(root, word);
+
+        if (endNode != null) // if node is found
+        {
+            endNode.IncrementWeight(); // increment weight and return success
+            return true;
+        }
+        
+        return false; // if node is not found
+    }
+    
+    private void QuickSort(List<Node> nodes, int low, int high) // Qsort - aqab
+    {
+        if (low < high)
+        {
+            int pivotIndex = Partition(nodes, low, high);
+            QuickSort(nodes, low, pivotIndex - 1);
+            QuickSort(nodes, pivotIndex + 1, high);
+        }
+    }
+
+    private int Partition(List<Node> nodes, int low, int high) // partition function - aqab
+    {
+        Node pivot = nodes[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++)
+        {
+            if (CompareNodes(nodes[j], pivot) < 0) 
+            {
+                i++;
+                Swap(nodes, i, j);
+            }
+        }
+
+        Swap(nodes, i + 1, high);
+        return i + 1;
+    }
+
+    private void Swap(List<Node> nodes, int i, int j) // swaps nodes - aqab
+    {
+        Node temp = nodes[i];
+        nodes[i] = nodes[j];
+        nodes[j] = temp;
+    }
+
+    private int CompareNodes(Node a, Node b) // compares nodes, first on weight then alphanumerically - aqab
+    {
+        if (b.GetWeight() != a.GetWeight())
+        {
+            return b.GetWeight() - a.GetWeight(); 
+        }
+        return string.Compare(a.GetData(), b.GetData(), StringComparison.OrdinalIgnoreCase); 
     }
 
     private Node? FindBranch(Node root, string prefix) // searches for a branch from 'root' matching input prefix, output node can be NULL

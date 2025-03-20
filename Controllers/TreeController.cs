@@ -4,7 +4,7 @@ using Carvana.Services;
 namespace Carvana.Controllers
 {
     [ApiController]
-    [Route("search")] // not sure what route to use yet so im defaulting to this
+    [Route("autocomplete")] // not sure what route to use yet so im defaulting to this
     public class TreeController : ControllerBase // extends controllerbase to allow for BadRequest responses etc
     {
         private readonly TreeService _treeService;
@@ -14,7 +14,7 @@ namespace Carvana.Controllers
             this._treeService = treeService;
         }
 
-        [HttpGet("autocomplete")]
+        [HttpGet]
         public IActionResult GetAutocomplete([FromQuery] string prefix) // IActionResult is abstract datatype allowing a variety of response types, helps make it more malleable
         {
             if (string.IsNullOrEmpty(prefix)) // check if string is empty
@@ -27,7 +27,25 @@ namespace Carvana.Controllers
             return Ok(completions); // returns HTTP 200 ok result with completions
         }
 
-        [HttpGet("prune")] // prune endpoint
+        [HttpGet("increment/{word}")]
+        public IActionResult IncrementWeight([FromRoute] string word)
+        {
+            if (string.IsNullOrEmpty(word))
+            {
+                return BadRequest("Word is required for autocomplete");
+            }
+
+            bool result = _treeService.IncrementWeight(word);
+
+            if (!result)
+            {
+                return StatusCode(500, "Error finding word");
+            }
+            
+            return Ok(word);
+        }
+
+        /*[HttpGet("prune")] // prune endpoint REMOVED AS IT SHOULD ONLY HAPPEN WHEN WEBSERVICE STARTS
         public IActionResult PruneTree()
         {
             try
@@ -39,7 +57,7 @@ namespace Carvana.Controllers
                 return BadRequest(ex);
             }
             return Ok();
-        }
+        }*/
 
         [HttpGet("printTree")] // visualising tree endpoint
         public IActionResult VisualiseTree()
