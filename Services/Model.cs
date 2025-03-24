@@ -15,7 +15,7 @@ namespace Carvana
     {
         [Key] public Guid ModelID { get; set; } // private key
         public VehicleType VehicleType { get; }// type of vehicle it is
-        public string Name { get; } // name of the model, i.e. "Civic"
+        public string Name { get; set; } // name of the model, i.e. "Civic"
         public int Year { get; } // year of the model, i.e. 2019
         public int NumDoors { get; } // number of doors
         public int NumSeats { get; } // number of seats

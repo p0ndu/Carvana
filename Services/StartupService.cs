@@ -12,6 +12,7 @@ public class StartupService
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>(); // store context
 
         context.Database.Migrate(); // check that DB is created and migrated
+        SeedData.Initialize(scope.ServiceProvider);
 
         if (!context.Cars.Any()) // if cars DB is empty
         {
