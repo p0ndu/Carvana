@@ -136,6 +136,7 @@
 
 /* RENT CAR RESULTS CSS */
 .rent-car-list-card {
+    margin-left: 30px;
     width: 75%;
     background: var(--card-background);
     box-shadow: 0 2px 8px var(--shadow-color);

@@ -10,7 +10,7 @@ function CheckboxFilter({ label, options }) {
                 {options.map(option => (
                     <div className='checkbox-group' key={option.value}>
                         <input type="checkbox" id={option.value} name={label} value={option.value} />
-                        <label for={option.value}>{option.label}</label>
+                        <label htmlFor={option.value}>{option.label}</label>
                     </div>
                 ))}
             </div>
