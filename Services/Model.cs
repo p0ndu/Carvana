@@ -38,6 +38,11 @@ namespace Carvana
 
         public static Model Create(Guid modelID, VehicleType type, string name, int year, int numDoors, int numSeats) // factory constructor
         {
+            if (modelID == Guid.Empty)
+            {
+                modelID = Guid.NewGuid();
+            }
+            
             return new Model(modelID, type, name, year, numDoors, numSeats ); // calls private constructor
         }
     }

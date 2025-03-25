@@ -11,7 +11,7 @@ Env.Load("connection.env"); // load data for connection string
 var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" + // build connection string
                        $"Port={Environment.GetEnvironmentVariable("DB_PORT")};" +
                        $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
-                       $"Username={Environment.GetEnvironmentVariable("DB_USER")};" +
+                       $"Username={Environment.GetEnvironmentVariable("DB_USERNAME")};" +
                        $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")}";
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString)); // register context with Postgress provider
 

@@ -11,13 +11,20 @@ public class StartupService
         var scope = serviceProvider.CreateScope(); // create scope
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>(); // store context
 
+        
+         Console.WriteLine("");
+                Console.WriteLine("About to seed data to DB");
+                SeedData.Initialize(scope.ServiceProvider);
+                Console.WriteLine("Seeded data to DB");
+        
+        Console.WriteLine("About to migrate DB");
         context.Database.Migrate(); // check that DB is created and migrated
-        SeedData.Initialize(scope.ServiceProvider);
+        Console.WriteLine("Migrated DB");
 
-        if (!context.Cars.Any()) // if cars DB is empty
+        if (context.Cars.Any() || context.Customers.Any() || context.RentalContracts.Any())
         {
-            Console.WriteLine("No cars found in database");
-        }
+            Console.WriteLine("\n\n\n\n\nData found in DB\n\n\n\n");
+        } 
     }
 
     private static void TestConnection(ApplicationDbContext context) // TODO finish
