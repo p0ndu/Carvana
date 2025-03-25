@@ -46,6 +46,10 @@ namespace Carvana
         public static Customer Create(Guid customerID, License license, string email, string fullName, int age,
             string phoneNumber, string password)
         {
+            if (customerID == Guid.Empty)
+            {
+                customerID = Guid.NewGuid();
+            }
             return new Customer(customerID, license, email, fullName, age, phoneNumber, password);
         }
 
