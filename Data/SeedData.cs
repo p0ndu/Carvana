@@ -19,7 +19,7 @@ namespace Carvana.Data
             context.Models.Add(model);
             context.SaveChanges();
 
-            var license = License.Create("134853719"); 
+            var license = License.Create("123456789"); 
             context.Licenses.Add(license);
             context.SaveChanges();
 

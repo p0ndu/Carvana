@@ -1,0 +1,98 @@
+.profile-container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+
+}
+
+.profile-container .main-profile-div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.profile-container .main-profile-div .tabs {
+    width: 25%;
+}
+
+.tab-button {
+    padding: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: var(--card-background);
+    border: 1px solid #ddd;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.3s;
+    margin: 0;
+}
+
+.tab-button.active {
+    background-color: var(--accent-color);
+    color: var(--card-background);
+}
+
+.profile-content {
+    flex-grow: 1;
+    width: 80%;
+    max-width: 900px;
+    padding-left: 30px;
+}
+
+.profile-card {
+    background-color: var(--card-background);
+    width: 80%;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    font-size: 24px;
+}
+
+.tab-content {
+    width: 70%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tab-content .profile-info-title {
+    margin-bottom: 50px;
+}
+
+.tab-content .profile-info-container {
+    display: grid;
+    grid-template-columns: 3fr 3fr 3fr;
+    justify-items: center;
+}
+
+.rental-history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.rental-history ul {
+    width: 90%;
+    list-style-type: none;
+    padding: 0;
+}
+
+.rental-history li {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.rental-history p {
+    font-size: 16px;
+}
