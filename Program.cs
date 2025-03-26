@@ -17,6 +17,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<TreeService>();
+builder.Services.AddScoped<CarService>();
+builder.Services.AddScoped<CustomerService>();
 builder.Services.AddControllers();
 var app = builder.Build();
 

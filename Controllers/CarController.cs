@@ -11,8 +11,9 @@ namespace Carvana.Controllers
     {
         private readonly CarService _carService;
 
-        public CarController()
+        public CarController(CarService carService)
         {
+            this._carService = carService;
         }
 
         [HttpGet()]

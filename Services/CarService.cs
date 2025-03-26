@@ -14,7 +14,9 @@ public class CarService : ICarService
 
     public async Task<IEnumerable<Car>> GetCarsAsync() // returns full list of cars
     {
-        return await _context.Cars.ToListAsync(); // returns list of cars
+        var output = await _context.Cars.ToListAsync();
+        Console.WriteLine(output.First().CarId);
+        return output;
     }
 
     public async Task<Car?> GetCarAsync(Guid id)
