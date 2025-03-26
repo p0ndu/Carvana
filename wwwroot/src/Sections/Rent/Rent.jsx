@@ -98,8 +98,8 @@ function Rent() {
         setError("");
 
         try {
-            const response = await axios.get("/rent", {
-                params: { model, location },
+            const response = await axios.get("http://localhost:5046/rent", {
+
             });
 
             setCarList(response.data);
