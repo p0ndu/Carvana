@@ -31,6 +31,8 @@ namespace Carvana.Data
                       .IsRequired();
 
                 entity.Property(e => e.LicensePlate).IsRequired();
+                entity.Property(e => e.Features)
+                      .HasColumnType("text[]");
                 // etc.
             });
 
@@ -38,6 +40,8 @@ namespace Carvana.Data
             modelBuilder.Entity<Model>(entity =>
             {
                 entity.HasKey(e => e.ModelID);
+
+                entity.Property(e => e.NumSeats).IsRequired();
 
                 // optional: store VehicleType as string
                 // entity.Property(e => e.VehicleType)
@@ -71,7 +75,7 @@ namespace Carvana.Data
                 entity.HasOne(c => c.License)
                       .WithOne(l => l.Customer) // If License has a Customer property
                       .HasForeignKey<Customer>(c => c.LicenseNumber)
-                      .IsRequired(); 
+                      .IsRequired();
             });
 
             // LICENSE

@@ -1,16 +1,17 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Carvana
 {
     public enum VehicleType
-        {
-            Sedan,
-            SUV,
-            Truck,
-            Coupe,
-            Convertible,
-            Van
-        }
+    {
+        Sedan,
+        SUV,
+        Truck,
+        Coupe,
+        Convertible,
+        Van
+    }
     public class Model
     {
         [Key] public Guid ModelID { get; set; } // private key
@@ -19,7 +20,7 @@ namespace Carvana
         public int Year { get; } // year of the model, i.e. 2019
         public int NumDoors { get; } // number of doors
         public int NumSeats { get; } // number of seats
-        
+        [JsonIgnore]
         public ICollection<Car> Cars { get; set; } = new List<Car>(); // many cars -> one model
 
         public Model() // parameterless constructor for EFCore
@@ -42,8 +43,8 @@ namespace Carvana
             {
                 modelID = Guid.NewGuid();
             }
-            
-            return new Model(modelID, type, name, year, numDoors, numSeats ); // calls private constructor
+
+            return new Model(modelID, type, name, year, numDoors, numSeats); // calls private constructor
         }
     }
 }
