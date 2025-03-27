@@ -16,7 +16,6 @@ namespace Carvana
     {
         [Key] public Guid CarId { get; set; } // private key
         public Guid ModelID { get; set; } // foreign key to link to Model
-        [JsonIgnore]
         public Model CarModel { get; set; } // to navigate to model
         public VehicleStatus VehicleStatus { get; set; }
         public string LicensePlate { get; set; }
