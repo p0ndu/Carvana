@@ -16,12 +16,12 @@ public class CarService : ICarService
     {
         //get cars from DB and include the model
         var output = await _context.Cars.Include(c => c.CarModel).ToListAsync();
-        
+
         foreach (var car in output)
         {
-            Console.WriteLine($"Car: {car.CarId}, Model: {car.CarModel.Name}");
+            Console.WriteLine($"Car: {car.CarId}, Model: {car.CarModel.Name}, Type: {car.CarModel.VehicleType}");
         }
-        
+
         return output;
     }
 
@@ -52,7 +52,7 @@ public class CarService : ICarService
     {
         _context.Cars.AddAsync(car); // adds Car to DB locally
         await _context.SaveChangesAsync(); // save changes
-        
+
         return car; // return the same car
     }
 
@@ -64,7 +64,7 @@ public class CarService : ICarService
         {
             _context.Cars.Remove(car); // remove the car
             await _context.SaveChangesAsync(); // save the change
-            
+
             return true; // deletion succeeded
         }
 

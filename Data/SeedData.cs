@@ -15,7 +15,7 @@ namespace Carvana.Data
             // ensure DB exists 
             context.Database.Migrate();
 
-            var model = Model.Create(Guid.Empty, VehicleType.Convertible, "convertible Test", 2019, 4, 4);
+            var model = Model.Create(Guid.Empty, VehicleType.Convertible, "Tesla", "Model X", 2019, 4, 4);
             context.Models.Add(model);
             context.SaveChanges();
 

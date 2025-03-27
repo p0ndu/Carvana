@@ -16,6 +16,7 @@ namespace Carvana
     {
         [Key] public Guid ModelID { get; set; } // private key
         public VehicleType VehicleType { get; }// type of vehicle it is
+        public string Brand { get; set; } // brand of the model, i.e. "Honda"
         public string Name { get; set; } // name of the model, i.e. "Civic"
         public int Year { get; } // year of the model, i.e. 2019
         public int NumDoors { get; } // number of doors
@@ -27,24 +28,25 @@ namespace Carvana
         {
         }
 
-        private Model(Guid modelID, VehicleType vehicleType, string name, int year, int numDoors, int numSeats) // private constructor for factory
+        private Model(Guid modelID, VehicleType vehicleType, string brand, string name, int year, int numDoors, int numSeats) // private constructor for factory
         {
             ModelID = modelID;
             VehicleType = vehicleType;
+            Brand = brand;
             Name = name;
             Year = year;
             NumDoors = numDoors;
             NumSeats = numSeats;
         }
 
-        public static Model Create(Guid modelID, VehicleType type, string name, int year, int numDoors, int numSeats) // factory constructor
+        public static Model Create(Guid modelID, VehicleType type, string brand, string name, int year, int numDoors, int numSeats) // factory constructor
         {
             if (modelID == Guid.Empty)
             {
                 modelID = Guid.NewGuid();
             }
 
-            return new Model(modelID, type, name, year, numDoors, numSeats); // calls private constructor
+            return new Model(modelID, type, brand, name, year, numDoors, numSeats); // calls private constructor
         }
     }
 }

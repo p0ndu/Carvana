@@ -41,11 +41,13 @@ namespace Carvana.Data
             {
                 entity.HasKey(e => e.ModelID);
 
+                entity.Property(e => e.Brand).IsRequired();
                 entity.Property(e => e.NumSeats).IsRequired();
 
                 // optional: store VehicleType as string
-                // entity.Property(e => e.VehicleType)
-                //       .HasConversion<string>();
+                entity.Property(e => e.VehicleType)
+                      .HasConversion<string>()
+                      .IsRequired();
             });
 
             // RENTAL CONTRACT

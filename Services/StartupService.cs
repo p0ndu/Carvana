@@ -44,6 +44,6 @@ public class StartupService
     private static Model CreateTestModel(VehicleType type)
     {
         Guid id = Guid.NewGuid();
-        return Model.Create(id, type, "test", 2000, 4, 4); // returns test model
+        return Model.Create(id, type, "Tesla", "test", 2000, 4, 4); // returns test model
     }
 }
