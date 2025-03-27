@@ -23,8 +23,9 @@ function Checkout() {
 
     const location = useLocation();
     const car = location.state?.car || {}; // Get car data from navigation state
+    console.log(car);
 
-    if (!car.name) {
+    if (!car.carModel.name) {
         return <p>No car selected. Go back and choose a car.</p>;
     }
 

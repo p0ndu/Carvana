@@ -83,23 +83,22 @@ function Rent() {
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const model = queryParams.get("model") || "";
-        const locationParam = queryParams.get("location") || "";
 
         // Set search parameters based on the query
-        setSearchQuery({ model, location: locationParam });
+        setSearchQuery({ model });
 
         // Fetch cars based on URL parameters (runs on page load or when the URL changes)
-        fetchCars(model, locationParam);
+        fetchCars(model);
     }, [location]);
 
     // Function to fetch car data
-    const fetchCars = async (model = "", location = "") => {
+    const fetchCars = async (model = "") => {
         setLoading(true);
         setError("");
 
         try {
             const response = await axios.get("http://localhost:5046/rent", {
-
+                params: { model }
             });
 
             setCarList(response.data);
@@ -116,10 +115,9 @@ function Rent() {
         const model = document.getElementById("rent-car-type").value;
         const location = document.getElementById("rent-location").value;
         console.log("model", model);
-        console.log("location", location);
 
         // Update the URL with search parameters
-        navigate(`/car-rent?model=${model}&location=${location}`);
+        navigate(`/car-rent?model=${model}`);
 
         // Fetch cars based on search
         fetchCars(model, location);
@@ -135,13 +133,6 @@ function Rent() {
                         className="rent-input"
                         id="rent-car-type"
                         defaultValue={searchQuery.model} // Set the model from URL query
-                    />
-                    <input
-                        type="text"
-                        placeholder="Location"
-                        className="rent-input"
-                        id="rent-location"
-                        defaultValue={searchQuery.location} // Set the location from URL query
                     />
                     <button className="rent-search-button" onClick={handleSearch}>
                         Search
