@@ -7,7 +7,12 @@ namespace Carvana.Controllers
     [Route("auth")] // authentication route
     public class CustomerController : ControllerBase
     {
-        private readonly string? _userDB; // IMPLEMENT DATABASE
+        private readonly CustomerService _customerService;
+
+        public CustomerController(CustomerService customerService)
+        {
+            _customerService = customerService;
+        }
 
         [HttpGet("/login")]
         public IActionResult Login([FromQuery] string username, string password) // logs user in via credentails passed

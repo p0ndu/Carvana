@@ -16,6 +16,25 @@ namespace Carvana.Controllers
             this._carService = carService;
         }
 
+        [HttpGet("models/id={modelID}")]
+        public async Task<IActionResult> GetCarsByModelID(Guid modelID)
+        {
+            Model model = await _carService.GetCarsByModelIDAsync(modelID);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+            return Ok(model);
+        }
+
+        [HttpGet("models")]
+        public async Task<IActionResult> GetAllModelsAsync()
+        {
+            var output = _carService.GetAllModelsAsync();
+            return Ok(output);
+        }
+        
         [HttpGet()]
         public async Task<IActionResult> Get() // returns all cars from DB
         {

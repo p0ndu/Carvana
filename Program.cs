@@ -28,6 +28,7 @@ var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString)); // register context with Postgress provider
 
 builder.Services.AddOpenApi();
+// TreeService as singleton since autocomplete is almost always needed, rest as scoped services
 builder.Services.AddSingleton<TreeService>();
 builder.Services.AddScoped<CarService>();
 builder.Services.AddScoped<CustomerService>();

@@ -14,8 +14,32 @@ public class CarService : ICarService
 
     public async Task<IEnumerable<Car>> GetCarsAsync() // returns full list of cars
     {
-        var output = await _context.Cars.ToListAsync();
-        Console.WriteLine(output.First().CarId);
+        //get cars from DB and include the model
+        var output = await _context.Cars.Include(c => c.CarModel).ToListAsync();
+        
+        foreach (var car in output)
+        {
+            Console.WriteLine($"Car: {car.CarId}, Model: {car.CarModel.Name}");
+        }
+        
+        return output;
+    }
+
+    public async Task<Model> GetCarsByModelIDAsync(Guid modelId)
+    {
+        var output = await _context.Models.FindAsync(modelId);
+
+        if (output == null) // if no model is found
+        {
+            Console.WriteLine("Error, model matching ModelID not found.");
+        }
+
+        return output;
+    }
+
+    public async Task<IEnumerable<Model>> GetAllModelsAsync()
+    {
+        var output = await _context.Models.ToListAsync();
         return output;
     }
 
