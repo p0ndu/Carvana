@@ -46,12 +46,18 @@ public class CustomerService : ICustomerService
         return false;
     }
 
-    public async Task<Customer> CreateCustomerAsync(Customer customer)
+    public async Task<Customer?> CreateCustomerAsync(Customer customer)
     {
-        _context.Customers.Add(customer);
-        await _context.SaveChangesAsync();
-        
-        return customer;
+        try
+        {
+            _context.Customers.Add(customer);
+            await _context.SaveChangesAsync();
+            return customer;
+        }
+        catch (DbUpdateException e)
+        {
+            return null;
+        }
     }
 
     public async Task<Customer> UpdateCustomerAsync(Customer customer)
@@ -60,5 +66,26 @@ public class CustomerService : ICustomerService
         await _context.SaveChangesAsync();
         
         return customer;
+    }
+
+    public async Task<Customer?> CheckForDuplicates(string email, string phoneNumber)
+    {
+        // try to find matching email or phone number in Customers table then return result
+      return await _context.Customers.FirstOrDefaultAsync(c => c.Email == email || c.PhoneNumber == phoneNumber);
+    }
+
+    public async Task<bool> Login(string email, string password)
+    {
+        // find customer from DB
+        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Email == email);
+        if (customer != null)
+        {
+            if (customer.Password == password)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

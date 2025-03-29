@@ -1,4 +1,5 @@
 using Carvana.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Carvana.Controllers
@@ -15,16 +16,43 @@ namespace Carvana.Controllers
         }
 
         [HttpGet("/login")]
-        public IActionResult Login([FromQuery] string username, string password) // logs user in via credentails passed
+        public async Task<IActionResult> Login([FromQuery] string username, [FromQuery] string password) // logs user in via credentails passed
         {
-            return Ok();
+            // result = bool
+            var result = await _customerService.Login(username, password);
+            // if details match
+            if (result)
+            {
+                return Ok();
+            }
+            // detials do not match
+            return BadRequest();
         }
 
 
-        [HttpPost("/signup")]
-        public IActionResult SignUp([FromQuery] string username, [FromQuery] string password) // signs the user up, push to DB
+        [HttpGet("/signup")]
+        public IActionResult CheckCustomerDetails([FromBody] Customer customer) // signs the user up, push to DB
         {
-            return Ok();
+            // var as output is nullable
+            var result = _customerService.CheckForDuplicates(customer.Email, customer.PhoneNumber);
+
+            if (result != null)
+            {
+                return Conflict("An account with this email or phone number already exists.");
+            }
+
+
+            if (_customerService.CreateCustomerAsync(customer) != null)
+            {
+                return Ok();
+            }
+            else
+            {
+                return Problem("Error when creating account");
+            }
+            
+            
         }
+
     }
 }
