@@ -11,7 +11,6 @@ function Login() {
     const [success, setSuccess] = useState(false);
 
     const SiteUrl = window.location.origin;
-    console.log(SiteUrl);
 
     const onFormSubmit = async (event) => {
         event.preventDefault();
@@ -20,12 +19,11 @@ function Login() {
         setSuccess(false);
 
         try {
-            const response = await axios.get(`${SiteUrl}/login`, {
-                params: { username: email, password } // Send username and password as query params
+            const response = await axios.get(`http://localhost:5046/login`, {
+                params: { username: email, password: password } // Send username and password as query params
             });
 
             if (response.status === 200) {
-                console.log(response.data);
 
                 // Update success state
                 setSuccess(true);

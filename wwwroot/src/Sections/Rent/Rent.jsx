@@ -75,11 +75,19 @@ function Rent() {
         setLoading(true);
         setError("");
 
+        // fetch cars from the server based on the search query
         try {
-            // Fetch cars based on the model and set car list
-            const response = await axios.get("http://localhost:5046/rent", {
-                params: { model }
-            });
+            var response = '';
+            if (!model) {
+                //Fetch all cars
+                response = await axios.get("http://localhost:5046/rent");
+            }
+            else {
+                // Fetch cars based on model
+                response = await axios.get("http://localhost:5046/rent/model", {
+                    params: { model }
+                });
+            }
 
             setCarList(response.data);
         } catch (err) {

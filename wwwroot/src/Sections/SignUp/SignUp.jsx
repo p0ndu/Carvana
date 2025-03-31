@@ -22,34 +22,55 @@ function SignUp() {
         setError("");
         setSuccess(false);
 
+        // Password strength validation: at least 1 lowercase, 1 uppercase, 1 number, and 1 special character
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/;
+
+        // Basic phone number validation: allows numbers with optional country code (e.g., +1234567890 or 1234567890)
+        const phoneRegex = /^(\+\d{1,3})?\d{10}$/;
+
+        // Basic license validation: assuming it must contain letters and numbers (e.g., "AB123456")
+        const licenseRegex = /^[A-Za-z0-9]{6,}$/;
+
         if (password !== confirmPassword) {
             setError("Passwords do not match.");
             setLoading(false);
             return;
         }
 
-        const signUpData = {
-            name,
-            email,
-            password,
-            phone,
-            license
-        };
+        if (!passwordRegex.test(password)) {
+            setError("Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character.");
+            setLoading(false);
+            return;
+        }
+
+        if (!phoneRegex.test(phone)) {
+            setError("Invalid phone number. Enter a valid 10-digit number with an optional country code.");
+            setLoading(false);
+            return;
+        }
+
+        if (!licenseRegex.test(license)) {
+            setError("Invalid license. It must contain at least 6 alphanumeric characters.");
+            setLoading(false);
+            return;
+        }
+
+        const signUpData = { name, email, password, phone, license };
 
         try {
-            const response = await axios.post(`${SiteUrl}/signup`, signUpData); // POST request to /signup
+            const response = await axios.post(`http://localhost:5046/signup`, signUpData);
 
             if (response.status === 200) {
                 console.log(response.data);
-
                 setSuccess(true);
-                setLoading(false);
             }
         } catch (error) {
             setError(error.response?.data?.message || "Sign Up failed.");
+        } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <div className='signup-container'>

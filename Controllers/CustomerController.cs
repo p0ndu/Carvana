@@ -25,7 +25,7 @@ namespace Carvana.Controllers
             {
                 return Ok();
             }
-            // detials do not match
+            // details do not match
             return BadRequest();
         }
 
@@ -50,8 +50,8 @@ namespace Carvana.Controllers
             {
                 return Problem("Error when creating account");
             }
-            
-            
+
+
         }
 
     }
