@@ -74,6 +74,7 @@ function Rent() {
     const fetchCars = async (model = "") => {
         setLoading(true);
         setError("");
+        console.log("Fetching cars with model:", model);
 
         try {
             // Fetch cars based on the model and set car list

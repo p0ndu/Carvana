@@ -97,9 +97,13 @@ function Checkout() {
                         <div className="login-prompt">
                             <p>Please login or sign up to proceed with your rental.</p>
                             <div className="button-group">
-                                <button className="login-signup-btn">Login</button>
+                                <a href="/log-in" className="login-signup-link">
+                                    <button className="login-signup-btn">Login</button>
+                                </a>
                                 <p className='login-prompt-or'>or</p>
-                                <button className="login-signup-btn">Sign Up</button>
+                                <a href="/sign-up" className="login-signup-link">
+                                    <button className="login-signup-btn">Sign Up</button>
+                                </a>
                             </div>
                         </div>
 
