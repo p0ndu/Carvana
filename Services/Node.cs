@@ -2,7 +2,7 @@ namespace Carvana.Services;
 
 public class Node // class for node of tree, going to be used for autocomplete, none of this uses pointers because were in c# and its kinda pointless(stop laughing)
 {
-    private string  _data;
+    private string _data;
     private Node? _parent; // nullable in case root node 
     private List<Node>? _children; // nullable in case final node
     private bool _isFullWord; // flag to indicate whether or not the node is a full word
@@ -14,7 +14,7 @@ public class Node // class for node of tree, going to be used for autocomplete, 
         this._parent = null;
         this._isFullWord = false;
         this.weight = 0;
-        
+
         this._children = new List<Node>();
     }
 
@@ -24,7 +24,7 @@ public class Node // class for node of tree, going to be used for autocomplete, 
         this._parent = parent;
         this._isFullWord = false;
         this.weight = 0;
-        
+
         this._children = new List<Node>();
     }
 
@@ -34,7 +34,7 @@ public class Node // class for node of tree, going to be used for autocomplete, 
         this._parent = parent;
         this._isFullWord = false;
         this.weight = 0;
-        
+
         this._children = children;
     }
 
@@ -48,7 +48,7 @@ public class Node // class for node of tree, going to be used for autocomplete, 
     //
     // }
 
-   
+
     public void IncrementWeight() // increments weight, no decrement required
     {
         this.weight += 1;
@@ -58,7 +58,7 @@ public class Node // class for node of tree, going to be used for autocomplete, 
     {
         this._isFullWord = true;
     }
-     
+
 
     public bool isFullWord()
     {
@@ -122,6 +122,9 @@ public class Node // class for node of tree, going to be used for autocomplete, 
     {
         this._parent = parent;
     }
-    
-   
+
+    public int GetWeight()
+    {
+        return this.weight;
+    }
 }
