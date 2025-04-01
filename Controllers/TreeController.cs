@@ -27,6 +27,24 @@ namespace Carvana.Controllers
             return Ok(completions); // returns HTTP 200 ok result with completions
         }
 
+        [HttpGet("increment/{word}")]
+        public IActionResult IncrementWeight([FromRoute] string word)
+        {
+            if (string.IsNullOrEmpty(word))
+            {
+                return BadRequest("Word is required for autocomplete");
+            }
+
+            bool result = _treeService.IncrementWeight(word);
+
+            if (!result)
+            {
+                return StatusCode(500, "Error finding word");
+            }
+
+            return Ok(word);
+        }
+
         [HttpGet("prune")] // prune endpoint
         public IActionResult PruneTree()
         {
