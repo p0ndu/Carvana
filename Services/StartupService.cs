@@ -13,9 +13,9 @@ public class StartupService
 
         
          Console.WriteLine("");
-                Console.WriteLine("About to seed data to DB");
-                SeedData.Initialize(scope.ServiceProvider);
-                Console.WriteLine("Seeded data to DB");
+               // Console.WriteLine("About to seed data to DB");
+                //SeedData.Initialize(scope.ServiceProvider);
+               // Console.WriteLine("Seeded data to DB");
         
         Console.WriteLine("About to migrate DB");
         context.Database.Migrate(); // check that DB is created and migrated

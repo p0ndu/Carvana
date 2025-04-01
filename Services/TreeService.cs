@@ -12,7 +12,7 @@ public class TreeService
 
     public TreeService(IHostEnvironment env) // environment passed to access testTree data file 
     {
-        string filepath = Path.Combine(env.ContentRootPath, "Services", "TestTree.txt");
+        string filepath = Path.Combine(env.ContentRootPath, "Data", "TestTree.txt");
         _factory = new DefaultNodeFactory();
         _manager = new TreeManager(_factory);
         _loader = new TreeLoader(filepath, _factory);

@@ -35,6 +35,7 @@ namespace Carvana.Controllers
                 return BadRequest("Word is required for autocomplete");
             }
 
+            Console.WriteLine("Word - " + word);
             bool result = _treeService.IncrementWeight(word);
 
             if (!result)

@@ -33,12 +33,13 @@ public class TreeManager // class which will manage the tree, will handle prunin
         List<string> results = new List<string>();
         List<Node> nodes = GetSuggestions(root, prefix); // gets all words that the current prefix could be completed to
 
+        QuickSort(nodes, 0, nodes.Count - 1); // sort nodes by weight
+        
         foreach (Node word in nodes) // for each possible completion
         {
             GetFullWord(word, "", results); // explore branch, complete the word and add it to 'results'
         }
 
-        results.Sort(); // sort results, will be changed later to implement a weight system
         return results.Take(5).ToList(); // returns first 5 nodes in list
     }
 
@@ -50,7 +51,7 @@ public class TreeManager // class which will manage the tree, will handle prunin
         {
             return false;
         }
-
+        endNode.IncrementWeight(); // increment the weight of the node
         return true;
     }
 
@@ -102,14 +103,15 @@ public class TreeManager // class which will manage the tree, will handle prunin
     {
         Node currentNode = root;
 
-        foreach (char character in prefix) // iterate over each charafter 
+        while(!string.IsNullOrEmpty(prefix)) // keep iterating until prefix is empty 
         {
             bool found = false;
             foreach (Node child in currentNode.GetChildren()) // check each child
             {
-                if (child.GetData().Equals(character.ToString(), StringComparison.OrdinalIgnoreCase)) // try find character in child data
+                if (prefix.StartsWith(child.GetData(), StringComparison.OrdinalIgnoreCase)) // if the beginning of prefix is the same as the data in child 
                 {
-                    currentNode = child; // update node being checked
+                    prefix = prefix.Substring(child.GetData().Length); // remove part of prefix that was just found
+                    currentNode = child; // update node being checked 
                     found = true; // tell program to continue searching
                     break; // break inner foreach
                 }
