@@ -35,7 +35,6 @@ namespace Carvana.Controllers
                 return BadRequest("Word is required for autocomplete");
             }
 
-            Console.WriteLine("Word - " + word);
             bool result = _treeService.IncrementWeight(word);
 
             if (!result)
@@ -46,7 +45,7 @@ namespace Carvana.Controllers
             return Ok(word);
         }
 
-        [HttpGet("prune")] // prune endpoint
+        [HttpGet("prune")] // prune endpoint TODO, remove once going to prod
         public IActionResult PruneTree()
         {
             try
