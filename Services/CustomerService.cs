@@ -46,38 +46,61 @@ public class CustomerService : ICustomerService
         return false;
     }
 
-    public async Task<Customer?> CreateCustomerAsync(Customer customer)
+    public async Task<bool> CreateCustomerAsync(Customer customer)
     {
+        bool success = true;
+        
         try
         {
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
-            return customer;
         }
         catch (DbUpdateException e)
         {
-            return null;
+           success = false; 
         }
-    }
-
-    public async Task<Customer> UpdateCustomerAsync(Customer customer)
-    {
-        _context.Customers.Update(customer);
-        await _context.SaveChangesAsync();
         
-        return customer;
+        return success;
     }
 
-    public async Task<Customer?> CheckForDuplicates(string email, string phoneNumber)
+    public async Task<bool> UpdateCustomerAsync(Customer customer)
+    {
+        // to track wether or not an error occured
+        bool success = true;
+
+        try
+        {
+            _context.Customers.Update(customer);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException e)
+        {
+            success = false;
+        } 
+        
+        return success;
+    }
+
+    //returns a boolean, true if duplicate found and false if not
+    public async Task<bool> CheckForDuplicates(string email, string phoneNumber)
     {
         // try to find matching email or phone number in Customers table then return result
-      return await _context.Customers.FirstOrDefaultAsync(c => c.Email == email || c.PhoneNumber == phoneNumber);
+      Customer? account =  await _context.Customers.FirstOrDefaultAsync(c => c.Email == email || c.PhoneNumber == phoneNumber);
+
+      if (account != null)
+      {
+          return true;
+      }
+
+      return false;
     }
 
+    
     public async Task<bool> Login(string email, string password)
     {
         // find customer from DB
         var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Email == email);
+        
         if (customer != null)
         {
             if (customer.Password == password)

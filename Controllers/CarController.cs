@@ -45,7 +45,7 @@ namespace Carvana.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetCarById(Guid id) // get specific car matching id
         {
-            var car = _carService.GetCarAsync(id); // tries to get car by ID
+            Car? car = await _carService.GetCarAsync(id); // tries to get car by ID
         
             if (car == null)
             {
@@ -59,12 +59,12 @@ namespace Carvana.Controllers
                 {
                     bool result = await _carService.DeleteCarAsync(id);
         
-                    if (result == null)
+                    if (result)
                     {
-                        return NotFound(false);
+                        return Ok();
                     }
-        
-                    return Ok(true);
+
+                    return NotFound();
                 }
 
         [HttpGet("count")]

@@ -12,6 +12,7 @@ public class CarService : ICarService
         _context = context;
     }
 
+    // Outputs all cars in DB as a list
     public async Task<IEnumerable<Car>> GetCarsAsync() // returns full list of cars
     {
         //get cars from DB and include the model
@@ -43,6 +44,7 @@ public class CarService : ICarService
         return output;
     }
 
+    // searches for car with matching primary key and returns as nullable car object
     public async Task<Car?> GetCarAsync(Guid id)
     {
         return await _context.Cars.FindAsync(id); // search DB for car matching ID
@@ -55,12 +57,13 @@ public class CarService : ICarService
 
         return car; // return the same car
     }
-
+// Attempts to remove car with primary key matching ID, returns boolean to indicate success
     public async Task<bool> DeleteCarAsync(Guid id)
     {
-        var car = await _context.Cars.FindAsync(id); // try find the car
+        // try find the car in table
+        Car? car = await _context.Cars.FindAsync(id); 
 
-        if (car != null)
+        if (car != null) // if car was found
         {
             _context.Cars.Remove(car); // remove the car
             await _context.SaveChangesAsync(); // save the change

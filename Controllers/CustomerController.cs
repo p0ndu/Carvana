@@ -31,16 +31,14 @@ namespace Carvana.Controllers
 
 
         [HttpPost("/signup")]
-        public IActionResult CheckCustomerDetails([FromBody] Customer customer) // signs the user up, push to DB
+        public async Task<IActionResult> CheckCustomerDetails([FromBody] Customer customer) // signs the user up, push to DB
         {
-            // var as output is nullable
-            var result = _customerService.CheckForDuplicates(customer.Email, customer.PhoneNumber);
+            bool result = await _customerService.CheckForDuplicates(customer.Email, customer.PhoneNumber);
 
-            if (result != null)
+            if (!result) // if account was found
             {
-                return Conflict("An account with this email or phone number already exists.");
+                return BadRequest("Account with matching details aready exists.");
             }
-
 
             if (_customerService.CreateCustomerAsync(customer) != null)
             {
