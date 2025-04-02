@@ -30,7 +30,7 @@ namespace Carvana.Controllers
         }
 
 
-        [HttpGet("/signup")]
+        [HttpPost("/signup")]
         public IActionResult CheckCustomerDetails([FromBody] Customer customer) // signs the user up, push to DB
         {
             // var as output is nullable
