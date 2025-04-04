@@ -34,6 +34,20 @@ namespace Carvana.Controllers
             var output = _carService.GetAllModelsAsync();
             return Ok(output);
         }
+
+        [HttpGet("models/search")]
+        public async Task<IActionResult> GetCarsByModelName([FromBody] string modelName)
+        {
+            // try find cars with matching model names
+            List<Car>? carList = await _carService.GetCarsByModel(modelName);
+
+            if (carList == null)
+            {
+                return NotFound("No cars with given model name found");
+            }
+            
+            return Ok(carList);
+        }
         
         [HttpGet()]
         public async Task<IActionResult> Get() // returns all cars from DB

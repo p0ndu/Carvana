@@ -26,13 +26,14 @@ public class CarService : ICarService
         return output;
     }
 
-    public async Task<Model> GetCarsByModelIDAsync(Guid modelId)
+    public async Task<Model?> GetCarsByModelIDAsync(Guid modelId)
     {
-        var output = await _context.Models.FindAsync(modelId);
+        Model? output = await _context.Models.FindAsync(modelId);
 
         if (output == null) // if no model is found
         {
             Console.WriteLine("Error, model matching ModelID not found.");
+            return null;
         }
 
         return output;
@@ -77,5 +78,25 @@ public class CarService : ICarService
     public async Task<int> CountCarsAsync()
     {
         return await _context.Cars.CountAsync();
+    }
+
+    public async Task<List<Car>?> GetCarsByModel(string modelName)
+    {
+        // i really dont enjoy DB work...
+        List<Car> matchingCars = await _context.Cars // cars db
+            .Include(c => c.CarModel) // include the carModel object 
+            .Where(c => c.CarModel.Name == modelName).ToListAsync(); // only return cars with model matching the modelName string
+        
+        // if matching cars are found
+        if (matchingCars.Any())
+        {
+            return matchingCars;
+        }
+        
+        // if no matching cars are found
+        return null;
+        
+        
+        
     }
 }

@@ -18,15 +18,16 @@ namespace Carvana.Controllers
         [HttpGet("/login")]
         public async Task<IActionResult> Login([FromQuery] string username, [FromQuery] string password) // logs user in via credentails passed
         {
-            // result = bool
-            var result = await _customerService.Login(username, password);
-            // if details match
-            if (result)
+            // result = email if login is successful, and null if not
+            string? result = await _customerService.Login(username, password);
+            
+            // if details dont match
+            if (result == null)
             {
-                return Ok();
+                return BadRequest();
             }
-            // details do not match
-            return BadRequest();
+            // returns OK with email
+            return Ok(result);
         }
 
 
@@ -46,10 +47,23 @@ namespace Carvana.Controllers
             }
             else
             {
-                return Problem("Error when creating account");
+                return BadRequest("Error when creating account");
             }
 
 
+        }
+
+        [HttpGet("/profile")]
+        public async Task<IActionResult> Profile([FromBody] string email)
+        {
+            Customer? customer = await _customerService.GetCustomerByEmailAsync(email);
+
+            if (customer == null)
+            {
+                return BadRequest("No Customer found with matching email address.");
+            }
+
+            return Ok(customer);
         }
 
     }

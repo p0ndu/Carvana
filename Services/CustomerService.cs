@@ -31,6 +31,14 @@ public class CustomerService : ICustomerService
         return null;
     }
 
+    public async Task<Customer?> GetCustomerByEmailAsync(string email)
+    {
+        Customer? customer = await _context.Customers.FirstOrDefaultAsync(x => x.Email == email);
+
+        return customer;
+
+    }
+
     public async Task<bool> DeleteCustomerAsync(Guid id)
     {
         var customer = await _context.Customers.FindAsync(id);
@@ -96,19 +104,19 @@ public class CustomerService : ICustomerService
     }
 
     
-    public async Task<bool> Login(string email, string password)
+    public async Task<string?> Login(string email, string password)
     {
         // find customer from DB
-        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Email == email);
+        Customer? customer = await _context.Customers.FirstOrDefaultAsync(c => c.Email == email);
         
         if (customer != null)
         {
             if (customer.Password == password)
             {
-                return true;
+                return email;
             }
         }
 
-        return false;
+        return null;
     }
 }
