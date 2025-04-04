@@ -22,7 +22,7 @@ public class TreeManager // class which will manage the tree, will handle prunin
         bool outcome = PruneInternal(root);
        Console.WriteLine(outcome ? "Tree Pruned" : "Error: Pruning Failed"); 
     }
-
+    
     public List<string> AutoComplete(Node root, string prefix = "") // returns top 5 results branching from node corresponding to prefix, default prefix value = "" so it always returns something
     {
         if (root == null)

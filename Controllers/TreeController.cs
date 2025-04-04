@@ -27,12 +27,13 @@ namespace Carvana.Controllers
             return Ok(completions); // returns HTTP 200 ok result with completions
         }
 
-        [HttpGet("prune")] // prune endpoint
+        [HttpGet("initialise")] // Endpoint to manually prune and discplay the percentage reductin in nodes, For testing remove later
         public IActionResult PruneTree()
         {
             try
             {
-                _treeService.Prune(); // should output to console
+                // prunes and counts the percentage reduction in nodes, then outputs results to console
+                _treeService.CountReduction(); 
             }
             catch (Exception ex)
             {
