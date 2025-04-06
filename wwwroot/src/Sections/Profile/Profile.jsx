@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import './Profile.css';
 
 function Profile() {
-    const [activeTab, setActiveTab] = useState('profile'); // Default tab is 'profile'
+    const [activeTab, setActiveTab] = useState('profile');
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
     };
 
     return (
-        <div className='profile-container'>
-            <div className='profile-card'>
-                <div className='main-profile-div'>
-                    <div className='tabs'>
+        <div className="profile-container">
+            <div className="profile-card">
+                <div className="main-profile-div">
+
+                    {/* Tabs */}
+                    <div className="tabs">
                         <button
                             className={`tab-button ${activeTab === 'profile' ? 'active' : ''}`}
                             onClick={() => handleTabChange('profile')}
@@ -27,22 +29,23 @@ function Profile() {
                         </button>
                     </div>
 
-                    <div className='tab-content'>
+                    {/* Tab Content */}
+                    <div className="tab-content">
                         {activeTab === 'profile' ? (
-                            <div className='profile-info'>
-                                <div className='profile-info-title'>
+                            <div className="profile-info">
+                                <div className="profile-info-title">
                                     <h2>Profile</h2>
                                 </div>
-                                <div className='profile-info-container'>
-                                    <p>Name: John Doe</p>
-                                    <p>Email: johndoe@example.com</p>
-                                    <p>Phone: +123 456 7890</p>
-                                    <p>Age: 23</p>
-                                    <p>License No.: 123456789</p>
+                                <div className="profile-info-container">
+                                    <div>Name: John Doe</div>
+                                    <div>Email: johndoe@example.com</div>
+                                    <div>Phone: +123 456 7890</div>
+                                    <div>Age: 23</div>
+                                    <div>License No.: 123456789</div>
                                 </div>
                             </div>
                         ) : (
-                            <div className='rental-history'>
+                            <div className="rental-history">
                                 <h3>Past Rental Contracts</h3>
                                 <ul>
                                     <li>
@@ -58,6 +61,7 @@ function Profile() {
                             </div>
                         )}
                     </div>
+
                 </div>
             </div>
         </div>
