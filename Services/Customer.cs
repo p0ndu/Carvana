@@ -1,50 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Carvana.Services;
+using CarRentalAPI.Helpers;
 
 namespace Carvana
 {
     public class Customer
     {
-        [Key] public Guid CustomerID { get; set; } // private key
-        public string LicenseNumber { get; set; } // foreign key
-        public License License { get; set; } // navigation to license
+        [Key] public Guid CustomerID { get; set; } // Private key
+        public string LicenseNumber { get; set; } // Foreign key
+        public License License { get; set; } // Navigation to license
         public string Password { get; set; }
         public string Email { get; set; }
         public string FullName { get; set; }
         public int Age { get; set; }
         public string PhoneNumber { get; set; }
-
         public ICollection<RentalContract> RentalContracts { get; set; } = new List<RentalContract>(); // 1 customer -> many contracts
 
-        public Customer(){} // parameterless constructor for EFCore
-        private Customer(Guid customerID, License license, string email, string fullName, int age, string phoneNumber, string password) // private constructor for factory
+        public Customer() { } // Parameterless constructor for EFCore
+
+        private Customer(Guid customerID, License license, string email, string fullName, int age, string phoneNumber, string password) // Private constructor for factory
         {
             CustomerID = customerID;
             License = license;
+            LicenseNumber = license != null ? license.LicenseNumber : String.Empty;
 
-            if (license != null)
-            {
-                LicenseNumber = license.LicenseNumber;
-            }
-            else
-            {
-                LicenseNumber = String.Empty;
-            }
-            
-            Email = email;
-            FullName = fullName;
+            // Encrypt sensitive fields before storing
+            Email = EncryptionHelper.Encrypt(email);
+            FullName = EncryptionHelper.Encrypt(fullName);
+            PhoneNumber = EncryptionHelper.Encrypt(phoneNumber);
+            Password = EncryptionHelper.Encrypt(password);
             Age = age;
-            PhoneNumber = phoneNumber;
-            Password = password;
         }
 
-        public static Customer Create(Guid customerID, License license, string email, string fullName, int age,
-            string phoneNumber, string password)
+        public static Customer Create(Guid customerID, License license, string email, string fullName, int age, string phoneNumber, string password)
         {
             if (customerID == Guid.Empty)
             {
@@ -57,6 +47,14 @@ namespace Carvana
         {
             Age++;
         }
-        
+
+        // Decrypt the customer data when needed
+        public void DecryptFields()
+        {
+            Email = EncryptionHelper.Decrypt(Email);
+            FullName = EncryptionHelper.Decrypt(FullName);
+            PhoneNumber = EncryptionHelper.Decrypt(PhoneNumber);
+            Password = EncryptionHelper.Decrypt(Password);
+        }
     }
 }
