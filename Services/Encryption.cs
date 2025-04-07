@@ -2,6 +2,8 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using CarRentalAPI.Helpers;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarRentalAPI.Helpers
 {
@@ -57,3 +59,15 @@ namespace CarRentalAPI.Helpers
         }
     }
 }
+
+
+// converter class to handle automatic encryption and decryption when interacting with DB
+public class EncryptedStringConverter : ValueConverter<string?, string?>
+{
+    public EncryptedStringConverter()
+        : base(
+            plain => plain == null ? null : EncryptionHelper.Encrypt(plain),
+            encrypted => encrypted == null ? null : EncryptionHelper.Decrypt(encrypted))
+    { }
+}
+

@@ -19,62 +19,74 @@ namespace Carvana.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // CAR
+            // car
             modelBuilder.Entity<Car>(entity =>
             {
                 entity.HasKey(e => e.CarId);
 
-                // Car -> Model (many Car to one Model)
+                // Car -> Model many-one 
                 entity.HasOne(e => e.CarModel)
                       .WithMany(m => m.Cars)
                       .HasForeignKey(e => e.ModelID)
                       .IsRequired();
 
                 entity.Property(e => e.LicensePlate).IsRequired();
-                // etc.
             });
 
-            // MODEL
+            // model
             modelBuilder.Entity<Model>(entity =>
             {
                 entity.HasKey(e => e.ModelID);
-
-                // optional: store VehicleType as string
-                // entity.Property(e => e.VehicleType)
-                //       .HasConversion<string>();
+                
             });
 
-            // RENTAL CONTRACT
+            // rental contract 
             modelBuilder.Entity<RentalContract>(entity =>
             {
                 entity.HasKey(e => e.ContractID);
 
-                // RentalContract -> Car (many-to-one)
+                // RentalContract -> Car is many-many 
                 entity.HasOne(rc => rc.Car)
                       .WithMany() // or with a collection if you prefer Car->Contracts
                       .HasForeignKey(rc => rc.CarID)
                       .IsRequired();
 
-                // RentalContract -> Customer (many-to-one)
+                // RentalContract -> Customer is many-many 
                 entity.HasOne(rc => rc.Customer)
                       .WithMany(c => c.RentalContracts)
                       .HasForeignKey(rc => rc.CustomerID)
                       .IsRequired();
             });
 
-            // CUSTOMER
+            // customer
             modelBuilder.Entity<Customer>(entity =>
             {
+                
                 entity.HasKey(e => e.CustomerID);
 
-                // Customer -> License (1-to-1)
+                // to handle conversion between clean text and cyphertext in DB
+                var encryptConverter = new EncryptedStringConverter();
+                
+                // convert phoneNumber
+                entity.Property(e => e.PhoneNumber)
+                    .HasConversion(encryptConverter);
+                
+                //convert password
+                entity.Property(e => e.Password)
+                    .HasConversion(encryptConverter);
+                
+                //convert licenseNumber
+                entity.Property(e => e.Email)
+                    .HasConversion(encryptConverter);
+                
+                // customer -> licese is 1-1
                 entity.HasOne(c => c.License)
                       .WithOne(l => l.Customer) // If License has a Customer property
                       .HasForeignKey<Customer>(c => c.LicenseNumber)
                       .IsRequired(); 
             });
 
-            // LICENSE
+            // license
             modelBuilder.Entity<License>(entity =>
             {
                 entity.HasKey(e => e.LicenseNumber);

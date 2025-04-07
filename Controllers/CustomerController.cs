@@ -25,9 +25,9 @@ namespace Carvana.Controllers
             // Decrypt customer data
             foreach (var customer in customers)
             {
-                customer.Name = EncryptionHelper.Decrypt(customer.Name);
+                customer.FullName = EncryptionHelper.Decrypt(customer.FullName);
                 customer.Email = EncryptionHelper.Decrypt(customer.Email);
-                customer.LicenseID = EncryptionHelper.Decrypt(customer.LicenseID);
+                customer.LicenseNumber = EncryptionHelper.Decrypt(customer.LicenseNumber);
                 customer.Password = EncryptionHelper.Decrypt(customer.Password);
             }
 
@@ -41,7 +41,7 @@ namespace Carvana.Controllers
             var customers = LoadCustomersFromJson(); // Load and decrypt data
 
             // Search by encrypted License ID
-            var foundCustomer = SearchHelper<Customer>.HashSearch(customers, c => c.LicenseID, EncryptionHelper.Encrypt(licenseID));
+            var foundCustomer = SearchHelper<Customer>.HashSearch(customers, c => c.LicenseNumber, EncryptionHelper.Encrypt(licenseID));
 
             if (foundCustomer == null)
                 return NotFound("Customer not found");
