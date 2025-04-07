@@ -1,4 +1,5 @@
 using Carvana.Data;
+using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Validations.Rules;
@@ -118,5 +119,41 @@ public class CustomerService : ICustomerService
         }
 
         return null;
+    }
+
+    // updates customer object in DB with matching CustomerID using reflection (fancy word for kinda foreaching attributes)
+    public async Task<bool> UpdateCustomer(CustomerData data)
+    {
+        // find matching customer in DB
+        Customer? customer = await _context.Customers.FirstOrDefaultAsync(c => c.CustomerID == data.CustomerID);
+
+        if (customer == null)
+        {
+            // return false as error state
+            return false; 
+        }
+
+        var updateItems = typeof(CustomerData).GetProperties();
+        //loop over each property in CustomerData class
+        foreach (var property in updateItems)
+        {
+            // set currentProperty from CustomerData object
+            var currentProperty = property.GetValue(data);
+            // if value is not null (API call contains new data for property
+            if (currentProperty != null)
+            {
+                // get corresponding property from customer object
+                var customerProperty = typeof(Customer).GetProperty(property.Name);
+                // if property is set and can be updated
+                if (customerProperty != null && customerProperty.CanWrite)
+                {
+                    // set the new value 
+                    customerProperty.SetValue(customer, currentProperty);
+                }
+            }
+        }
+        // save changes and return success
+        await _context.SaveChangesAsync();
+        return true;
     }
 }

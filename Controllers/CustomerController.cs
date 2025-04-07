@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Carvana.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -66,5 +67,16 @@ namespace Carvana.Controllers
             return Ok(customer);
         }
 
+        [HttpPost("/profile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] CustomerData NewData)
+        {
+            bool success = await _customerService.UpdateCustomer(NewData);
+
+            if (success)
+            {
+                return Ok();
+            }
+            return BadRequest("Error when updating profile");
+        }
     }
 }
