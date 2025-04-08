@@ -48,9 +48,6 @@ function Navbar() {
                     ) : (
                         <>
                             <li className="menu-item">
-                                <a href="/profile" className="menu-link logged-in">Profile</a>
-                            </li>
-                            <li className="menu-item">
                                 <a href="/log-in" className="menu-link logged-out">Login</a>
                             </li>
                             <li className="menu-item">
