@@ -58,11 +58,11 @@ public class CarService : ICarService
 
         return car; // return the same car
     }
-// Attempts to remove car with primary key matching ID, returns boolean to indicate success
+    // Attempts to remove car with primary key matching ID, returns boolean to indicate success
     public async Task<bool> DeleteCarAsync(Guid id)
     {
         // try find the car in table
-        Car? car = await _context.Cars.FindAsync(id); 
+        Car? car = await _context.Cars.FindAsync(id);
 
         if (car != null) // if car was found
         {
@@ -82,21 +82,34 @@ public class CarService : ICarService
 
     public async Task<List<Car>?> GetCarsByModel(string modelName)
     {
-        // i really dont enjoy DB work...
-        List<Car> matchingCars = await _context.Cars // cars db
-            .Include(c => c.CarModel) // include the carModel object 
-            .Where(c => c.CarModel.Name == modelName).ToListAsync(); // only return cars with model matching the modelName string
-        
-        // if matching cars are found
-        if (matchingCars.Any())
-        {
-            return matchingCars;
-        }
-        
-        // if no matching cars are found
-        return null;
-        
-        
-        
+        // i really don't enjoy DB work...
+        Console.WriteLine(modelName); // print the model name to console for debugging
+
+        if (string.IsNullOrWhiteSpace(modelName))
+            return null;
+
+        // normalize user input
+        string lowerModelName = modelName.ToLower();
+
+        // fetch all cars and their models from the database
+        List<Car> allCars = await _context.Cars
+            .Include(c => c.CarModel)
+            .ToListAsync();
+
+        // filter cars where the model name or brand matches any part of the search input
+        List<Car> matchingCars = allCars
+            .Where(c =>
+                !string.IsNullOrEmpty(c.CarModel?.Name) &&
+                !string.IsNullOrEmpty(c.CarModel?.Brand) &&
+                (
+                    lowerModelName.Contains(c.CarModel.Name.ToLower()) ||
+                    lowerModelName.Contains(c.CarModel.Brand.ToLower()) ||
+                    c.CarModel.Name.ToLower().Contains(lowerModelName) ||
+                    c.CarModel.Brand.ToLower().Contains(lowerModelName)
+                ))
+            .ToList();
+
+        // return matching cars if any
+        return matchingCars.Any() ? matchingCars : null;
     }
 }

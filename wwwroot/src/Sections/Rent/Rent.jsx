@@ -16,6 +16,11 @@ const sortOptions = [
 // Create the Rent component and export it
 function Rent() {
     // Define the state variables
+    const [input, setInput] = useState("");
+    const [suggestions, setSuggestions] = useState([]);
+    const [searchLoading, setSearchLoading] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(-1);
     const [carList, setCarList] = useState([]);
     const [filteredCars, setFilteredCars] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -69,6 +74,42 @@ function Rent() {
         setFilteredCars(filterCars(carList, filters));
     }, [carList, filters]);
 
+    // Use effect to handle auto-complete suggestions
+    useEffect(() => {
+        // Ensure the input is not empty before fetching suggestions
+        if (!input || !input.trim()) {
+            setSuggestions([]);
+            return;
+        }
+
+        // Function to fetch suggestions from the server
+        const fetchSuggestions = async () => {
+            setSearchLoading(true);
+            try {
+                const response = await axios.get("http://localhost:5046/search/autocomplete", {
+                    params: { prefix: input }
+                });
+
+                const suffix = response.data;
+                console.log("Suggestions:", suffix);
+
+                if (suffix && suffix.length > 0) {
+                    //Connect the prefix with the suffixes
+                    setSuggestions(suffix.map(item => input.charAt(0).toUpperCase() + input.slice(1) + item));
+                }
+            } catch (error) {
+                console.error("Error fetching suggestions:", error);
+                setSuggestions([]);
+            } finally {
+                setSearchLoading(false);
+            }
+        }
+
+        // Debounce the fetchSuggestions function to avoid too many requests
+        const debounceTimeout = setTimeout(fetchSuggestions, 300);
+        return () => clearTimeout(debounceTimeout);
+    }, [input]);
+
 
     // Function to fetch car data
     const fetchCars = async (model = "") => {
@@ -84,7 +125,7 @@ function Rent() {
             }
             else {
                 // Fetch cars based on model
-                response = await axios.get("http://localhost:5046/rent/model", {
+                response = await axios.get("http://localhost:5046/rent/models/search", {
                     params: { model }
                 });
             }
@@ -181,19 +222,78 @@ function Rent() {
         };
     }
 
+    // Functions for auto-complete suggestions
+    // Function to handle input changes
+    const handleSearchChange = (e) => {
+        setInput(e.target.value);
+        setSelectedIndex(-1);
+        console.log(input);
+
+        if (suggestions.includes(e.target.value)) {
+            setShowDropdown(false);
+        }
+        else {
+            setShowDropdown(true);
+        }
+    };
+
+    // Function to handle suggestion selection
+    const handleSearchSelect = (suggestion) => {
+        setInput(suggestion);
+        setSuggestions([]);
+        setShowDropdown(false);
+    };
+
+    // Function to handle keyboard navigation for the dropdown
+    const handleSearchKeyDown = (e) => {
+        if (e.key === "ArrowDown") {
+            setSelectedIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev));
+        } else if (e.key === "ArrowUp") {
+            setSelectedIndex((prev) => (prev > 0 ? prev - 1 : prev));
+        } else if (e.key === "Enter" && selectedIndex >= 0 && showDropdown) {
+            if (selectedIndex >= 0) {
+                e.preventDefault(); // Prevents form submission
+                handleSearchSelect(suggestions[selectedIndex]);
+            }
+        }
+    };
 
     // Render the Rent component
     return (
         <div className="rent-car-container">
             <div className="rent-car-search">
                 <div className="rent-search-container">
-                    <input
-                        type="text"
-                        placeholder="Car model, type, brand..."
-                        className="rent-input"
-                        id="rent-car-type"
-                        defaultValue={searchQuery.model}
-                    />
+                    <div className="rent-input-container">
+                        <input
+                            type="text"
+                            placeholder="Car model, type, brand..."
+                            className="rent-input"
+                            id="rent-car-type"
+                            defaultValue={searchQuery.model}
+                            value={input}
+                            onChange={handleSearchChange}
+                            onKeyDown={handleSearchKeyDown}
+                            onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                        />
+                        {showDropdown && input.length > 0 && !suggestions.includes(input) && (
+                            <div className="rent-autocomplete-dropdown">
+                                {searchLoading ? (
+                                    <div className="rent-autocomplete-item">Loading...</div>
+                                ) : (
+                                    suggestions.map((suggestion, index) => (
+                                        <div
+                                            key={index}
+                                            className={`rent-autocomplete-item ${index === selectedIndex ? "selected" : ""
+                                                }`}
+                                            onMouseDown={() => handleSearchSelect(suggestion)}
+                                        >
+                                            {suggestion}
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                        )}
+                    </div>
                     <button className="rent-search-button" onClick={handleSearch}>
                         Search
                     </button>

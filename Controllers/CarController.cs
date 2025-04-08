@@ -36,57 +36,57 @@ namespace Carvana.Controllers
         }
 
         [HttpGet("models/search")]
-        public async Task<IActionResult> GetCarsByModelName([FromBody] string modelName)
+        public async Task<IActionResult> GetCarsByModelName(string model)
         {
             // try find cars with matching model names
-            List<Car>? carList = await _carService.GetCarsByModel(modelName);
+            List<Car>? carList = await _carService.GetCarsByModel(model);
 
             if (carList == null)
             {
                 return NotFound("No cars with given model name found");
             }
-            
+
             return Ok(carList);
         }
-        
+
         [HttpGet()]
         public async Task<IActionResult> Get() // returns all cars from DB
         {
-            var cars = await _carService.GetCarsAsync(); 
+            var cars = await _carService.GetCarsAsync();
             return Ok(cars);
         }
-        
+
         [HttpGet("{id}")]
         public async Task<ActionResult> GetCarById(Guid id) // get specific car matching id
         {
             Car? car = await _carService.GetCarAsync(id); // tries to get car by ID
-        
+
             if (car == null)
             {
                 return NotFound(); // if car is not found
             }
             return Ok(car); // if car is found
         }
-        
-        [HttpDelete("{id}")]
-                public async Task<IActionResult> DeleteCarById(Guid id) // removes car from DB
-                {
-                    bool result = await _carService.DeleteCarAsync(id);
-        
-                    if (result)
-                    {
-                        return Ok();
-                    }
 
-                    return NotFound();
-                }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCarById(Guid id) // removes car from DB
+        {
+            bool result = await _carService.DeleteCarAsync(id);
+
+            if (result)
+            {
+                return Ok();
+            }
+
+            return NotFound();
+        }
 
         [HttpGet("count")]
         public async Task<ActionResult> Count() // returns number of cars
         {
-            var count = await _carService.CountCarsAsync(); 
+            var count = await _carService.CountCarsAsync();
             return Ok(count);
         }
-        
+
     }
 }
