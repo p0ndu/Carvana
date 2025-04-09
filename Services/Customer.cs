@@ -40,6 +40,7 @@ namespace Carvana
             Password = password;
         }
 
+        // public method to call the private constructor as EFCore requires a public one with no variables
         public static Customer Create(Guid customerID, License license, string email, string fullName, int age,
             string phoneNumber, string password)
         {
@@ -50,7 +51,8 @@ namespace Carvana
             return new Customer(customerID, license, email, fullName, age, phoneNumber, password);
         }
 
-        public void IncrementAge() // for birthdays
+        // for birthdays
+        public void IncrementAge()
         {
             Age++;
         }

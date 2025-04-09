@@ -50,7 +50,7 @@ namespace Carvana
         {
             return new Car(carId, model, vehicleStatus, licensePlate, mileage, colour, pricePerDay, features); // calls private constructor
         }
-        public void addMiles(int miles)
+        public void AddMiles(int miles)
         {
             Mileage += miles;
         }

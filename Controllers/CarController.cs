@@ -78,14 +78,18 @@ namespace Carvana.Controllers
         [HttpDelete()] // TODO CAHNGED TO FROMBODY
         public async Task<IActionResult> DeleteCarById([FromBody] Guid id) // removes car from DB
         {
-            bool result = await _carService.DeleteCarAsync(id);
+            bool? result = await _carService.DeleteCarAsync(id);
 
-            if (result)
+            if (result == true)
             {
                 return Ok();
             }
+            else if (result == null)
+            {
+                return NotFound("No car with given id found");
+            }
 
-            return NotFound();
+            return BadRequest("Error deleting car");
         }
 
         // count the number of cars in the DB

@@ -59,8 +59,10 @@ public class CarService : ICarService
     }
 
     // adds car to DB and saves change
-    public async Task<Car?> AddCarAsync(Car car)
+    public async Task<bool> AddCarAsync(Car car)
     {
+        bool success = true;
+        
         await _context.Cars.AddAsync(car); // adds Car to DB locally
         
         try
@@ -69,18 +71,16 @@ public class CarService : ICarService
         }
         catch (DbUpdateConcurrencyException)
         {
-            return null;
+            success = false;
         }
-        
-        _context.Cars.AddAsync(car); // adds Car to DB locally
-        await _context.SaveChangesAsync(); // save changes
 
-
-        return car; // return the same car
+        return success; // return the same car
     }
+    
     // Attempts to remove car with primary key matching ID, returns boolean to indicate success
-    public async Task<bool> DeleteCarAsync(Guid id)
+    public async Task<bool?> DeleteCarAsync(Guid id)
     {
+        bool? success = true;
         // try find the car in table
         Car? car = await _context.Cars.FindAsync(id);
 
@@ -94,17 +94,19 @@ public class CarService : ICarService
             }
             catch (DbUpdateConcurrencyException)
             {
-                return false;
+               success = false; 
             }       
 
             _context.Cars.Remove(car); // remove the car
             await _context.SaveChangesAsync(); // save the change
-
-
-            return true; // deletion succeeded
+        }
+        else
+        {
+            // return null to indicate no matching car was found
+            success = null;
         }
 
-        return false;
+        return success;
     }
 
     // take a guess what this function does
@@ -133,8 +135,8 @@ public class CarService : ICarService
         // filter cars where the model name or brand matches any part of the search input
         List<Car> matchingCars = allCars
             .Where(c =>
-                !string.IsNullOrEmpty(c.CarModel?.Name) &&
-                !string.IsNullOrEmpty(c.CarModel?.Brand) &&
+                !string.IsNullOrEmpty(c.CarModel.Name) &&
+                !string.IsNullOrEmpty(c.CarModel.Brand) &&
                 (
                     lowerModelName.Contains(c.CarModel.Name.ToLower()) ||
                     lowerModelName.Contains(c.CarModel.Brand.ToLower()) ||

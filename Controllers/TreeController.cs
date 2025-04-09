@@ -27,7 +27,8 @@ namespace Carvana.Controllers
             return Ok(completions); // returns HTTP 200 ok result with completions
         }
 
-        [HttpGet("initialise")] // Endpoint to manually prune and discplay the percentage reductin in nodes, For testing remove later
+        // prunes and displays the percentage reduction in nodes, will run on startup, left as endpoint during testing
+        [HttpGet("initialise")] 
         public IActionResult Initialise()
         {
             Console.WriteLine("Initialise endpoint called");
