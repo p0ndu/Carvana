@@ -2,6 +2,7 @@ using Carvana.Services;
 using Carvana.Data;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3001")
+            policy.WithOrigins("http://localhost:3000")
                   .AllowAnyMethod()
                   .AllowAnyHeader();
         });
@@ -28,10 +29,15 @@ var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString)); // register context with Postgress provider
 
 builder.Services.AddOpenApi();
+// TreeService as singleton since autocomplete is almost always needed, rest as scoped services
 builder.Services.AddSingleton<TreeService>();
 builder.Services.AddScoped<CarService>();
 builder.Services.AddScoped<CustomerService>();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+        .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
 var app = builder.Build();
 // Use CORS
 app.UseCors("AllowFrontend");

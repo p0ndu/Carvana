@@ -27,6 +27,9 @@ namespace Carvana.Controllers
             return Ok(completions); // returns HTTP 200 ok result with completions
         }
 
+
+        [HttpGet("initialise")] // Endpoint to manually prune and discplay the percentage reductin in nodes, For testing remove later
+
         [HttpGet("increment/{word}")]
         public IActionResult IncrementWeight([FromRoute] string word)
         {
@@ -46,11 +49,13 @@ namespace Carvana.Controllers
         }
 
         [HttpGet("prune")] // prune endpoint TODO, remove once going to prod
+
         public IActionResult PruneTree()
         {
             try
             {
-                _treeService.Prune(); // should output to console
+                // prunes and counts the percentage reduction in nodes, then outputs results to console
+                _treeService.CountReduction(); 
             }
             catch (Exception ex)
             {

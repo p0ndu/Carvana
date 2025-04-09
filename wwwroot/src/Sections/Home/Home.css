@@ -39,9 +39,9 @@
 }
 
 .home-form-group {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 10px;
     margin-bottom: 1rem;
 }
 
@@ -99,4 +99,30 @@
     margin-bottom: 5px;
     font-size: 0.9rem;
     color: var(--muted-text-color);
+}
+
+/* Autocomplete dropdown */
+.home-autocomplete-dropdown {
+    max-height: 200px;
+    top: 85%;
+    overflow-y: auto;
+    background: var(--card-background);
+    border: 1px solid var(--accent-color);
+    border-radius: 0 0 8px 8px;
+    box-shadow: var(--shadow-color) 0px 2px 5px;
+    z-index: 10;
+    position: absolute;
+    width: -webkit-fill-available;
+}
+
+.home-autocomplete-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.home-autocomplete-item:hover,
+.home-autocomplete-item.selected {
+    background: var(--hover-color);
+    color: white;
 }

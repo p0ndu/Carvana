@@ -12,7 +12,11 @@ public class TreeService
 
     public TreeService(IHostEnvironment env) // environment passed to access testTree data file 
     {
+
+        string filepath = Path.Combine(env.ContentRootPath,"Data", "TestTree.txt");
+
         string filepath = Path.Combine(env.ContentRootPath, "Data", "TestTree.txt");
+
         _factory = new DefaultNodeFactory();
         _manager = new TreeManager(_factory);
         _loader = new TreeLoader(filepath, _factory);
@@ -34,6 +38,20 @@ public class TreeService
         return _manager.AutoComplete(_root, query);
     }
 
+
+    public void CountReduction()
+    {
+        int numNodesBefore = _root.CountAllNodes();
+        Prune();
+        int numNodesAfter = _root.CountAllNodes();
+        float percentReduction = (numNodesBefore - numNodesAfter) / (float)numNodesBefore * 100f;
+        
+        Console.WriteLine("Number of nodes before pruning - " + numNodesBefore + "\n" + "Number of nodes after pruning - " + numNodesAfter);
+        Console.WriteLine(percentReduction + "% reduction in node count");
+    }
+    
+}
+
     public bool IncrementWeight(string word)
     {
         bool result = _manager.IncrementNodeWeight(word, _root);
@@ -41,3 +59,4 @@ public class TreeService
     }
 
 }
+
