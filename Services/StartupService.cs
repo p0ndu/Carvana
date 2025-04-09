@@ -11,11 +11,11 @@ public class StartupService
         var scope = serviceProvider.CreateScope(); // create scope
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>(); // store context
 
-
-        Console.WriteLine("");
-        // Console.WriteLine("About to seed data to DB");
-        // SeedData.Initialize(scope.ServiceProvider);
-        // Console.WriteLine("Seeded data to DB");
+        TreeService treeService = scope.ServiceProvider.GetRequiredService<TreeService>(); // create tree service
+       
+        Console.WriteLine("Pruning Tree");
+        treeService.Prune(); // prune tree
+        
 
         Console.WriteLine("About to migrate DB");
         context.Database.Migrate(); // check that DB is created and migrated
@@ -26,6 +26,7 @@ public class StartupService
             Console.WriteLine("\n\n\n\n\nData found in DB\n\n\n\n");
         }
     }
+
 
     private static void TestConnection(ApplicationDbContext context) // TODO finish
     {
