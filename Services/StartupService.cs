@@ -11,10 +11,7 @@ public class StartupService
         var scope = serviceProvider.CreateScope(); // create scope
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>(); // store context
 
-        TreeService treeService = scope.ServiceProvider.GetRequiredService<TreeService>(); // create tree service
-       
-        Console.WriteLine("Pruning Tree");
-        treeService.Prune(); // prune tree
+        //TreeService _treeService = scope.ServiceProvider.GetRequiredService<TreeService>(); // create tree service
         
 
         Console.WriteLine("About to migrate DB");

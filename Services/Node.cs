@@ -133,15 +133,6 @@ public class Node // class for node of tree, going to be used for autocomplete, 
 
         return count;
     }
-
     
-   
-}
-
-
-    public int GetWeight()
-    {
-        return this.weight;
-    }
 }
 

@@ -1,4 +1,6 @@
+using Carvana;
 using Carvana.Data;
+using Carvana.Services;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -67,15 +69,6 @@ public class CustomerService : ICustomerService
         return false;
     }
 
-
-    public async Task<Customer?> CreateCustomerAsync(Customer customer)
-    {
-        if (customer == null)
-        {
-            throw new ArgumentNullException(nameof(customer));
-        }
-
-
     public async Task<bool> CreateCustomerAsync(Customer customer)
     {
         bool success = true;
@@ -84,25 +77,9 @@ public class CustomerService : ICustomerService
         {
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
-
-
-            return customer;
+            
         }
         catch (DbUpdateException)
-        {
-            return null;
-        }
-    }
-
-    public async Task<Customer?> UpdateCustomerAsync(Customer customer)
-    {
-        if (customer == null)
-        {
-            throw new ArgumentNullException(nameof(customer));
-        }
-
-        }
-        catch (DbUpdateException e)
         {
            success = false; 
         }
@@ -119,15 +96,6 @@ public class CustomerService : ICustomerService
         {
             _context.Customers.Update(customer);
             await _context.SaveChangesAsync();
-
-
-            return customer;
-        }
-        catch (DbUpdateException)
-        {
-            return null;
-        }
-
         }
         catch (DbUpdateException e)
         {

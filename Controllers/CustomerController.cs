@@ -41,17 +41,12 @@ namespace Carvana.Controllers
             {
                 return BadRequest("Account with matching details aready exists.");
             }
-
-            if (_customerService.CreateCustomerAsync(customer) != null)
-            {
-                return Ok();
-            }
-            else
+            else if (result == null)
             {
                 return BadRequest("Error when creating account");
             }
 
-
+            return Ok();
         }
 
         [HttpGet("/profile")]

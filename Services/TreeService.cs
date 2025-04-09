@@ -54,11 +54,5 @@ public class TreeService
         Console.WriteLine(percentReduction + "% reduction in node count");
     }
 
-    public bool IncrementWeight(string word)
-    {
-        bool result = _manager.IncrementNodeWeight(word, _root);
-        return result;
-    }
-
 }
 

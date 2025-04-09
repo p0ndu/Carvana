@@ -121,11 +121,11 @@ function Rent() {
             var response = '';
             if (!model) {
                 //Fetch all cars
-                response = await axios.get("http://localhost:5046/rent");
+                response = await axios.get("http://localhost:5046/rent"); // TODO remove
             }
             else {
                 // Fetch cars based on model
-                response = await axios.get("http://localhost:5046/rent/models/search", {
+                response = await axios.get("http://localhost:5046/rent/models/search", { // TODO remove
                     params: { model }
                 });
             }
