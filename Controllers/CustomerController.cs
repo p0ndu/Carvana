@@ -16,8 +16,8 @@ namespace Carvana.Controllers
             _customerService = customerService;
         }
 
-        [HttpGet("/login")]
-        public async Task<IActionResult> Login([FromBody] string username, [FromQuery] string password) // logs user in via credentails passed
+        [HttpGet("/login")]// TODO CHANGED TO FROMBODY
+        public async Task<IActionResult> Login([FromBody] string username, [FromBody] string password) // logs user in via credentails passed
         {
             // result = email if login is successful, and null if not
             string? result = await _customerService.Login(username, password);

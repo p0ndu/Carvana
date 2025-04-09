@@ -14,8 +14,8 @@ namespace Carvana.Controllers
             this._treeService = treeService;
         }
 
-        [HttpGet]
-        public IActionResult GetAutocomplete([FromQuery] string prefix) // IActionResult is abstract datatype allowing a variety of response types, helps make it more malleable
+        [HttpGet] // TODO, CHANGE CALLS TO SEND PREFIX VIA BODY ISNTEAD OF QUERY
+        public IActionResult GetAutocomplete([FromBody] string prefix) // IActionResult is abstract datatype allowing a variety of response types, helps make it more malleable
         {
             if (string.IsNullOrEmpty(prefix)) // check if string is empty
             {
@@ -36,8 +36,8 @@ namespace Carvana.Controllers
         }
 
 
-        [HttpGet("increment/{word}")] // TODO change this to take the word from body instead of from route
-        public IActionResult IncrementWeight([FromRoute] string word)
+        [HttpGet("increment")] // TODO change frontend code to send word via body instead of route 
+        public IActionResult IncrementWeight([FromBody] string word)
         {
             if (string.IsNullOrEmpty(word))
             {

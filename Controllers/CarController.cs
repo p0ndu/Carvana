@@ -17,7 +17,7 @@ namespace Carvana.Controllers
         }
 
         // searches DB for model matching modelID given
-        [HttpGet("models/id={modelID}")]
+        [HttpGet("models/id")] // TODO, CHANGED ENDPOINT AND MODELID COMES FROM BODY NOW
         public async Task<IActionResult> GetCarsByModelID([FromBody] Guid modelID)
         {
             Model? model = await _carService.GetCarsByModelIDAsync(modelID);
@@ -40,7 +40,7 @@ namespace Carvana.Controllers
         }
 
         // searches DB for model matching model name given
-        [HttpGet("models/search")]
+        [HttpGet("models/search")] // TODO CHANGED TO FROMBODY
         public async Task<IActionResult> GetCarsByModelName([FromBody] string model)
         {
             // try find cars with matching model names
@@ -63,7 +63,7 @@ namespace Carvana.Controllers
         }
 
         // searches for car in DB and returns it if found
-        [HttpGet("/search")]
+        [HttpGet("/search")] // TODO CAHNGED TO FROMBODY
         public async Task<ActionResult> GetCarById([FromBody] Guid id) // get specific car matching id
         {
             Car? car = await _carService.GetCarAsync(id); // tries to get car by ID
@@ -77,7 +77,7 @@ namespace Carvana.Controllers
         }
 
         // remove car with matching ID from database if found
-        [HttpDelete()]
+        [HttpDelete()] // TODO CAHNGED TO FROMBODY
         public async Task<IActionResult> DeleteCarById([FromBody] Guid id) // removes car from DB
         {
             bool result = await _carService.DeleteCarAsync(id);
