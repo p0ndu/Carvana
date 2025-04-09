@@ -2,7 +2,7 @@ namespace Carvana.Services;
 
 public class Node // class for node of tree, going to be used for autocomplete, none of this uses pointers because were in c# and its kinda pointless(stop laughing)
 {
-    private string  _data;
+    private string _data;
     private Node? _parent; // nullable in case root node 
     private List<Node>? _children; // nullable in case final node
     private bool _isFullWord; // flag to indicate whether or not the node is a full word
@@ -14,7 +14,7 @@ public class Node // class for node of tree, going to be used for autocomplete, 
         this._parent = null;
         this._isFullWord = false;
         this._weight = 0;
-        
+
         this._children = new List<Node>();
     }
 
@@ -24,31 +24,21 @@ public class Node // class for node of tree, going to be used for autocomplete, 
         this._parent = parent;
         this._isFullWord = false;
         this._weight = 0;
-        
+
         this._children = new List<Node>();
     }
 
-    public Node(string data, Node parent, List<Node> children) // constructor in case you have the children ahead of time
+    public
+        Node(string data, Node parent, List<Node> children) // constructor in case you have the children ahead of time
     {
         this._data = data;
         this._parent = parent;
         this._isFullWord = false;
         this._weight = 0;
-        
         this._children = children;
     }
 
-    // public Node(string data, Node parent, Node child)
-    // {
-    //     this._data = data;
-    //     this._parent = parent;
-    //     
-    //     this._children = new List<Node>();
-    //     this._children.Add(child);
-    //
-    // }
 
-   
     public void IncrementWeight() // increments weight, no decrement required
     {
         this._weight += 1;
@@ -58,7 +48,7 @@ public class Node // class for node of tree, going to be used for autocomplete, 
     {
         this._isFullWord = true;
     }
-     
+
 
     public bool isFullWord()
     {
@@ -129,5 +119,29 @@ public class Node // class for node of tree, going to be used for autocomplete, 
     }
     
     
+    public int CountAllNodes()
+    {
+        int count = 1; // count this node
+
+        if (_children != null)
+        {
+            foreach (var child in _children)
+            {
+                count += child.CountAllNodes(); // recursively count children
+            }
+        }
+
+        return count;
+    }
+
+    
    
 }
+
+
+    public int GetWeight()
+    {
+        return this.weight;
+    }
+}
+

@@ -31,7 +31,7 @@ function Navbar() {
                         <a href="/" className="menu-link">Home</a>
                     </li>
                     <li className="menu-item">
-                        <a href="/rent" className="menu-link">Rent a Car</a>
+                        <a href="/car-rent" className="menu-link">Rent a Car</a>
                     </li>
                     <li className="menu-item">
                         <a href="/about-us" className="menu-link">About Us</a>
@@ -48,10 +48,7 @@ function Navbar() {
                     ) : (
                         <>
                             <li className="menu-item">
-                                <a href="/profile" className="menu-link logged-in">Profile</a>
-                            </li>
-                            <li className="menu-item">
-                                <a href="/login" className="menu-link logged-out">Login</a>
+                                <a href="/log-in" className="menu-link logged-out">Login</a>
                             </li>
                             <li className="menu-item">
                                 <a href="/sign-up" className="menu-link logged-out">Sign Up</a>

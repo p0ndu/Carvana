@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './RangeFilter.css';
 
 // Create the MultiRangeSlider component and export it
-function MultiRangeSlider({ label, min, max, unit = '' }) {
-    const [lowerValue, setLowerValue] = useState(min);
-    const [upperValue, setUpperValue] = useState(max);
+function MultiRangeSlider({ label, min, max, unit = '', onChange }) {
+    const [lowerValue, setLowerValue] = useState(min ?? 0);
+    const [upperValue, setUpperValue] = useState(max ?? 1000);
+    const debounceTimer = useRef(null);
 
     // Handle changes for the lower slider
     const handleLowerChange = (event) => {
@@ -19,6 +20,18 @@ function MultiRangeSlider({ label, min, max, unit = '' }) {
         }
         setLowerValue(lowerVal);
         setUpperValue(upperVal);
+
+        // Clear any existing timeout and set a new one
+        if (debounceTimer.current) {
+            clearTimeout(debounceTimer.current);
+        }
+
+        // Set a new timeout to update the parent after 1 second of no movement
+        debounceTimer.current = setTimeout(() => {
+            if (onChange) {
+                onChange({ lowerValue: lowerVal, upperValue: upperVal });
+            }
+        }, 500);
     };
 
     // Handle changes for the upper slider
@@ -34,6 +47,18 @@ function MultiRangeSlider({ label, min, max, unit = '' }) {
         }
         setLowerValue(lowerVal);
         setUpperValue(upperVal);
+
+        // Clear any existing timeout and set a new one
+        if (debounceTimer.current) {
+            clearTimeout(debounceTimer.current);
+        }
+
+        // Set a new timeout to update the parent after 1 second of no movement
+        debounceTimer.current = setTimeout(() => {
+            if (onChange) {
+                onChange({ lowerValue: lowerVal, upperValue: upperVal });
+            }
+        }, 1000);
     };
 
     // Calculate the width and positioning of the bar

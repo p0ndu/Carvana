@@ -19,47 +19,44 @@
 }
 
 .rent-search-container {
-    padding: 5px;
     width: 50%;
-    border: 1px solid var(--text-color);
+    border: none;
     border-radius: 8px;
-    box-shadow: 1px 1px 5px var(--shadow-color);
+    display: flex;
 }
 
 /* Search input field */
+.rent-car-search .rent-search-container .rent-input-container {
+    width: 80%;
+    position: relative;
+}
+
 .rent-car-search .rent-search-container .rent-input {
-    width: 41%;
-    padding: 12px;
+    width: 100%;
+    padding: 17px;
+    padding-right: 0;
     font-size: 1rem;
-    border: none;
-    border-radius: 8px;
-}
-
-.rent-car-search .rent-search-container .rent-input:first-child {
-    border-right: 1px solid var(--text-color);
+    border-right: none;
     border-radius: 8px 0 0 8px;
-    margin-right: 5px;
+    border: 1px solid var(--text-color);
 }
 
-/* Remove border and outline on focus for both inputs */
 .rent-car-search .rent-search-container .rent-input:focus-visible {
     outline: none;
-    border: none;
-}
-
-.rent-car-search .rent-search-container .rent-input:first-child:focus-visible {
-    border-right: 1px solid var(--text-color);
-    border-radius: 8px 0 0 8px;
+    border-right: none;
 }
 
 /* Search button styling */
 .rent-car-search .rent-search-container .rent-search-button {
-    width: 10%;
-    padding: 12px;
+    height: 100%;
+    width: 15%;
+    padding: 17px;
     background-color: var(--accent-color);
     color: var(--card-background);
-    border: none;
-    border-radius: 7px;
+    border-left: none;
+    border-radius: 0 7px 7px 0;
+    border: 1px solid var(--text-color);
+    z-index: 2;
 }
 
 /* Button hover effect */
@@ -136,10 +133,37 @@
 
 /* RENT CAR RESULTS CSS */
 .rent-car-list-card {
+    margin-left: 30px;
     width: 75%;
     background: var(--card-background);
     box-shadow: 0 2px 8px var(--shadow-color);
     border-radius: 10px;
     padding: 20px;
     height: fit-content;
+}
+
+/* Autocomplete dropdown */
+.rent-autocomplete-dropdown {
+    max-height: 200px;
+    top: 85%;
+    overflow-y: auto;
+    background: var(--card-background);
+    border: 1px solid var(--accent-color);
+    border-radius: 0 0 8px 8px;
+    box-shadow: var(--shadow-color) 0px 2px 5px;
+    z-index: 10;
+    position: absolute;
+    width: -webkit-fill-available;
+}
+
+.rent-autocomplete-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.rent-autocomplete-item:hover,
+.rent-autocomplete-item.selected {
+    background: var(--hover-color);
+    color: white;
 }
