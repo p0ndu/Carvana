@@ -9,6 +9,7 @@ public class TreeManager // class which will manage the tree, will handle prunin
 {
     private readonly INodeFactory _nodeFactory; // used to make nodes
 
+
     public TreeManager(INodeFactory nodeFactory)
     {
         _nodeFactory = nodeFactory;
@@ -20,7 +21,7 @@ public class TreeManager // class which will manage the tree, will handle prunin
             throw new ArgumentNullException(nameof(root));
         }
         bool outcome = PruneInternal(root);
-        Console.WriteLine(outcome ? "Tree Pruned" : "Error: Pruning Failed");
+       Console.WriteLine(outcome ? "Tree Pruned" : "Error: Pruning Failed"); // output success or failure
     }
     
     public List<string> AutoComplete(Node root, string prefix = "") // returns top 5 results branching from node corresponding to prefix, default prefix value = "" so it always returns something
@@ -55,6 +56,7 @@ public class TreeManager // class which will manage the tree, will handle prunin
         return true;
     }
 
+  
     private void QuickSort(List<Node> nodes, int low, int high) // Qsort - aqab
     {
         if (low < high)

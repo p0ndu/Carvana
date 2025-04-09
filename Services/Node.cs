@@ -6,14 +6,14 @@ public class Node // class for node of tree, going to be used for autocomplete, 
     private Node? _parent; // nullable in case root node 
     private List<Node>? _children; // nullable in case final node
     private bool _isFullWord; // flag to indicate whether or not the node is a full word
-    private int weight; // number of times this node has been selected by user. Used to sort possible words
+    private int _weight; // number of times this node has been selected by user. Used to sort possible words
 
     public Node(string data) // constructor for only data, to make root node
     {
         this._data = data;
         this._parent = null;
         this._isFullWord = false;
-        this.weight = 0;
+        this._weight = 0;
 
         this._children = new List<Node>();
     }
@@ -23,7 +23,7 @@ public class Node // class for node of tree, going to be used for autocomplete, 
         this._data = data;
         this._parent = parent;
         this._isFullWord = false;
-        this.weight = 0;
+        this._weight = 0;
 
         this._children = new List<Node>();
     }
@@ -34,15 +34,14 @@ public class Node // class for node of tree, going to be used for autocomplete, 
         this._data = data;
         this._parent = parent;
         this._isFullWord = false;
-        this.weight = 0;
-
+        this._weight = 0;
         this._children = children;
     }
 
 
     public void IncrementWeight() // increments weight, no decrement required
     {
-        this.weight += 1;
+        this._weight += 1;
     }
 
     public void setFullWord()
@@ -113,6 +112,12 @@ public class Node // class for node of tree, going to be used for autocomplete, 
     {
         this._parent = parent;
     }
+
+    public int GetWeight()
+    {
+        return this._weight;
+    }
+    
     
     public int CountAllNodes()
     {

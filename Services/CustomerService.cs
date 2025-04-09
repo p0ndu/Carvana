@@ -20,13 +20,25 @@ public class CustomerService : ICustomerService
         return await _context.Customers.ToListAsync();
     }
 
-    public async Task<Customer> GetCustomerByIdAsync(Guid id)
+    public async Task<Customer?> GetCustomerByIdAsync(Guid id)
     {
-        var customer = await _context.Customers.FindAsync(id);
-
-        if (customer != null)
+        if (id == Guid.Empty || id == null)
         {
-            return customer;
+            throw new ArgumentNullException(nameof(id));
+        }
+
+        try
+        {
+            var customer = await _context.Customers.FindAsync(id);
+
+            if (customer != null)
+            {
+                return customer;
+            }
+        }
+        catch (DbUpdateException)
+        {
+            return null;
         }
 
         return null;
@@ -55,14 +67,40 @@ public class CustomerService : ICustomerService
         return false;
     }
 
+
+    public async Task<Customer?> CreateCustomerAsync(Customer customer)
+    {
+        if (customer == null)
+        {
+            throw new ArgumentNullException(nameof(customer));
+        }
+
+
     public async Task<bool> CreateCustomerAsync(Customer customer)
     {
         bool success = true;
-        
+
         try
         {
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
+
+
+            return customer;
+        }
+        catch (DbUpdateException)
+        {
+            return null;
+        }
+    }
+
+    public async Task<Customer?> UpdateCustomerAsync(Customer customer)
+    {
+        if (customer == null)
+        {
+            throw new ArgumentNullException(nameof(customer));
+        }
+
         }
         catch (DbUpdateException e)
         {
@@ -81,6 +119,15 @@ public class CustomerService : ICustomerService
         {
             _context.Customers.Update(customer);
             await _context.SaveChangesAsync();
+
+
+            return customer;
+        }
+        catch (DbUpdateException)
+        {
+            return null;
+        }
+
         }
         catch (DbUpdateException e)
         {

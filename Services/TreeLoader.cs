@@ -15,8 +15,6 @@ public class TreeLoader : ITreeLoader // tree loader class, to move loading and 
 
     public Node LoadFromFile()
     {
-        //Node root = new Node(""); // creates root node
-
         Node root = _nodeFactory.CreateNode("");
 
         string[] lines = File.ReadAllLines(_path);
