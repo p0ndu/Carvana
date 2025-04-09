@@ -1,6 +1,4 @@
-using System.Security.Cryptography.X509Certificates;
 using Carvana.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Carvana.Controllers
@@ -35,9 +33,9 @@ namespace Carvana.Controllers
         [HttpPost("/signup")]
         public async Task<IActionResult> CheckCustomerDetails([FromBody] Customer customer) // signs the user up, push to DB
         {
-            bool result = await _customerService.CheckForDuplicates(customer.Email, customer.PhoneNumber);
+            bool? result = await _customerService.CheckForDuplicates(customer.Email, customer.PhoneNumber);
 
-            if (!result) // if account was found
+            if (result == false) // if account was found
             {
                 return BadRequest("Account with matching details aready exists.");
             }
@@ -63,9 +61,9 @@ namespace Carvana.Controllers
         }
 
         [HttpPost("/profile")]
-        public async Task<IActionResult> UpdateProfile([FromBody] CustomerData NewData)
+        public async Task<IActionResult> UpdateProfile([FromBody] CustomerData newData)
         {
-            bool success = await _customerService.UpdateCustomer(NewData);
+            bool success = await _customerService.UpdateCustomer(newData);
 
             if (success)
             {

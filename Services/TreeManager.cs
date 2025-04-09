@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
-using System.Linq; // for select and aggregate used in one-liner later on, not needed but let me have a little fun 
 
 namespace Carvana.Services;
 

@@ -1,10 +1,5 @@
-using Carvana;
 using Carvana.Data;
-using Carvana.Services;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Validations.Rules;
 
 namespace Carvana.Services;
 

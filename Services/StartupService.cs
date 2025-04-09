@@ -1,4 +1,3 @@
-using Carvana.Controllers;
 using Carvana.Data;
 using Microsoft.EntityFrameworkCore;
 
