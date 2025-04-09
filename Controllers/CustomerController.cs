@@ -17,7 +17,7 @@ namespace Carvana.Controllers
         }
 
         [HttpGet("/login")]
-        public async Task<IActionResult> Login([FromQuery] string username, [FromQuery] string password) // logs user in via credentails passed
+        public async Task<IActionResult> Login([FromBody] string username, [FromQuery] string password) // logs user in via credentails passed
         {
             // result = email if login is successful, and null if not
             string? result = await _customerService.Login(username, password);

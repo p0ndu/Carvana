@@ -4,7 +4,7 @@ using Carvana.Services;
 namespace Carvana.Controllers
 {
     [ApiController]
-    [Route("autocomplete")] // not sure what route to use yet so im defaulting to this
+    [Route("search")] // not sure what route to use yet so im defaulting to this
     public class TreeController : ControllerBase // extends controllerbase to allow for BadRequest responses etc
     {
         private readonly TreeService _treeService;
@@ -28,9 +28,15 @@ namespace Carvana.Controllers
         }
 
         [HttpGet("initialise")] // Endpoint to manually prune and discplay the percentage reductin in nodes, For testing remove later
+        public IActionResult Initialise()
+        {
+            Console.WriteLine("Initialise endpoint called");
+            _treeService.Initialise();
+            return Ok("Results outputted to console");
+        }
 
 
-        [HttpGet("increment/{word}")]
+        [HttpGet("increment/{word}")] // TODO change this to take the word from body instead of from route
         public IActionResult IncrementWeight([FromRoute] string word)
         {
             if (string.IsNullOrEmpty(word))

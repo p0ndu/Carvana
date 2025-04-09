@@ -26,6 +26,7 @@ public class CarService : ICarService
         return output;
     }
 
+    // searches for model in DB with matching Guid
     public async Task<Model?> GetCarsByModelIDAsync(Guid modelId)
     {
         Model? output = await _context.Models.FindAsync(modelId);
@@ -39,6 +40,7 @@ public class CarService : ICarService
         return output;
     }
 
+    // returns list containing all models in DB
     public async Task<IEnumerable<Model>> GetAllModelsAsync()
     {
         var output = await _context.Models.ToListAsync();
@@ -56,10 +58,11 @@ public class CarService : ICarService
         return await _context.Cars.FindAsync(id); // search DB for car matching ID
     }
 
+    // adds car to DB and saves change
     public async Task<Car?> AddCarAsync(Car car)
     {
-
         await _context.Cars.AddAsync(car); // adds Car to DB locally
+        
         try
         {
             await _context.SaveChangesAsync(); // save changes     
@@ -104,11 +107,13 @@ public class CarService : ICarService
         return false;
     }
 
+    // take a guess what this function does
     public async Task<int> CountCarsAsync()
     {
         return await _context.Cars.CountAsync();
     }
 
+    // returns list of cars matching modelName in DB
     public async Task<List<Car>?> GetCarsByModel(string modelName)
     {
         // i really don't enjoy DB work...

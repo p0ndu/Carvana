@@ -16,27 +16,32 @@ namespace Carvana.Controllers
             this._carService = carService;
         }
 
+        // searches DB for model matching modelID given
         [HttpGet("models/id={modelID}")]
-        public async Task<IActionResult> GetCarsByModelID(Guid modelID)
+        public async Task<IActionResult> GetCarsByModelID([FromBody] Guid modelID)
         {
-            Model model = await _carService.GetCarsByModelIDAsync(modelID);
+            Model? model = await _carService.GetCarsByModelIDAsync(modelID);
 
             if (model == null)
             {
                 return NotFound();
             }
+
             return Ok(model);
         }
 
+        // returns all models as list
         [HttpGet("models")]
         public async Task<IActionResult> GetAllModelsAsync()
         {
-            var output = _carService.GetAllModelsAsync();
+            var output = await _carService.GetAllModelsAsync();
+
             return Ok(output);
         }
 
+        // searches DB for model matching model name given
         [HttpGet("models/search")]
-        public async Task<IActionResult> GetCarsByModelName(string model)
+        public async Task<IActionResult> GetCarsByModelName([FromBody] string model)
         {
             // try find cars with matching model names
             List<Car>? carList = await _carService.GetCarsByModel(model);
@@ -49,15 +54,17 @@ namespace Carvana.Controllers
             return Ok(carList);
         }
 
+        // returns all cars from the DB
         [HttpGet()]
-        public async Task<IActionResult> Get() // returns all cars from DB
+        public async Task<IActionResult> Get()
         {
             var cars = await _carService.GetCarsAsync();
             return Ok(cars);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult> GetCarById(Guid id) // get specific car matching id
+        // searches for car in DB and returns it if found
+        [HttpGet("/search")]
+        public async Task<ActionResult> GetCarById([FromBody] Guid id) // get specific car matching id
         {
             Car? car = await _carService.GetCarAsync(id); // tries to get car by ID
 
@@ -65,11 +72,13 @@ namespace Carvana.Controllers
             {
                 return NotFound(); // if car is not found
             }
+
             return Ok(car); // if car is found
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCarById(Guid id) // removes car from DB
+        // remove car with matching ID from database if found
+        [HttpDelete()]
+        public async Task<IActionResult> DeleteCarById([FromBody] Guid id) // removes car from DB
         {
             bool result = await _carService.DeleteCarAsync(id);
 
@@ -81,6 +90,7 @@ namespace Carvana.Controllers
             return NotFound();
         }
 
+        // count the number of cars in the DB
         [HttpGet("count")]
         public async Task<ActionResult> Count() // returns number of cars
         {

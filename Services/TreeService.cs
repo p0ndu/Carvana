@@ -43,7 +43,7 @@ public class TreeService
        return result;
     }
 
-    public void CountReduction()
+    public void Initialise()
     {
         int numNodesBefore = _root.CountAllNodes();
         Prune();
