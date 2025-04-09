@@ -115,6 +115,7 @@ function Rent() {
     const fetchCars = async (model = "") => {
         setLoading(true);
         setError("");
+        console.log("Fetching cars with model:", model);
 
         // fetch cars from the server based on the search query
         try {
