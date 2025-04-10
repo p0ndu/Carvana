@@ -22,7 +22,7 @@ function Login() {
         setSuccess(false);
 
         try {
-            const response = await axios.get(`http://localhost:5046/login`,
+            const response = await axios.get(`http://localhost:5046/auth/login`,
                 { params: { username: email, password: password } });
 
             if (response.status === 200) {
