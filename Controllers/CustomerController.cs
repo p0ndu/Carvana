@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Carvana.Controllers
 {
     [ApiController]
-    [Route("auth")] // authentication route
+    [Route("auth")]
     public class CustomerController : ControllerBase
     {
         private readonly CustomerService _customerService;
@@ -14,62 +14,78 @@ namespace Carvana.Controllers
             _customerService = customerService;
         }
 
-        [HttpGet("/login")]// TODO CHANGED TO FROMBODY
-        public async Task<IActionResult> Login([FromBody] string username, [FromBody] string password) // logs user in via credentails passed
+        // ---------------------------
+        // Authentication
+        // ---------------------------
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            // result = email if login is successful, and null if not
-            string? result = await _customerService.Login(username, password);
-            
-            // if details dont match
+            string? result = await _customerService.Login(request.Email, request.Password);
+
             if (result == null)
             {
-                return BadRequest();
+                return Unauthorized("Invalid credentials");
             }
-            // returns OK with email
+
             return Ok(result);
         }
 
-
-        [HttpPost("/signup")]
-        public async Task<IActionResult> CheckCustomerDetails([FromBody] Customer customer) // signs the user up, push to DB
+        [HttpPost("signup")]
+        public async Task<IActionResult> Signup([FromBody] Customer customer)
         {
-            bool? result = await _customerService.CheckForDuplicates(customer.Email, customer.PhoneNumber);
+            bool exists = await _customerService.CheckForDuplicates(customer.Email, customer.PhoneNumber);
 
-            if (result == false) // if account was found
+            if (exists)
             {
-                return BadRequest("Account with matching details aready exists.");
-            }
-            else if (result == null)
-            {
-                return BadRequest("Error when creating account");
+                return BadRequest("Account with matching email or phone already exists.");
             }
 
-            return Ok();
+            bool created = await _customerService.CreateCustomerAsync(customer);
+
+            if (!created)
+            {
+                return BadRequest("Error creating account.");
+            }
+
+            return Ok("Account created successfully.");
         }
 
-        [HttpGet("/profile")]
-        public async Task<IActionResult> Profile([FromBody] string email)
+        // ---------------------------
+        // Profile
+        // ---------------------------
+
+        [HttpGet("profile")]
+        public async Task<IActionResult> GetProfile([FromQuery] string email)
         {
-            Customer? customer = await _customerService.GetCustomerByEmailAsync(email);
+            var customer = await _customerService.GetCustomerByEmailAsync(email);
 
             if (customer == null)
             {
-                return BadRequest("No Customer found with matching email address.");
+                return NotFound("Customer not found.");
             }
 
             return Ok(customer);
         }
 
-        [HttpPost("/profile")]
+        [HttpPut("profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] CustomerData newData)
         {
             bool success = await _customerService.UpdateCustomer(newData);
 
-            if (success)
+            if (!success)
             {
-                return Ok();
+                return BadRequest("Error updating profile.");
             }
-            return BadRequest("Error when updating profile");
+
+            return Ok("Profile updated successfully.");
         }
+    }
+
+    // DTO class for login
+    public class LoginRequest
+    {
+        public string Email { get; set; } = null!;
+        public string Password { get; set; } = null!;
     }
 }

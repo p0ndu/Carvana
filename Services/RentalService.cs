@@ -11,8 +11,9 @@ public class RentalService : IRentalService
     {
         _context = context;
     }
-    
-    
+
+    // ------------------- GET -------------------
+
     public async Task<IEnumerable<RentalContract>> GetAllContractsAsync()
     {
         return await _context.RentalContracts.ToListAsync();
@@ -23,9 +24,11 @@ public class RentalService : IRentalService
         return await _context.RentalContracts.FindAsync(id);
     }
 
-    public async Task<RentalContract?>CreateContractAsync(RentalContract rentalContract)
+    // ------------------- CREATE / UPDATE / DELETE -------------------
+
+    public async Task<RentalContract?> CreateContractAsync(RentalContract rentalContract)
     {
-        if (rentalContract == null) // if no rental contract passed in
+        if (rentalContract == null)
         {
             throw new ArgumentNullException(nameof(rentalContract));
         }
@@ -35,7 +38,7 @@ public class RentalService : IRentalService
             _context.RentalContracts.Add(rentalContract);
             await _context.SaveChangesAsync();
         }
-        catch (DbUpdateException e) // if error adding or saving changes to DB
+        catch (DbUpdateException)
         {
             return null;
         }
@@ -45,40 +48,39 @@ public class RentalService : IRentalService
 
     public async Task<RentalContract?> UpdateContractAsync(RentalContract rentalContract)
     {
-        if (rentalContract == null) // if argument passed in is missing
+        if (rentalContract == null)
         {
             throw new ArgumentNullException(nameof(rentalContract));
         }
 
         try
         {
-            _context.RentalContracts.Update(rentalContract); 
+            _context.RentalContracts.Update(rentalContract);
             await _context.SaveChangesAsync();
         }
-        catch (DbUpdateException) // if error updating or saving changes
+        catch (DbUpdateException)
         {
             return null;
         }
-        
+
         return rentalContract;
     }
 
     public async Task<bool> DeleteContractAsync(Guid id)
     {
-        if (Guid.Empty.Equals(id) || id == null) // if ID s missing or empty
+        if (Guid.Empty.Equals(id) || id == null)
         {
             throw new ArgumentNullException(nameof(id));
         }
 
         try
         {
-            var contract = await _context.RentalContracts.FindAsync(id); // try find the contract
+            var contract = await _context.RentalContracts.FindAsync(id);
 
-            if (contract != null) // if contract is found
+            if (contract != null)
             {
-                _context.RentalContracts.Remove(contract); // remove the contract
-                await _context.SaveChangesAsync(); // save db
-
+                _context.RentalContracts.Remove(contract);
+                await _context.SaveChangesAsync();
                 return true;
             }
         }
@@ -86,8 +88,7 @@ public class RentalService : IRentalService
         {
             return false;
         }
-        
+
         return false;
     }
-    
 }
