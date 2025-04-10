@@ -4,21 +4,31 @@ using Microsoft.AspNetCore.Mvc;
 namespace Carvana.Controllers
 {
     [ApiController]
-    [Route("rent")] //rental route
-    public class CarController : ControllerBase // will control all interactions to do with renting and car availability
+    [Route("rent")] // rental route
+    public class CarController : ControllerBase
     {
         private readonly CarService _carService;
 
         public CarController(CarService carService)
         {
-            this._carService = carService;
+            _carService = carService;
         }
 
-        // searches DB for model matching modelID given
-        [HttpGet("models/id")] // TODO, CHANGED ENDPOINT AND MODELID COMES FROM BODY NOW
-        public async Task<IActionResult> GetCarsByModelID([FromBody] Guid modelID)
+        // ---------------------------------------
+        // Model Endpoints
+        // ---------------------------------------
+
+        [HttpGet("models")]
+        public async Task<IActionResult> GetAllModelsAsync()
         {
-            Model? model = await _carService.GetCarsByModelIDAsync(modelID);
+            var models = await _carService.GetAllModelsAsync();
+            return Ok(models);
+        }
+
+        [HttpGet("models/id/{modelID:guid}")]
+        public async Task<IActionResult> GetCarsByModelID([FromRoute] Guid modelID)
+        {
+            var model = await _carService.GetCarsByModelIDAsync(modelID);
 
             if (model == null)
             {
@@ -28,23 +38,12 @@ namespace Carvana.Controllers
             return Ok(model);
         }
 
-        // returns all models as list
-        [HttpGet("models")]
-        public async Task<IActionResult> GetAllModelsAsync()
+        [HttpGet("models/search/{modelName}")]
+        public async Task<IActionResult> GetCarsByModelName([FromRoute] string modelName)
         {
-            var output = await _carService.GetAllModelsAsync();
+            var carList = await _carService.GetCarsByModel(modelName);
 
-            return Ok(output);
-        }
-
-        // searches DB for model matching model name given
-        [HttpGet("models/search")] // TODO CHANGED TO FROMBODY
-        public async Task<IActionResult> GetCarsByModelName([FromBody] string model)
-        {
-            // try find cars with matching model names
-            List<Car>? carList = await _carService.GetCarsByModel(model);
-
-            if (carList == null)
+            if (carList == null || !carList.Any())
             {
                 return NotFound("No cars with given model name found");
             }
@@ -52,39 +51,41 @@ namespace Carvana.Controllers
             return Ok(carList);
         }
 
-        // returns all cars from the DB
-        [HttpGet()]
-        public async Task<IActionResult> Get()
+        // ---------------------------------------
+        // Car Endpoints
+        // ---------------------------------------
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllCars()
         {
             var cars = await _carService.GetCarsAsync();
             return Ok(cars);
         }
 
-        // searches for car in DB and returns it if found
-        [HttpGet("/search")] // TODO CAHNGED TO FROMBODY
-        public async Task<ActionResult> GetCarById([FromBody] Guid id) // get specific car matching id
+        [HttpGet("search/{id:guid}")]
+        public async Task<IActionResult> GetCarById([FromRoute] Guid id)
         {
-            Car? car = await _carService.GetCarAsync(id); // tries to get car by ID
+            var car = await _carService.GetCarAsync(id);
 
             if (car == null)
             {
-                return NotFound(); // if car is not found
+                return NotFound();
             }
 
-            return Ok(car); // if car is found
+            return Ok(car);
         }
 
-        // remove car with matching ID from database if found
-        [HttpDelete()] // TODO CAHNGED TO FROMBODY
-        public async Task<IActionResult> DeleteCarById([FromBody] Guid id) // removes car from DB
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteCarById([FromRoute] Guid id)
         {
-            bool? result = await _carService.DeleteCarAsync(id);
+            var result = await _carService.DeleteCarAsync(id);
 
             if (result == true)
             {
                 return Ok();
             }
-            else if (result == null)
+
+            if (result == null)
             {
                 return NotFound("No car with given id found");
             }
@@ -92,13 +93,15 @@ namespace Carvana.Controllers
             return BadRequest("Error deleting car");
         }
 
-        // count the number of cars in the DB
+        // ---------------------------------------
+        // Utility
+        // ---------------------------------------
+
         [HttpGet("count")]
-        public async Task<ActionResult> Count() // returns number of cars
+        public async Task<IActionResult> Count()
         {
             var count = await _carService.CountCarsAsync();
             return Ok(count);
         }
-
     }
 }

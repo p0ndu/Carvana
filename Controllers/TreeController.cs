@@ -13,9 +13,19 @@ namespace Carvana.Controllers
         {
             this._treeService = treeService;
         }
+        
+        // prunes and displays the percentage reduction in nodes, will run on startup, left as endpoint during testing
+        [HttpGet("initialise")] 
+        public IActionResult Initialise()
+        {
+            Console.WriteLine("Initialise endpoint called");
+            _treeService.Initialise();
+            return Ok("Results outputted to console");
+        }
 
+        // returns 5 options with highest weight that branch from prefix
         [HttpGet] // TODO, CHANGE CALLS TO SEND PREFIX VIA BODY ISNTEAD OF QUERY
-        public IActionResult GetAutocomplete([FromBody] string prefix) // IActionResult is abstract datatype allowing a variety of response types, helps make it more malleable
+        public IActionResult GetAutocomplete([FromBody] string prefix)
         {
             if (string.IsNullOrEmpty(prefix)) // check if string is empty
             {
@@ -27,16 +37,7 @@ namespace Carvana.Controllers
             return Ok(completions); // returns HTTP 200 ok result with completions
         }
 
-        // prunes and displays the percentage reduction in nodes, will run on startup, left as endpoint during testing
-        [HttpGet("initialise")] 
-        public IActionResult Initialise()
-        {
-            Console.WriteLine("Initialise endpoint called");
-            _treeService.Initialise();
-            return Ok("Results outputted to console");
-        }
-
-
+        // increments the weight of a word
         [HttpGet("increment")] // TODO change frontend code to send word via body instead of route 
         public IActionResult IncrementWeight([FromBody] string word)
         {
@@ -56,14 +57,13 @@ namespace Carvana.Controllers
             return Ok(word);
         }
 
-   
-
-        [HttpGet("printTree")] // visualising tree endpoint
+        // prints graph of tree in console, for debugging
+        [HttpGet("printTree")] 
         public IActionResult VisualiseTree()
         {
             try
             {
-                _treeService.VisualiseTree(); // should output to console(?)
+                _treeService.VisualiseTree(); 
             }
             catch (Exception ex)
             {
