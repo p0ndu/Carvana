@@ -24,12 +24,15 @@
 }
 
 /* CAR DETAILS SECTION */
-.car-checkout-details {
+.car-checkout-details-container {
     width: 70%;
     background: var(--card-background);
     box-shadow: 0 2px 8px var(--shadow-color);
     border-radius: 10px;
     padding: 20px;
+}
+
+.car-checkout-details {
     display: flex;
     align-items: flex-start;
 }

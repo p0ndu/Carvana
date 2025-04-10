@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import axios from "axios";
 
@@ -60,6 +60,14 @@ function Home() {
 
     // Function to handle suggestion selection
     const handleSelect = (suggestion) => {
+        console.log(suggestion);
+        axios.get("http://localhost:5046/search/increment", { params: { word: "tesla" } })   // Send "word" as the key
+            .then((response) => {
+                console.log("Increment success:", response.data);  // Handle success
+            })
+            .catch((error) => {
+                console.error("Error incrementing weight:", error.response ? error.response.data : error.message);  // Handle error
+            });
         setInput(suggestion);
         setSuggestions([]);
         setShowDropdown(false);

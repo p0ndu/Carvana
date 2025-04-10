@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import "./Login.css";
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router';
 
 // Create a Login component and export it
 function Login() {
@@ -9,6 +11,7 @@ function Login() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
 
     const SiteUrl = window.location.origin;
 
@@ -19,15 +22,21 @@ function Login() {
         setSuccess(false);
 
         try {
-            const response = await axios.get(`http://localhost:5046/login`, {
-                params: { username: email, password: password } // Send username and password as query params
-            });
+            const response = await axios.get(`http://localhost:5046/login`,
+                { params: { username: email, password: password } });
 
             if (response.status === 200) {
 
                 // Update success state
                 setSuccess(true);
                 setLoading(false);
+                Cookies.set('user', JSON.stringify(response.data));
+
+                //Send user to home page
+                setTimeout(() => {
+                    navigate("/");
+                }, 1000);
+
             }
         } catch (error) {
             setError(error.response?.data?.message || "Login failed.");

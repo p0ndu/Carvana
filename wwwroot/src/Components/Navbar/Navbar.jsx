@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
+import Cookies from 'js-cookie';
 
 // Create the Navbar component and export it
-function Navbar() {
+function Navbar({ logged_in }) {
 
     const [isActive, setActive] = useState(false);
 
     // Function to check login status
     const checkLoginStatus = () => {
-        const loginStatus = document.cookie
-            .split("; ")
-            .find((row) => row.startsWith("loginStatus="))
-            ?.split("=")[1];
+        setActive(logged_in);
+    };
 
-        setActive(loginStatus === "true"); // Assuming "true" means logged in
+    // Function to handle logout
+    const handleLogout = (e) => {
+        e.preventDefault();
+        Cookies.remove('user');
+        console.log("User logged out");
+        window.location.href = '/';
     };
 
     // Check login status when the component mounts
     useEffect(() => {
         checkLoginStatus();
-    }, []);
+    }, [logged_in]);
 
 
     return (
@@ -42,7 +46,7 @@ function Navbar() {
                                 <a href="/profile" className="menu-link logged-in">Profile</a>
                             </li>
                             <li className="menu-item">
-                                <a href="/logout" className="menu-link logged-in">Logout</a>
+                                <a href="/" className="menu-link logged-in" onClick={handleLogout}>Logout</a>
                             </li>
                         </>
                     ) : (
