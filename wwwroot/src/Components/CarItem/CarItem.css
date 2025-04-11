@@ -4,6 +4,7 @@
     align-items: center;
     border-bottom: 1px solid var(--border-color);
     padding: 30px;
+    width: 100%;
 }
 
 .rent-car-item:last-child {

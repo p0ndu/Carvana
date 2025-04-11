@@ -18,17 +18,23 @@ namespace Carvana.Controllers
         // Authentication
         // ---------------------------
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        [HttpGet("login")]
+        public async Task<IActionResult> Login([FromQuery] string username, [FromQuery] string password)
         {
-            string? result = await _customerService.Login(request.Email, request.Password);
-
-            if (result == null)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                return Unauthorized("Invalid credentials");
+                return BadRequest("Email and password are required.");
             }
+            {
+                string? result = await _customerService.Login(username, password);
 
-            return Ok(result);
+                if (result == null)
+                {
+                    return Unauthorized("Invalid credentials");
+                }
+
+                return Ok(result);
+            }
         }
 
         [HttpPost("signup")]
@@ -80,12 +86,5 @@ namespace Carvana.Controllers
 
             return Ok("Profile updated successfully.");
         }
-    }
-
-    // DTO class for login
-    public class LoginRequest
-    {
-        public string Email { get; set; } = null!;
-        public string Password { get; set; } = null!;
     }
 }

@@ -2,10 +2,45 @@ import React, { useState } from 'react';
 import './Profile.css';
 
 function Profile() {
-    const [activeTab, setActiveTab] = useState('profile'); // Default tab is 'profile'
+    // Original profile details (to discard changes)
+    const originalProfile = {
+        name: 'John Doe',
+        email: 'johndoe@example.com',
+        phone: '+123 456 7890',
+        age: 23,
+        licenseNo: '123456789',
+    };
+
+    const [activeTab, setActiveTab] = useState('profile');
+    const [isEditing, setIsEditing] = useState(false);
+    const [profileDetails, setProfileDetails] = useState(originalProfile);
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setProfileDetails((prevDetails) => ({
+            ...prevDetails,
+            [name]: value,
+        }));
+    };
+
+    const handleEdit = () => {
+        setIsEditing(true);
+    };
+
+    const handleApply = () => {
+        setIsEditing(false);
+        // Apply changes (this could involve saving to a server, etc.)
+        // For now, we're just saving the changes locally
+    };
+
+    const handleBack = () => {
+        setIsEditing(false);
+        // Discard changes and reset the profile details to the original ones
+        setProfileDetails(originalProfile);
     };
 
     return (
@@ -34,11 +69,61 @@ function Profile() {
                                     <h2>Profile</h2>
                                 </div>
                                 <div className='profile-info-container'>
-                                    <p>Name: John Doe</p>
-                                    <p>Email: johndoe@example.com</p>
-                                    <p>Phone: +123 456 7890</p>
-                                    <p>Age: 23</p>
-                                    <p>License No.: 123456789</p>
+                                    <label>Name:</label>
+                                    <input
+                                        type='text'
+                                        name='name'
+                                        value={profileDetails.name}
+                                        onChange={handleChange}
+                                        disabled={!isEditing}
+                                    />
+
+                                    <label>Email:</label>
+                                    <input
+                                        type='email'
+                                        name='email'
+                                        value={profileDetails.email}
+                                        onChange={handleChange}
+                                        disabled={!isEditing}
+                                    />
+
+                                    <label>Phone:</label>
+                                    <input
+                                        type='text'
+                                        name='phone'
+                                        value={profileDetails.phone}
+                                        onChange={handleChange}
+                                        disabled={!isEditing}
+                                    />
+
+                                    <label>Age:</label>
+                                    <input
+                                        type='number'
+                                        name='age'
+                                        value={profileDetails.age}
+                                        onChange={handleChange}
+                                        disabled={!isEditing}
+                                    />
+
+                                    <label>License No.:</label>
+                                    <input
+                                        type='text'
+                                        name='licenseNo'
+                                        value={profileDetails.licenseNo}
+                                        onChange={handleChange}
+                                        disabled={!isEditing}
+                                    />
+                                </div>
+
+                                <div className='edit-actions'>
+                                    {isEditing ? (
+                                        <>
+                                            <button className='edit-button' onClick={handleApply}>Apply</button>
+                                            <button className='back-button' onClick={handleBack}>Back</button>
+                                        </>
+                                    ) : (
+                                        <button className='edit-button' onClick={handleEdit}>Edit</button>
+                                    )}
                                 </div>
                             </div>
                         ) : (
