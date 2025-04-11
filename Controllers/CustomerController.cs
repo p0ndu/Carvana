@@ -77,6 +77,7 @@ namespace Carvana.Controllers
         [HttpPut("profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] CustomerData newData)
         {
+            //data MUST HAVE CUSTOMER GUID to be able to find the customer being updated
             bool success = await _customerService.UpdateCustomerAsync(newData);
 
             if (!success)

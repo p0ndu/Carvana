@@ -24,8 +24,8 @@ namespace Carvana.Controllers
         }
 
         // returns 5 options with highest weight that branch from prefix
-        [HttpGet] // TODO, CHANGE CALLS TO SEND PREFIX VIA BODY ISNTEAD OF QUERY
-        public IActionResult GetAutocomplete([FromBody] string prefix)
+        [HttpGet] 
+        public IActionResult GetAutocomplete([FromQuery] string prefix)
         {
             if (string.IsNullOrEmpty(prefix)) // check if string is empty
             {
@@ -38,8 +38,8 @@ namespace Carvana.Controllers
         }
 
         // increments the weight of a word
-        [HttpGet("increment")] // TODO change frontend code to send word via body instead of route 
-        public IActionResult IncrementWeight([FromBody] string word)
+        [HttpGet("increment")] 
+        public IActionResult IncrementWeight([FromQuery] string word)
         {
             if (string.IsNullOrEmpty(word))
             {

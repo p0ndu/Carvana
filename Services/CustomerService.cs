@@ -68,22 +68,20 @@ public class CustomerService : ICustomerService
     {
         bool success = true;
 
-        // Step 1: Try to find existing license
+        //try to find existing license in DB (shouldnt really exist but who knows)
         var license = await _context.Licenses.FindAsync(data.LicenseNumber);
-
-        // Step 2: If not found, create a new License
+        
         if (license == null)
         {
             license = new License
             {
-                LicenseNumber = data.LicenseNumber!
-                // Add any additional default or required fields if your License model has more
+                LicenseNumber = data.LicenseNumber! // ! incase its null somehow
             };
 
             _context.Licenses.Add(license); // Add to context so EFCore tracks it
         }
 
-        // Step 3: Create Customer with the License
+        // create Customer with the License
         var customer = Customer.Create(
             data.CustomerID,
             license,
@@ -97,7 +95,7 @@ public class CustomerService : ICustomerService
         try
         {
             _context.Customers.Add(customer);
-            await _context.SaveChangesAsync(); // Saves both Customer and new License if needed
+            await _context.SaveChangesAsync(); 
         }
         catch (DbUpdateException ex)
         {
@@ -132,23 +130,24 @@ public class CustomerService : ICustomerService
             return false;
         }
 
+        // create iterable collection of items to update
         var updateItems = typeof(CustomerData).GetProperties();
-
+        
         foreach (var property in updateItems)
         {
             var currentProperty = property.GetValue(data);
-
+            // if the property needs to be changed
             if (currentProperty != null)
             {
                 var customerProperty = typeof(Customer).GetProperty(property.Name);
-
+                // if its possible to update
                 if (customerProperty != null && customerProperty.CanWrite)
                 {
                     customerProperty.SetValue(customer, currentProperty);
                 }
             }
         }
-
+        // save changes
         await _context.SaveChangesAsync();
         return true;
     }
