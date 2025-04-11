@@ -1,39 +1,69 @@
 /* ABOUT US CSS */
+
 .about-container {
     width: 100%;
-    min-height: 884.422px;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-
+    padding: 40px 20px;
 }
 
-/* About Card */
 .about-card {
-    background: var(--card-background);
+    background: #fff;
     padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px var(--shadow-color);
-    border: 1px solid var(--border-color);
-    max-width: 800px;
-    margin: 100px auto;
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    max-width: 900px;
+    width: 100%;
     text-align: center;
 }
 
 .about-header {
-    color: var(--primary-color);
-    font-size: 2rem;
-    margin-bottom: 15px;
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 
-/* About Card Text */
-.about-card p {
-    color: var(--text-color);
+.about-intro {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+.about-body p {
     font-size: 1.1rem;
+    color: #444;
     line-height: 1.8;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    text-align: justify;
 }
 
-.about-card p:last-child {
+.about-body p:last-child {
     margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .about-card {
+        padding: 25px;
+    }
+
+    .about-header {
+        font-size: 2rem;
+    }
+
+    .about-intro {
+        font-size: 1rem;
+    }
+
+    .about-body p {
+        font-size: 1rem;
+    }
+
+    .about-image {
+        max-height: 200px;
+    }
 }
