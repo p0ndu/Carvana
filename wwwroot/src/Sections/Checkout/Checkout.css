@@ -7,7 +7,7 @@
 
 /* CHECKOUT HEADER */
 .checkout-header {
-    margin-left: 70px;
+    width: 85%;
     margin-bottom: 30px;
 }
 
@@ -30,21 +30,15 @@
     box-shadow: 0 2px 8px var(--shadow-color);
     border-radius: 10px;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .car-checkout-details {
     display: flex;
     align-items: flex-start;
-}
-
-.car-checkout-details .car-checkout-image-container {
-    width: 40%;
-}
-
-.car-checkout-image {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 15px;
+    width: 90%;
 }
 
 /* RENTAL SUMMARY */

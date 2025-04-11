@@ -12,9 +12,6 @@ function CarItem({ car, page = 'car-rent' }) {
     };
     return (
         <div className="rent-car-item" key={car.carId}>
-            <div className={`car-image ${page === 'checkout' ? 'checkout-image' : ''}`}>
-                <img className="car-item-img" src={car.image} alt={car.name} />
-            </div>
             <div className={`car-details-container ${page === 'checkout' ? 'checkout-details' : ''}`}>
                 <h3 className="car-name">{car.carModel.name}</h3>
                 <div className="car-details-text ">
