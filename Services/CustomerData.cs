@@ -1,5 +1,6 @@
 namespace Carvana.Services;
 
+// DTO for customer
 public class CustomerData
 {
     public Guid CustomerID { get; set; }

@@ -32,7 +32,7 @@ namespace Carvana.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> Signup([FromBody] Customer customer)
+        public async Task<IActionResult> Signup([FromBody] CustomerData customer)
         {
             bool exists = await _customerService.CheckForDuplicates(customer.Email, customer.PhoneNumber);
 
@@ -71,7 +71,7 @@ namespace Carvana.Controllers
         [HttpPut("profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] CustomerData newData)
         {
-            bool success = await _customerService.UpdateCustomer(newData);
+            bool success = await _customerService.UpdateCustomerAsync(newData);
 
             if (!success)
             {

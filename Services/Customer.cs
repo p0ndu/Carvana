@@ -8,7 +8,7 @@ namespace Carvana
     {
         [Key] public Guid CustomerID { get; set; } // private key
         public string LicenseNumber { get; set; } // foreign key
-        public License License { get; set; } // navigation to license
+        public License? License { get; set; } // navigation to license
         public string Password { get; set; }
         public string Email { get; set; }
         public string FullName { get; set; }
@@ -50,6 +50,7 @@ namespace Carvana
             }
             return new Customer(customerID, license, email, fullName, age, phoneNumber, password);
         }
+
 
         // for birthdays
         public void IncrementAge()

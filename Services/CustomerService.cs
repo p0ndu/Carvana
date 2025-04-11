@@ -64,34 +64,44 @@ public class CustomerService : ICustomerService
 
     // ------------------- CREATE / UPDATE / DELETE -------------------
 
-    public async Task<bool> CreateCustomerAsync(Customer customer)
+    public async Task<bool> CreateCustomerAsync(CustomerData data)
     {
         bool success = true;
+
+        // Step 1: Try to find existing license
+        var license = await _context.Licenses.FindAsync(data.LicenseNumber);
+
+        // Step 2: If not found, create a new License
+        if (license == null)
+        {
+            license = new License
+            {
+                LicenseNumber = data.LicenseNumber!
+                // Add any additional default or required fields if your License model has more
+            };
+
+            _context.Licenses.Add(license); // Add to context so EFCore tracks it
+        }
+
+        // Step 3: Create Customer with the License
+        var customer = Customer.Create(
+            data.CustomerID,
+            license,
+            data.Email!,
+            data.FullName!,
+            data.Age ?? 0,
+            data.PhoneNumber!,
+            data.Password!
+        );
 
         try
         {
             _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(); // Saves both Customer and new License if needed
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException ex)
         {
-            success = false;
-        }
-
-        return success;
-    }
-
-    public async Task<bool> UpdateCustomerAsync(Customer customer)
-    {
-        bool success = true;
-
-        try
-        {
-            _context.Customers.Update(customer);
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateException)
-        {
+            Console.WriteLine("DB Error: " + ex.InnerException?.Message ?? ex.Message);
             success = false;
         }
 
@@ -113,7 +123,7 @@ public class CustomerService : ICustomerService
     }
 
     // updates customer using reflection (partial update)
-    public async Task<bool> UpdateCustomer(CustomerData data)
+    public async Task<bool> UpdateCustomerAsync(CustomerData data)
     {
         Customer? customer = await _context.Customers.FirstOrDefaultAsync(c => c.CustomerID == data.CustomerID);
 
