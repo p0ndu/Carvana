@@ -75,6 +75,21 @@ namespace Carvana.Data
             {
                 entity.HasKey(e => e.CustomerID);
 
+                // converter for DB values
+                var encryptConverter = new EncryptedStringConverter();
+                
+                // convert phoneNumber
+                entity.Property(e => e.PhoneNumber)
+                    .HasConversion(encryptConverter);
+    
+                //convert password
+                entity.Property(e => e.Password)
+                    .HasConversion(encryptConverter);
+
+                //convert licenseNumber
+                entity.Property(e => e.Email)
+                    .HasConversion(encryptConverter);
+
                 // each customer only has one license 
                 entity.HasOne(c => c.License)
                       .WithOne(l => l.Customer)
