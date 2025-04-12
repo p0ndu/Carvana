@@ -1,58 +1,58 @@
-namespace Carvana.Services // wrapper class to handle all input and output from tree
+namespace Carvana.Services // Wrapper class for handling tree operations
 {
     public class TreeService
     {
-        private readonly TreeManager _manager;
-        private readonly DefaultNodeFactory _factory; // node factory instance
-        private readonly TreeLoader _loader; // tree loader instance
-        private readonly Node _root; // root node pointing to the tree
+        private readonly TreeManager _manager; // Manages tree operations
+        private readonly DefaultNodeFactory _factory; // Factory to create nodes
+        private readonly TreeLoader _loader; // Loads tree data from file
+        private readonly Node _root; // Root node of the tree
 
-        public TreeService(IHostEnvironment env) // environment passed to access testTree data file 
+        public TreeService(IHostEnvironment env) // Initializes service with environment data
         {
-            string filepath = Path.Combine(env.ContentRootPath, "Data", "TestTree.txt");
+            string filepath = Path.Combine(env.ContentRootPath, "Data", "AutocompleteNames.txt");
 
             _factory = new DefaultNodeFactory();
             _manager = new TreeManager(_factory);
             _loader = new TreeLoader(filepath, _factory);
             _root = _loader.LoadFromFile();
-            Prune(); 
+            Prune(); // Prune the tree after loading
         }
 
-        // ------------------- INITI -------------------------
+        // ------------------- INIT -------------------------
 
         public void Initialise()
         {
-            int numNodesBefore = _root.CountAllNodes();
+            int numNodesBefore = _root.CountAllNodes(); // Before pruning
             Prune();
-            int numNodesAfter = _root.CountAllNodes();
+            int numNodesAfter = _root.CountAllNodes(); // After pruning
 
+            // Print reduction percentage
             float percentReduction = (numNodesBefore - numNodesAfter) / (float)numNodesBefore * 100f;
 
-            Console.WriteLine("Number of nodes before pruning - " + numNodesBefore + "\n" +
-                              "Number of nodes after pruning - " + numNodesAfter);
-            Console.WriteLine(percentReduction + "% reduction in node count");
+            Console.WriteLine($"Nodes before: {numNodesBefore}, after: {numNodesAfter}");
+            Console.WriteLine($"{percentReduction}% reduction");
         }
 
         private void Prune()
         {
-            _manager.Prune(_root);
+            _manager.Prune(_root); // Remove unnecessary nodes
         }
 
         // ------------------- FUNCTIONAL METHODS ------------------- 
 
         public List<string> Autocomplete(string query)
         {
-            return _manager.AutoComplete(_root, query);
+            return _manager.AutoComplete(_root, query); // Get autocomplete suggestions
         }
 
         public bool IncrementWeight(string word)
         {
-            return _manager.IncrementNodeWeight(word, _root);
+            return _manager.IncrementNodeWeight(word, _root); // Increase node weight for word
         }
 
         public void VisualiseTree()
         {
-            TreeVisualiser.VisualizeTree(_root);
+            TreeVisualiser.VisualizeTree(_root); // Visualize the tree
         }
     }
 }

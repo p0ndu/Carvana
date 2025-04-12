@@ -14,7 +14,7 @@ public class CarService : ICarService
 
     // ------------------- GET CARS -------------------
 
-    // Outputs all cars in DB as a list
+    // Outputs all cars in DB as a list, including their models
     public async Task<IEnumerable<Car>> GetCarsAsync()
     {
         var output = await _context.Cars.Include(c => c.CarModel).ToListAsync();
@@ -27,12 +27,12 @@ public class CarService : ICarService
         return output;
     }
 
-    // searches for car with matching primary key and returns as nullable car object
+    // Searches for car with matching primary key and returns it as a nullable car object
     public async Task<Car?> GetCarAsync(Guid id)
     {
         if (id == Guid.Empty)
         {
-            return null;
+            return null; // early return if ID is empty
         }
 
         return await _context.Cars.FindAsync(id);
@@ -40,13 +40,13 @@ public class CarService : ICarService
 
     // ------------------- GET MODELS -------------------
 
-    // returns list containing all models in DB
+    // Returns a list containing all models in the DB
     public async Task<IEnumerable<Model>> GetAllModelsAsync()
     {
         return await _context.Models.ToListAsync();
     }
 
-    // searches for model in DB with matching Guid
+    // Searches for a model in DB with a matching Guid and returns it
     public async Task<Model?> GetCarsByModelIDAsync(Guid modelId)
     {
         Model? output = await _context.Models.FindAsync(modelId);
@@ -54,7 +54,7 @@ public class CarService : ICarService
         if (output == null)
         {
             Console.WriteLine("Error, model matching ModelID not found.");
-            return null;
+            return null; // no matching model found
         }
 
         return output;
@@ -62,20 +62,22 @@ public class CarService : ICarService
 
     // ------------------- SEARCH / FILTER -------------------
 
-    // returns list of cars matching modelName in DB
+    // Returns a list of cars matching the modelName in DB
     public async Task<List<Car>?> GetCarsByModel(string modelName)
     {
-        Console.WriteLine(modelName); // for debugging
+        Console.WriteLine(modelName); // log for debugging
 
         if (string.IsNullOrWhiteSpace(modelName))
-            return null;
+            return null; // return null if modelName is empty or just whitespace
 
-        string lowerModelName = modelName.ToLower();
+        string lowerModelName = modelName.ToLower(); // case-insensitive search
 
+        // Fetch all cars with their model data from DB
         List<Car> allCars = await _context.Cars
             .Include(c => c.CarModel)
             .ToListAsync();
 
+        // Filter cars based on model name or brand containing the search term
         List<Car> matchingCars = allCars
             .Where(c =>
                 !string.IsNullOrEmpty(c.CarModel.Name) &&
@@ -88,31 +90,31 @@ public class CarService : ICarService
                 ))
             .ToList();
 
-        return matchingCars.Any() ? matchingCars : null;
+        return matchingCars.Any() ? matchingCars : null; // return filtered cars or null if no match
     }
 
     // ------------------- ADD / DELETE -------------------
 
-    // adds car to DB and saves change
+    // Adds car to DB and saves changes, returns success flag
     public async Task<bool> AddCarAsync(Car car)
     {
         bool success = true;
 
-        await _context.Cars.AddAsync(car);
+        await _context.Cars.AddAsync(car); // add car to context
 
         try
         {
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(); // attempt to save changes
         }
         catch (DbUpdateConcurrencyException)
         {
-            success = false;
+            success = false; // handle concurrency issues
         }
 
         return success;
     }
 
-    // Attempts to remove car with primary key matching ID, returns boolean to indicate success
+    // Attempts to remove a car with primary key matching ID, returns boolean to indicate success
     public async Task<bool?> DeleteCarAsync(Guid id)
     {
         bool? success = true;
@@ -122,17 +124,17 @@ public class CarService : ICarService
         {
             try
             {
-                _context.Cars.Remove(car);
-                await _context.SaveChangesAsync();
+                _context.Cars.Remove(car); // remove car from context
+                await _context.SaveChangesAsync(); // save changes to DB
             }
             catch (DbUpdateConcurrencyException)
             {
-                success = false;
+                success = false; // handle concurrency issues
             }
         }
         else
         {
-            success = null;
+            success = null; // return null if no matching car found
         }
 
         return success;
@@ -140,7 +142,7 @@ public class CarService : ICarService
 
     // ------------------- UTILITY -------------------
 
-    // Returns total number of cars in DB
+    // Returns the total number of cars in the DB
     public async Task<int> CountCarsAsync()
     {
         return await _context.Cars.CountAsync();

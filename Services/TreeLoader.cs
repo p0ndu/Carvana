@@ -1,4 +1,3 @@
-
 namespace Carvana.Services;
 
 public class TreeLoader : ITreeLoader // tree loader class, to move loading and building the tree into its own class
@@ -23,12 +22,13 @@ public class TreeLoader : ITreeLoader // tree loader class, to move loading and 
             if (!string.IsNullOrEmpty(trimmedLine)) // if line is not null
             {
                 InsertWord(root, trimmedLine); // inserts the word into the trie
-                
             }
         }
         return root; // returns root node as sort of header for whole tree
     }
-    
+
+    // -------- Internal Helpers --------
+
     private void InsertWord(Node root, string word) // inserts word into the trie one char at a time
     {
         bool isNewBranch = false; // flag to mark wether we are inserting to a new branch, to avoid checking the children of nodes we just created

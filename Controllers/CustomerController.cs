@@ -23,23 +23,23 @@ namespace Carvana.Controllers
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                return BadRequest("Email and password are required.");
+                return BadRequest("Email and password are required."); // early return if missing input
             }
+
+            string? result = await _customerService.Login(username, password);
+
+            if (result == null)
             {
-                string? result = await _customerService.Login(username, password);
-
-                if (result == null)
-                {
-                    return Unauthorized("Invalid credentials");
-                }
-
-                return Ok(result);
+                return Unauthorized("Invalid credentials"); // no match in DB
             }
+
+            return Ok(result); // return token or auth confirmation
         }
 
         [HttpPost("signup")]
         public async Task<IActionResult> Signup([FromBody] CustomerData customer)
         {
+            // check if account already exists (email or phone match)
             bool exists = await _customerService.CheckForDuplicates(customer.Email, customer.PhoneNumber);
 
             if (exists)
@@ -68,16 +68,16 @@ namespace Carvana.Controllers
 
             if (customer == null)
             {
-                return NotFound("Customer not found.");
+                return NotFound("Customer not found."); // no matching customer
             }
 
-            return Ok(customer);
+            return Ok(customer); // returns full customer profile
         }
 
         [HttpPut("profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] CustomerData newData)
         {
-            //data MUST HAVE CUSTOMER GUID to be able to find the customer being updated
+            // data MUST HAVE CUSTOMER GUID to identify the record being updated
             bool success = await _customerService.UpdateCustomerAsync(newData);
 
             if (!success)

@@ -22,7 +22,7 @@ namespace Carvana.Controllers
         public async Task<IActionResult> GetAllModelsAsync()
         {
             var models = await _carService.GetAllModelsAsync();
-            return Ok(models);
+            return Ok(models); // returns list of all available car models
         }
 
         [HttpGet("models/id/{modelID:guid}")]
@@ -32,10 +32,10 @@ namespace Carvana.Controllers
 
             if (model == null)
             {
-                return NotFound();
+                return NotFound(); // if no matching model is found, return 404
             }
 
-            return Ok(model);
+            return Ok(model); // returns all cars with the matching model ID
         }
 
         [HttpGet("models/search/{modelName}")]
@@ -45,10 +45,10 @@ namespace Carvana.Controllers
 
             if (carList == null || !carList.Any())
             {
-                return NotFound("No cars with given model name found");
+                return NotFound("No cars with given model name found"); // handles null and empty list just in case
             }
 
-            return Ok(carList);
+            return Ok(carList); // returns all cars that match the given model name (partial or exact depending on service logic)
         }
 
         // ---------------------------------------
@@ -59,7 +59,7 @@ namespace Carvana.Controllers
         public async Task<IActionResult> GetAllCars()
         {
             var cars = await _carService.GetCarsAsync();
-            return Ok(cars);
+            return Ok(cars); // returns full list of cars, regardless of status
         }
 
         [HttpGet("search/{id:guid}")]
@@ -69,10 +69,10 @@ namespace Carvana.Controllers
 
             if (car == null)
             {
-                return NotFound();
+                return NotFound(); // no car found with this ID
             }
 
-            return Ok(car);
+            return Ok(car); // returns car if match found
         }
 
         [HttpDelete("{id:guid}")]
@@ -82,15 +82,15 @@ namespace Carvana.Controllers
 
             if (result == true)
             {
-                return Ok();
+                return Ok(); // car deleted successfully
             }
 
             if (result == null)
             {
-                return NotFound("No car with given id found");
+                return NotFound("No car with given id found"); // nothing to delete
             }
 
-            return BadRequest("Error deleting car");
+            return BadRequest("Error deleting car"); // deletion failed for unknown reason
         }
 
         // ---------------------------------------
@@ -101,7 +101,7 @@ namespace Carvana.Controllers
         public async Task<IActionResult> Count()
         {
             var count = await _carService.CountCarsAsync();
-            return Ok(count);
+            return Ok(count); // returns number of cars in system
         }
     }
 }

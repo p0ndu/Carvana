@@ -10,56 +10,42 @@ public class Node // class for node of tree, going to be used for autocomplete, 
 
     public Node(string data) // constructor for only data, to make root node
     {
-        this._data = data;
-        this._parent = null;
-        this._isFullWord = false;
-        this._weight = 0;
-
-        this._children = new List<Node>();
+        _data = data;
+        _parent = null;
+        _isFullWord = false;
+        _weight = 0;
+        _children = new List<Node>();
     }
 
     public Node(string data, Node parent) // constructor without children
     {
-        this._data = data;
-        this._parent = parent;
-        this._isFullWord = false;
-        this._weight = 0;
-
-        this._children = new List<Node>();
+        _data = data;
+        _parent = parent;
+        _isFullWord = false;
+        _weight = 0;
+        _children = new List<Node>();
     }
-
-    public
-        Node(string data, Node parent, List<Node> children) // constructor in case you have the children ahead of time
-    {
-        this._data = data;
-        this._parent = parent;
-        this._isFullWord = false;
-        this._weight = 0;
-        this._children = children;
-    }
-
 
     public void IncrementWeight() // increments weight, no decrement required
     {
-        this._weight += 1;
+        _weight += 1;
     }
 
     public void setFullWord()
     {
-        this._isFullWord = true;
+        _isFullWord = true;
     }
-
 
     public bool isFullWord()
     {
-        return this._isFullWord;
+        return _isFullWord;
     }
 
     public void AddChild(Node child) // adds child to children
     {
         try
         {
-            this._children.Add(child);
+            _children.Add(child);
         }
         catch (Exception e)
         {
@@ -73,7 +59,7 @@ public class Node // class for node of tree, going to be used for autocomplete, 
     {
         try
         {
-            this._children.Remove(child);
+            _children.Remove(child);
         }
         catch (Exception e)
         {
@@ -85,40 +71,39 @@ public class Node // class for node of tree, going to be used for autocomplete, 
 
     public string GetData()
     {
-        return this._data;
+        return _data;
     }
 
     public void SetData(string data)
     {
-        this._data = data;
+        _data = data;
     }
 
     public Node? GetParent()
     {
-        return this._parent;
-    }
-
-    public List<Node> GetChildren() // returns entire list of children
-    {
-        return this._children;
-    }
-
-    public int GetNumChildren()
-    {
-        return this._children.Count;
+        return _parent;
     }
 
     public void SetParent(Node parent) // changes parent
     {
-        this._parent = parent;
+        _parent = parent;
+    }
+
+    public List<Node> GetChildren() // returns entire list of children
+    {
+        return _children;
+    }
+
+    public int GetNumChildren()
+    {
+        return _children.Count;
     }
 
     public int GetWeight()
     {
-        return this._weight;
+        return _weight;
     }
-    
-    
+
     public int CountAllNodes()
     {
         int count = 1; // count this node
@@ -133,6 +118,4 @@ public class Node // class for node of tree, going to be used for autocomplete, 
 
         return count;
     }
-    
 }
-
