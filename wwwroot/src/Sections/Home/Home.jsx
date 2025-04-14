@@ -61,7 +61,7 @@ function Home() {
     // Function to handle suggestion selection
     const handleSelect = (suggestion) => {
         console.log(suggestion);
-        axios.get("http://localhost:5046/search/increment", { params: { word: "tesla" } })   // Send "word" as the key
+        axios.get("http://localhost:5046/search/increment", { params: { word: suggestion } })   // Send "word" as the key
             .then((response) => {
                 console.log("Increment success:", response.data);  // Handle success
             })
