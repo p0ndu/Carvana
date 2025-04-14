@@ -20,7 +20,7 @@ function Home() {
         const fetchSuggestions = async () => {
             setLoading(true);
             try {
-                const response = await axios.get("http://localhost:5046/search/autocomplete", {
+                const response = await axios.get("http://localhost:5046/search", {
                     params: { prefix: input }
                 });
 

@@ -86,7 +86,7 @@ function Rent() {
         const fetchSuggestions = async () => {
             setSearchLoading(true);
             try {
-                const response = await axios.get("http://localhost:5046/search/autocomplete", {
+                const response = await axios.get("http://localhost:5046/search", {
                     params: { prefix: input }
                 });
 
