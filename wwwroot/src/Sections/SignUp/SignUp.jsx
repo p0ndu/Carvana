@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import "./SignUp.css";
+import { useNavigate } from 'react-router';
 
 // Create a SignUp component and export it
 function SignUp() {
@@ -10,11 +11,13 @@ function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [phone, setPhone] = useState("");
     const [license, setLicense] = useState("");
+    const [age, setAge] = useState(0);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
 
     const SiteUrl = window.location.origin; // Dynamically getting the base URL
+    const navigate = useNavigate(); // Using useNavigate hook for navigation
 
     const onFormSubmit = async (event) => {
         event.preventDefault();
@@ -55,14 +58,23 @@ function SignUp() {
             return;
         }
 
-        const signUpData = { name, email, password, phone, license };
+        const signUpData = {
+            Fullname: name,
+            Email: email,
+            Password: password,
+            PhoneNumber: phone,
+            LicenseNumber: license,
+            Age: age
+        };
 
         try {
-            const response = await axios.post(`http://localhost:5046/signup`, signUpData);
+            const response = await axios.post(`http://localhost:5046/auth/signup`, signUpData);
 
             if (response.status === 200) {
                 console.log(response.data);
                 setSuccess(true);
+
+                setTimeout(() => { navigate("/log-in") }, 1000); // Redirect after 2 seconds
             }
         } catch (error) {
             setError(error.response?.data?.message || "Sign Up failed.");
@@ -128,6 +140,16 @@ function SignUp() {
                             placeholder='Phone'
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className='signup-form-group'>
+                        <label htmlFor='Age'>Age:</label>
+                        <input
+                            type='number'
+                            placeholder='Age'
+                            value={age}
+                            onChange={(e) => setAge(e.target.value)}
                             required
                         />
                     </div>
