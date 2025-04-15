@@ -1,3 +1,4 @@
+using CarRentalAPI.Helpers;
 using Carvana.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -56,14 +57,21 @@ public class CustomerService : ICustomerService
     // Handles user login by matching email and password
     public async Task<string?> Login(string email, string password)
     {
+        // Try find customer in DB
         Customer? customer = await _context.Customers.FirstOrDefaultAsync(c => c.Email == email);
 
-        if (customer != null && customer.Password == password)
+        if (customer == null)
         {
-            return email; // Return email if credentials are valid
+            return ""; // Return empty string if customer is not found
         }
-
-        return null; // Return null if login fails
+        
+        // Check if passwords match 
+        if (HashHelper.VerifyPassword(password, customer.Password))
+        {
+            return customer.Email; // Return email if login is successful
+        }
+        
+        return null; // Return null if passwords dont match
     }
 
     // ------------------- CREATE / UPDATE / DELETE -------------------
@@ -85,17 +93,13 @@ public class CustomerService : ICustomerService
 
             _context.Licenses.Add(license); // Add new license to context
         }
+        
+        // Hash password
+        string cypherPass = HashHelper.HashPassword(data.Password);
 
         // Create new customer with the license information
-        var customer = Customer.Create(
-            data.CustomerID,
-            license,
-            data.Email!,
-            data.FullName!,
-            data.Age ?? 0,
-            data.PhoneNumber!,
-            data.Password!
-        );
+        var customer = Customer.Create(data.CustomerID, license, data.Email, data.FullName, data.Age ?? 0, data.PhoneNumber,cypherPass); 
+        // Age ?? 0 because CustomerData DTO has all nullable fields and frontend will never send this request with age column missing, so worst case it ends up as 0 if theres an issue
 
         try
         {
@@ -104,7 +108,7 @@ public class CustomerService : ICustomerService
         }
         catch (DbUpdateException ex)
         {
-            Console.WriteLine("DB Error: " + ex.InnerException?.Message ?? ex.Message); // Log any DB errors
+            Console.WriteLine("DB Error: " + ex.Message);
             success = false; // Mark as failure if error occurs
         }
 
@@ -126,7 +130,7 @@ public class CustomerService : ICustomerService
         return false; // Return false if no customer found with the given ID
     }
 
-    // Updates customer data using reflection (partial update)
+    // Updates customer data using reflection (quirky little partial update)
     public async Task<bool> UpdateCustomerAsync(CustomerData data)
     {
         Customer? customer = await _context.Customers.FirstOrDefaultAsync(c => c.CustomerID == data.CustomerID);
@@ -149,6 +153,12 @@ public class CustomerService : ICustomerService
                 // If the customer property can be written to, update it
                 if (customerProperty != null && customerProperty.CanWrite)
                 {
+                    // Handle passwords differently as they need to be hashed
+                    if (property.Name == "Password")
+                    {
+                        string cypherPass = HashHelper.HashPassword(data.Password);
+                        customerProperty.SetValue(customer, cypherPass);
+                    }
                     customerProperty.SetValue(customer, currentProperty);
                 }
             }

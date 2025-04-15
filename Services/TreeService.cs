@@ -22,9 +22,9 @@ namespace Carvana.Services // Wrapper class for handling tree operations
 
         public void Initialise()
         {
-            int numNodesBefore = _root.CountAllNodes(); // Before pruning
+            int numNodesBefore = _root.CountAllNodes(); 
             Prune();
-            int numNodesAfter = _root.CountAllNodes(); // After pruning
+            int numNodesAfter = _root.CountAllNodes(); 
 
             // Print reduction percentage
             float percentReduction = (numNodesBefore - numNodesAfter) / (float)numNodesBefore * 100f;

@@ -19,21 +19,25 @@ namespace Carvana.Controllers
         // ---------------------------
 
         [HttpGet("login")]
-        public async Task<IActionResult> Login([FromQuery] string username, [FromQuery] string password)
+        public async Task<IActionResult> Login([FromQuery] string email, [FromQuery] string password)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
                 return BadRequest("Email and password are required."); // early return if missing input
             }
 
-            string? result = await _customerService.Login(username, password);
+            string? result = await _customerService.Login(email, password);
 
             if (result == null)
             {
                 return Unauthorized("Invalid credentials"); // no match in DB
             }
+            else if (result.Length == 0)
+            {
+                return Unauthorized("No matching account found");
+            }
 
-            return Ok(result); // return token or auth confirmation
+            return Ok(result); // return email
         }
 
         [HttpPost("signup")]
