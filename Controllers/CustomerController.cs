@@ -79,8 +79,17 @@ namespace Carvana.Controllers
         }
 
         [HttpPut("profile")]
-        public async Task<IActionResult> UpdateProfile([FromBody] CustomerData newData)
+        public async Task<IActionResult> UpdateProfile([FromBody] CustomerData newData, string customerGuidString = null)
         {
+
+            if (newData.CustomerID == null && customerGuidString == null)
+            {
+                return BadRequest("Customer ID or Phone number are required.");
+            }
+            else if (newData.CustomerID == null)
+            {
+                newData.CustomerID = new Guid(customerGuidString);
+            }
             // data MUST HAVE CUSTOMER GUID to identify the record being updated
             bool success = await _customerService.UpdateCustomerAsync(newData);
 
