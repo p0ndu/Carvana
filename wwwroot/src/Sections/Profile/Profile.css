@@ -58,12 +58,19 @@
     justify-content: center;
 }
 
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .profile-info-title h2 {
     text-align: center;
     font-size: 24px;
 }
 
 .profile-info-container {
+    width: 75%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
@@ -86,11 +93,23 @@
     margin-bottom: 20px;
 }
 
+.profile-hide {
+    display: none;
+}
+
+.verify-password {
+    display: block;
+}
+
 .edit-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+}
+
+.edit-actions.editing {
+    width: 40%;
 }
 
 .edit-button,
@@ -119,28 +138,4 @@
 .back-button {
     background-color: #f44336;
     color: white;
-}
-
-.rental-history {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.rental-history ul {
-    width: 90%;
-    list-style-type: none;
-    padding: 0;
-}
-
-.rental-history li {
-    background-color: #f9f9f9;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 5px;
-}
-
-.rental-history p {
-    font-size: 16px;
 }

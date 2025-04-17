@@ -26,6 +26,7 @@ function Rent() {
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState({ model: "", location: "" });
     const [error, setError] = useState("");
+    const SiteUrl = window.location.origin;
     const [carFilters, setCarFilters] = useState({
         vehicleTypes: [],
         seatingCapacities: [],
@@ -86,7 +87,7 @@ function Rent() {
         const fetchSuggestions = async () => {
             setSearchLoading(true);
             try {
-                const response = await axios.get("http://localhost:5046/search", {
+                const response = await axios.get(`${SiteUrl}/search`, {
                     params: { prefix: input }
                 });
 
@@ -122,11 +123,11 @@ function Rent() {
             var response = '';
             if (!model) {
                 //Fetch all cars
-                response = await axios.get("http://localhost:5046/rent"); // TODO remove
+                response = await axios.get(`${SiteUrl}/rent`);
             }
             else {
                 // Fetch cars based on model
-                response = await axios.get("http://localhost:5046/rent/models/search", { // TODO remove
+                response = await axios.get(`${SiteUrl}/rent/models/search`, {
                     params: { model }
                 });
             }

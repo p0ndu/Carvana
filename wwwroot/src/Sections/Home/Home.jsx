@@ -9,6 +9,7 @@ function Home() {
     const [loading, setLoading] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(-1);
+    const SiteUrl = window.location.origin;
     useEffect(() => {
         // Ensure the input is not empty before fetching suggestions
         if (!input || !input.trim()) {
@@ -20,7 +21,7 @@ function Home() {
         const fetchSuggestions = async () => {
             setLoading(true);
             try {
-                const response = await axios.get("http://localhost:5046/search", {
+                const response = await axios.get(`${SiteUrl}/search`, {
                     params: { prefix: input }
                 });
 
@@ -61,7 +62,7 @@ function Home() {
     // Function to handle suggestion selection
     const handleSelect = (suggestion) => {
         console.log(suggestion);
-        axios.get("http://localhost:5046/search/increment", { params: { word: suggestion } })   // Send "word" as the key
+        axios.get(`${SiteUrl}/search/increment`, { params: { word: suggestion } })
             .then((response) => {
                 console.log("Increment success:", response.data);  // Handle success
             })

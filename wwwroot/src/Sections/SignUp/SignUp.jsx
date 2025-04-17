@@ -58,8 +58,20 @@ function SignUp() {
             return;
         }
 
+        if (age < 18) {
+            setError("You must be at least 18 years old to sign up.");
+            setLoading(false);
+            return;
+        }
+
+        if (age > 130) {
+            setError("Please enter a valid age.");
+            setLoading(false);
+            return;
+        }
+
         const signUpData = {
-            Fullname: name,
+            FullName: name,
             Email: email,
             Password: password,
             PhoneNumber: phone,
@@ -68,7 +80,7 @@ function SignUp() {
         };
 
         try {
-            const response = await axios.post(`http://localhost:5046/auth/signup`, signUpData);
+            const response = await axios.post(`${SiteUrl}/auth/signup`, signUpData);
 
             if (response.status === 200) {
                 console.log(response.data);
