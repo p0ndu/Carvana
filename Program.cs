@@ -46,7 +46,8 @@ app.UseCors("AllowFrontend");
 StartupService.Run(app.Services);
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.MapControllers();
-
+app.MapFallbackToFile("index.html"); // for SPA routing
 app.Run();
 
