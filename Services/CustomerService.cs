@@ -64,13 +64,13 @@ public class CustomerService : ICustomerService
         {
             return ""; // Return empty string if customer is not found
         }
-        
+
         // Check if passwords match 
         if (HashHelper.VerifyPassword(password, customer.Password))
         {
             return customer.Email; // Return email if login is successful
         }
-        
+
         return null; // Return null if passwords dont match
     }
 
@@ -93,12 +93,12 @@ public class CustomerService : ICustomerService
 
             _context.Licenses.Add(license); // Add new license to context
         }
-        
+
         // Hash password
         string cypherPass = HashHelper.HashPassword(data.Password);
 
         // Create new customer with the license information
-        var customer = Customer.Create(data.CustomerID, license, data.Email, data.FullName, data.Age ?? 0, data.PhoneNumber,cypherPass); 
+        var customer = Customer.Create(data.CustomerID, license, data.Email, data.FullName, data.Age ?? 0, data.PhoneNumber, cypherPass);
         // Age ?? 0 because CustomerData DTO has all nullable fields and frontend will never send this request with age column missing, so worst case it ends up as 0 if theres an issue
 
         try
@@ -153,13 +153,17 @@ public class CustomerService : ICustomerService
                 // If the customer property can be written to, update it
                 if (customerProperty != null && customerProperty.CanWrite)
                 {
+                    customerProperty.SetValue(customer, currentProperty); // Update the property value
+
                     // Handle passwords differently as they need to be hashed
-                    if (property.Name == "Password")
+                    if (property.Name == "Password" && data.Password != customer.Password)
                     {
+                        Console.WriteLine("Updating password:" + customer.Password);
+                        Console.WriteLine("New Password:" + data.Password); // Debugging line to check password update
                         string cypherPass = HashHelper.HashPassword(data.Password);
+                        Console.WriteLine("CypherPass: " + cypherPass); // Debugging line to check hashed password
                         customerProperty.SetValue(customer, cypherPass);
                     }
-                    customerProperty.SetValue(customer, currentProperty);
                 }
             }
         }
