@@ -156,9 +156,10 @@ public class CustomerService : ICustomerService
                     customerProperty.SetValue(customer, currentProperty); // Update the property value
 
                     // Handle passwords differently as they need to be hashed
-                    if (property.Name == "Password")
+                    if (property.Name == "Password" && data.Password != customer.Password)
                     {
-                        Console.WriteLine("Updating password"); // Debugging line to check password update
+                        Console.WriteLine("Updating password:" + customer.Password);
+                        Console.WriteLine("New Password:" + data.Password); // Debugging line to check password update
                         string cypherPass = HashHelper.HashPassword(data.Password);
                         Console.WriteLine("CypherPass: " + cypherPass); // Debugging line to check hashed password
                         customerProperty.SetValue(customer, cypherPass);

@@ -88,12 +88,22 @@ function Profile() {
             Age: profileDetails.age,
         }
 
+        //Check if email has been changed and update cookie accordingly
+        var prev_email = Cookie.get('user');
+
         try {
             // Send updated profile details to the server
             axios.put(`${SiteUrl}/auth/profile`, CustomerData)
                 .then((response) => {
                     console.log('Profile updated successfully:', response.data);
                     setSuccess(true);
+
+                    //Update the email in the logged-in user cookie if it has changed
+                    if (prev_email !== CustomerData.Email) {
+                        Cookie.remove('user');
+                        Cookie.set('user', CustomerData.Email);
+                    }
+
                     Cookie.set('userProfile', JSON.stringify(CustomerData));
                     setTimeout(() => {
                         setSuccess(false);
@@ -150,7 +160,7 @@ function Profile() {
                                         <label>Name:</label>
                                         <input
                                             type='text'
-                                            name='name'
+                                            name='fullName'
                                             value={profileDetails.fullName}
                                             onChange={handleChange}
                                             disabled={!isEditing}
@@ -174,8 +184,8 @@ function Profile() {
                                         />
                                         <label>Phone:</label>
                                         <input
-                                            type='text'
-                                            name='phone'
+                                            type='number'
+                                            name='phoneNumber'
                                             value={profileDetails.phoneNumber}
                                             onChange={handleChange}
                                             disabled={!isEditing}
