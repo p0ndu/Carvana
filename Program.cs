@@ -2,6 +2,7 @@ using Carvana.Services;
 using Carvana.Data;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 
 
@@ -49,5 +50,25 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.MapControllers();
 app.MapFallbackToFile("index.html"); // for SPA routing
+
+// ✅ Open browser automatically on app startup
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    var launchUrl = app.Urls.FirstOrDefault(u => u.StartsWith("https://")) ?? "http://localhost:5046";
+    try
+    {
+        var psi = new ProcessStartInfo
+        {
+            FileName = launchUrl,
+            UseShellExecute = true
+        };
+        Process.Start(psi);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Failed to launch browser: {ex.Message}");
+    }
+});
+
 app.Run();
 
