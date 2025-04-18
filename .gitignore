@@ -1,4 +1,4 @@
-bin/
-obj/
+Carvana/bin/
+Carvana/obj/
 package-lock.json
-.DS_Store
+Carvana/.DS_Store
