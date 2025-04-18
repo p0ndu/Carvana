@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Carvana;
 using Carvana.Services;
 
 namespace Carvana.Data

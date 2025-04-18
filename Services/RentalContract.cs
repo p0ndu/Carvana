@@ -57,7 +57,6 @@ public class RentalContract
     {
         TotalPrice *= discount;
     }
-
     public void setStartDate(DateTime startDate)
     {
         StartDate = startDate;

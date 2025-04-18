@@ -2,6 +2,7 @@ using Carvana.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Carvana.Controllers
+// Credit: Microsoft EFCore and AspNetCore documentation
 {
     [ApiController]
     [Route("auth")]

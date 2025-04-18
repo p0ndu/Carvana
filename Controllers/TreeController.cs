@@ -6,6 +6,7 @@ namespace Carvana.Controllers
     [ApiController]
     [Route("search")] // not sure what route to use yet so im defaulting to this
     public class TreeController : ControllerBase // extends controllerbase to allow for BadRequest responses etc
+    // Credit: Microsoft EFCore and AspNetCore documentation
     {
         private readonly TreeService _treeService;
 

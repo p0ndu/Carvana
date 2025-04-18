@@ -1,6 +1,9 @@
 namespace Carvana.Services;
 
 public class TreeManager // class which will manage the tree, will handle pruning and autocompletion
+                         // Autocomplete implemented using Trie data structure
+                         // Based on concepts from de la Briandais (1959) and Fredkin (1960)
+
 {
     private readonly INodeFactory _nodeFactory; // used to make nodes
 

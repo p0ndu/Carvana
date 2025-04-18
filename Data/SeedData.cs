@@ -1,11 +1,11 @@
-using Carvana;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 using Carvana.Services;
 
 namespace Carvana.Data
 {
+    // Class used during testing to add testData to the database
+    // was originally run on startup to populate DB but now deprecated. 
+    // This file is being left within the project as it may help with clarity for the relationships of the different tables
     public static class SeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)

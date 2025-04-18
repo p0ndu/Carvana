@@ -1,11 +1,10 @@
 using System.Security.Cryptography;
-using System.Text;
-using CarRentalAPI.Helpers;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarRentalAPI.Helpers
 {
     public static class HashHelper
+        // Passwords hashed using PBKDF2 implementation for secure storage
+        // Based on NIST recommendations and Microsoft documentation (Microsoft, 2023)
     {
         private const int _saltSize = 16; // 128 bits
         private const int _hashSize = 32; // 256 bits
@@ -19,7 +18,7 @@ namespace CarRentalAPI.Helpers
             // Generate salt (random bytes used to hash)
             byte[] salt = RandomNumberGenerator.GetBytes(_saltSize);
 
-            // Hash password using pbkdf2 algo
+            // Hash password using implementation of pbkdf2 algo
             byte[] hash = Rfc2898DeriveBytes.Pbkdf2(password, salt, _iterations, HashAlgorithmName.SHA256, _hashSize);
 
             // Join the two using : and return
