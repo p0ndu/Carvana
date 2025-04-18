@@ -36,7 +36,7 @@ function Login() {
 
                 //Send user to home page
                 setTimeout(() => {
-                    navigate("/");
+                    window.location.href = '/car-rent';
                 }, 1000);
 
             }

@@ -78,6 +78,46 @@ function Profile() {
         setLoading(true);
         setError("");
         setSuccess(false);
+
+        //Password strength validation: at least 1 lowercase, 1 uppercase, 1 number, and 1 special character
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/;
+
+        //Basic phone number validation: allows numbers with optional country code (e.g., +1234567890 or 1234567890)
+        const phoneRegex = /^(\+\d{1,3})?\d{10}$/;
+
+        //Basic license validation: assuming it must contain letters and numbers (e.g., "AB123456")
+        const licenseRegex = /^[A-Za-z0-9]{6,}$/;
+
+        if (profileDetails.password != null && !passwordRegex.test(profileDetails.password)) {
+            setError("Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character.");
+            setLoading(false);
+            return;
+        }
+
+        if (!phoneRegex.test(profileDetails.phoneNumber)) {
+            setError("Invalid phone number. Enter a valid 10-digit number with an optional country code.");
+            setLoading(false);
+            return;
+        }
+
+        if (!licenseRegex.test(profileDetails.licenseNumber)) {
+            setError("Invalid license. It must contain at least 6 alphanumeric characters.");
+            setLoading(false);
+            return;
+        }
+
+        if (profileDetails.age < 18) {
+            setError("You must be at least 18 years old to sign up.");
+            setLoading(false);
+            return;
+        }
+
+        if (profileDetails.age > 130) {
+            setError("Please enter a valid age.");
+            setLoading(false);
+            return;
+        }
+
         var CustomerData = {
             customerID: profileDetails.customerID,
             LicenseNumber: profileDetails.licenseNumber,
@@ -184,7 +224,7 @@ function Profile() {
                                         />
                                         <label>Phone:</label>
                                         <input
-                                            type='number'
+                                            type='text'
                                             name='phoneNumber'
                                             value={profileDetails.phoneNumber}
                                             onChange={handleChange}
