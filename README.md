@@ -2,8 +2,6 @@
 
 **Carvana** is a car rental application developed as a university project. It allows users to browse, book, and manage car rentals efficiently through a modern and responsive interface.
 
----
-
 ## 🚗 Features
 
 - **Car Browsing**: Explore a wide range of available rental cars.
@@ -11,7 +9,21 @@
 - **Filtering Options**: Filter cars by model, brand, price, and features.
 - **Responsive Design**: Seamless experience across all device sizes.
 
----
+## 🖼️ Screenshots
+
+### 🏠 Main Menu
+![Main Menu](https://github.com/user-attachments/assets/d303d483-f7b0-4af9-b7d4-e13212f9419f)
+
+
+### 🚘 Car Booking
+![Car Booking](https://github.com/user-attachments/assets/e4456bec-74f9-491f-9e5a-42000b477a58)
+
+
+### 💳 Checkout
+![Checkout](https://github.com/user-attachments/assets/5ddbdeb5-12f1-43f7-a2c2-1f33611b8757)
+
+
+> 💡 *Screenshots are taken from the React frontend in development mode.*
 
 ## 🛠 Tech Stack
 
@@ -19,8 +31,6 @@
 - **JavaScript (React)**: Frontend logic and user interface.
 - **CSS**: Custom styling and responsive layout.
 - **HTML**: Page structure and semantic markup.
-
----
 
 ## 📁 Folder Structure
 ```bash
@@ -34,8 +44,6 @@ Carvana/
 ├── Program.cs               # Main .NET web app file
 └── README.md
 ```
-
----
 
 ## ⚙️ Getting Started
 
